@@ -1,0 +1,158 @@
+{% if template contains 'index' %}
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page_title | escape }}</title><meta name="description" content="{{ page_description | escape }}">
+  <link rel="canonical" href="{{ canonical_url }}"><meta name="theme-color" content="#d72182">
+  {% include 'ly-favicon' %}
+  <meta name="facebook-domain-verification" content="bzlfnupz8z72cksny8b9dcp2hxy599" />
+  <meta name="google-site-verification" content="PoBgJlfJg8v7uU2gyvmuYtZ6E29_onHCBA__WGMLmhA" />
+  <meta name="google-site-verification" content="UwhfvcsbOy_X21gMScaOGdQDgv-hNbNMqT_AzTeftG0" />
+  <meta name="google-site-verification" content="gLrawET5etHJDHYWKC355HO0NGcQnpH2tJz9-G3a8IE" />
+  <meta name="robots" content="index,follow">
+  {% include 'fb-open-graph-tags' %}
+  {% include 'schema' %}
+  {{ 'jquery.js' | asset_url | script_tag }}
+<script>/* 17/10/2026: định dạng tiền của shop là "$" (thiếu {amount}) → Bizweb.formatMoney() gọi không kèm định dạng ném lỗi "reading '1'" (giỏ hàng, app). Luôn dùng định dạng VNĐ khi thiếu. */
+(function(){var F='{'+'{amount_no_decimals_with_comma_separator}'+'}₫',R=/\{\{\s*\w+\s*\}\}/,B=window.Bizweb||(window.Bizweb={}),fn;window.money_format=F;function w(f){return function(a,m){return f.call(this,a,(typeof m==='string'&&R.test(m))?m:F)}}if(typeof B.formatMoney==='function')fn=w(B.formatMoney);try{Object.defineProperty(B,'formatMoney',{configurable:true,enumerable:true,get:function(){return fn},set:function(f){fn=typeof f==='function'?w(f):f}})}catch(e){}})();</script>
+  {{ content_for_header }}
+  <link rel="stylesheet" href="{{ 'ly-home.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'ly-design.css' | asset_url }}">
+  {%- comment -%} 22/10/2026 tối ưu GĐ2: trang chủ bỏ ly-tweaks.css + ly-pages.css (đo computed style toàn trang 390/1440: 0 khác biệt). Bản trước: layouts/zz-backup-theme-20261022-gd2.bwt {%- endcomment %}
+  <link rel="stylesheet" href="{{ 'ly-cart.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'lyx-base.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'lyx-home.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'lyx-editorial.css' | asset_url }}">
+  <script src="{{ 'ly-cart.js' | asset_url }}" defer></script>
+  <script src="{{ 'ly-home.js' | asset_url }}" defer></script>
+  <script src="{{ 'ly-site.js' | asset_url }}" defer></script>
+  <script src="{{ 'ly-design.js' | asset_url }}" defer></script>
+</head>
+<body class="ly-home-page lyx-page">
+  <a class="ly-skip" href="#ly-main">Đến nội dung chính</a>
+  {% include 'lyx-header' %}
+  {{ content_for_layout }}
+  {% include 'lyx-footer' %}
+  {% include 'ly-cart-drawer' %}
+  {%- comment -%} 19/10/2026: bật lại Trợ lý chọn thảm theo yêu cầu – chỉ trang chủ, hiện 1 lần {%- endcomment -%}
+  {% if template == 'index' %}{% include 'louis-quiz' %}{% endif %}
+{%- comment -%} 17/10/2026: anh Công bỏ "Trợ lý chọn thảm" (louis-quiz) — snippet vẫn còn, thêm lại dòng include nếu cần {%- endcomment -%}
+  <dialog class="ly-dialog" id="ly-favorites" aria-labelledby="ly-favorites-title"><div class="ly-dialog-head"><h2 id="ly-favorites-title">Sản phẩm yêu thích</h2><button class="ly-icon" data-close aria-label="Đóng yêu thích">✕</button></div><div id="ly-favorite-items"></div></dialog>
+  <dialog class="ly-dialog ly-video-dialog" id="ly-video" aria-labelledby="ly-video-title"><div class="ly-dialog-head"><h2 id="ly-video-title">Louis Yoga đồng hành cùng Yogi</h2><button class="ly-icon" data-close aria-label="Đóng video">✕</button></div><div id="ly-video-frame"></div></dialog>
+  <div class="ly-toast" id="ly-toast" role="status" aria-live="polite"></div>
+</body>
+</html>
+
+{% else %}
+<!DOCTYPE html>
+<html lang="vi">
+	<head>
+		<meta name="facebook-domain-verification" content="bzlfnupz8z72cksny8b9dcp2hxy599" />
+		<meta charset="UTF-8" />
+		<meta name="google-site-verification" content="PoBgJlfJg8v7uU2gyvmuYtZ6E29_onHCBA__WGMLmhA" />
+		<meta name="google-site-verification" content="UwhfvcsbOy_X21gMScaOGdQDgv-hNbNMqT_AzTeftG0" />
+		<meta name="google-site-verification" content="gLrawET5etHJDHYWKC355HO0NGcQnpH2tJz9-G3a8IE" />
+		<meta name="theme-color" content="{{ settings.main-color }}" />
+		<link rel="canonical" href="{{ canonical_url }}"/>
+		<meta name='revisit-after' content='2 days' />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		{%if current_page != 1 or template contains 'search' or template contains 'cart'%}<meta name="robots" content="follow, noindex">{%else%}<meta name="robots" content="noodp,index,follow" />{%endif%}
+		{%if current_page != 1%}<meta name="description" content="{{ page_description }} | Trang {{ current_page }}">{%else%}<meta name="description" content="{{ page_description }}">{%endif%}
+		<title>{%if page_title == 'All'%}Tất cả sản phẩm{%else%}{{ page_title }}{%endif%}{%if current_tags%} tagged "{{ current_tags | join: ', ' }}"{%endif%}{%if current_page != 1%} - Trang {{ current_page }}{%endif%}		</title>
+		{%if template contains 'index'%}{%if settings.home_page_keywords != '' and settings.home_page_keywords != null%}<meta name="keywords" content="{{settings.home_page_keywords}}"/>{%else%}<meta name="keywords" content="{{store.name}}, {{store.domain}}"/>{%endif%}{%elsif template contains 'product'%}<meta name="keywords" content="{{product.name}}, {%for collection in product.collections%}{{collection.name}}, {%endfor%}{%if product.tags.size > 0%}{%for tag in product.tags%}{{tag}}, {%endfor%}{%endif%}{{store.name}}, {{store.domain}}"/>{%elsif template contains 'collection'%}<meta name="keywords" content="{{collection.name }}, {{store.name}}, {{store.domain}}"/>{%elsif template contains 'blog'%}<meta name="keywords" content="{{blog.name }}, {{store.name}}, {{store.domain}}"/>{%elsif template contains 'article'%}<meta name="keywords" content="{{article.title}}, {{blog.name}}, {%if article.tags.size > 0%}{%for tag in article.tags%}{{tag}}, {%endfor%}{%endif%} {{store.name}}, {{store.domain}}"/>{%else%}<meta name="keywords" content="{{page_title}}, {{store.name}}, {{store.domain}}"/>{%endif%}
+		{%include 'fb-open-graph-tags'%}
+		{% include 'ly-favicon' %}
+		<link rel="preload" as="script" href="{{ 'jquery.js' | asset_url }}" />
+		{{ 'jquery.js'  | asset_url | script_tag }}
+		<link rel="preload" as="script" href="{{ 'swiper.js' | asset_url }}" />
+		{{ 'swiper.js'  | asset_url | script_tag }}
+		<link rel="preload" as="script" href="{{ 'lazy.js' | asset_url }}" />
+		{{ 'lazy.js'  | asset_url | script_tag }}
+		{%include 'notify'%}
+		{%include 'header_style'%}
+<script>/* 17/10/2026: định dạng tiền của shop là "$" (thiếu {amount}) → Bizweb.formatMoney() gọi không kèm định dạng ném lỗi "reading '1'" (giỏ hàng, app). Luôn dùng định dạng VNĐ khi thiếu. */
+(function(){var F='{'+'{amount_no_decimals_with_comma_separator}'+'}₫',R=/\{\{\s*\w+\s*\}\}/,B=window.Bizweb||(window.Bizweb={}),fn;window.money_format=F;function w(f){return function(a,m){return f.call(this,a,(typeof m==='string'&&R.test(m))?m:F)}}if(typeof B.formatMoney==='function')fn=w(B.formatMoney);try{Object.defineProperty(B,'formatMoney',{configurable:true,enumerable:true,get:function(){return fn},set:function(f){fn=typeof f==='function'?w(f):f}})}catch(e){}})();</script>
+		{{ content_for_header }}
+		{%if template contains 'customer'%}
+		{{ 'bizweb-api.js'  | bizweb_asset_url | script_tag }}
+		{{ 'common.js' | bizweb_asset_url | script_tag }}
+		{{ 'customer.js'  | bizweb_asset_url | script_tag }}
+		{{ 'customers.js'  | bizweb_asset_url | script_tag }}
+		{%endif%}
+		{%if template contains 'product'%}<script>var ProductReviewsAppUtil=ProductReviewsAppUtil || {};{%if customer %}ProductReviewsAppUtil.customer={id: '{{customer.id}}',name: '{{customer.name}}',email: '{{customer.email}}', phone: '{{customer.phone}}'};{%endif%}ProductReviewsAppUtil.store={name: '{{store.name}}'};</script>{%endif%}
+		{%include 'schema'%}
+		<script>
+			$(document).ready(function ($) {
+				awe_lazyloadImage();
+			});
+			function awe_lazyloadImage() {
+				var ll = new LazyLoad({
+					elements_selector: ".lazyload",
+					load_delay: 100,
+					threshold: 0
+				});
+			} window.awe_lazyloadImage=awe_lazyloadImage;
+		</script>
+		{%- comment -%} 22/10/2026 tối ưu GĐ2 — CSS theo loại trang (đo computed style từng phần tử trước/sau khi gỡ, 390/1440: 0 khác biệt ở các trang bị bỏ):
+		  appcombo.css + lyx-pdp.css chỉ trang SP; lyx-home.css bỏ ở trang nội dung/FAQ/giới thiệu/blog/bài viết/tài khoản; nạp lại cuối trang chỉ trang SP + giỏ. {%- endcomment -%}
+		{%- assign lyo_pdp = false -%}{%- if template contains 'product' -%}{%- assign lyo_pdp = true -%}{%- endif -%}
+		{%- assign lyo_nohome = false -%}{%- if template == 'page' or template == 'page.faq' or template == 'page.about' or template contains 'blog' or template contains 'article' or template contains 'customers' -%}{%- assign lyo_nohome = true -%}{%- endif -%}
+		{% if lyo_pdp %}{{ 'appcombo.css' | asset_url | stylesheet_tag }}{% endif %}
+	<link rel="stylesheet" href="{{ 'ly-home.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'ly-site.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'ly-design.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'ly-tweaks.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'ly-cart.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'ly-pages.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'lyx-base.css' | asset_url }}">
+{% unless lyo_nohome %}<link rel="stylesheet" href="{{ 'lyx-home.css' | asset_url }}">{% endunless %}
+<link rel="stylesheet" href="{{ 'lyx-col.css' | asset_url }}">
+{% if lyo_pdp %}<link rel="stylesheet" href="{{ 'lyx-pdp.css' | asset_url }}">{% endif %}
+<link rel="stylesheet" href="{{ 'lyx-editorial.css' | asset_url }}">
+<script>window.favoriBean={Wishlist:{wishlistProduct:function(){document.dispatchEvent(new Event('ly:wishlist-refresh'));}}};</script>
+<script src="{{ 'ly-cart.js' | asset_url }}" defer></script>
+<script src="{{ 'ly-site.js' | asset_url }}" defer></script>
+<script src="{{ 'ly-home.js' | asset_url }}" defer></script>
+<script src="{{ 'ly-design.js' | asset_url }}" defer></script>
+</head>
+	<body class="ly-home-page ly-inner-page lyx-page ly-template-{{ template | replace: '.', '-' }}">
+<a class="ly-skip" href="#ly-page-main">Đến nội dung chính</a>
+		<div class="opacity_menu"></div>
+		{% include 'lyx-header' %}
+		<div class="bodywrap">
+			<main id="ly-page-main">{{ content_for_layout }}</main>
+			<div id="js-global-alert" class="alert alert-success" role="alert">
+				<button type="button" class="close"><span aria-hidden="true"><span aria-hidden="true">&times;</span></span></button>
+				<h5 class="alert-heading"></h5>
+				<p class="alert-content"></p>
+			</div>
+			{% include 'lyx-footer' %}
+		</div>
+		<div class="backdrop__body-backdrop___1rvky"></div>
+
+		{%include 'footer_script'%}
+		<div id="popupCartModal" class="modal fade" role="dialog">
+		</div>
+		{%if settings.sale_pop%}{%include 'popup_sale'%}{%endif%}
+		{%include 'support'%}
+		{%include 'popup-sapo'%}
+		{%include 'livechat'%}
+		{% include 'loyalty' %}
+  {% include 'ly-cart-drawer' %}
+  {%- comment -%} 19/10/2026: bật lại Trợ lý chọn thảm theo yêu cầu – chỉ trang chủ, hiện 1 lần {%- endcomment -%}
+  {% if template == 'index' %}{% include 'louis-quiz' %}{% endif %}
+{%- comment -%} 17/10/2026: anh Công bỏ "Trợ lý chọn thảm" (louis-quiz) {%- endcomment -%}
+  <dialog class="ly-dialog" id="ly-favorites" aria-labelledby="ly-favorites-title"><div class="ly-dialog-head"><h2 id="ly-favorites-title">Sản phẩm yêu thích</h2><button class="ly-icon" data-close aria-label="Đóng yêu thích">✕</button></div><div id="ly-favorite-items"></div></dialog>
+  <dialog class="ly-dialog ly-video-dialog" id="ly-video" aria-labelledby="ly-video-title"><div class="ly-dialog-head"><h2 id="ly-video-title">Louis Yoga đồng hành cùng Yogi</h2><button class="ly-icon" data-close aria-label="Đóng video">✕</button></div><div id="ly-video-frame"></div></dialog>
+  <div class="ly-toast" id="ly-toast" role="status" aria-live="polite"></div>
+{%- comment -%} 17/10/2026 tối ưu: chỉ nạp lại 3 file cần thắng CSS nạp giữa trang (template SP/Giới thiệu, ajaxcart, picbox, jquery-ui) — đã kiểm chứng computed style 0 khác biệt trên danh mục/SP/Giới thiệu/giỏ ở 1440 và 390 (trước: nạp lại 10 file).
+15/10/2026: CSS giao diện mới (lyx-*.css) nạp sau cùng để thắng CSS cũ khi trùng độ ưu tiên. {%- endcomment -%}
+{%- if lyo_pdp or template contains 'cart' -%}
+<link rel="stylesheet" href="{{ 'ly-cart.css' | asset_url }}">
+{% if lyo_pdp %}<link rel="stylesheet" href="{{ 'lyx-pdp.css' | asset_url }}">{% endif %}
+<link rel="stylesheet" href="{{ 'lyx-editorial.css' | asset_url }}">
+{%- endif %}
+</body>
+</html>
+{% endif %}

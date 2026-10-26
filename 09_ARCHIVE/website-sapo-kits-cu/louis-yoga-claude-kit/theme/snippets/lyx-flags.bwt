@@ -1,0 +1,37 @@
+{%- comment -%}
+  15/10/2026 — Cờ ảnh dẫn xuất cho giao diện mới. Ảnh đã chuẩn bị sẵn ở generated/ của bộ kit (đúng tên file bên dưới).
+  Sau khi tải file lên Giao diện → Sửa code → Assets, đổi cờ tương ứng thành true:
+    lyx-cat-mats.jpg (640×328)  → ảnh thẻ "Thảm yoga cao su" ở Danh mục sản phẩm (trang chủ)
+    lyx-story.jpg (640×488)     → ảnh khối "Câu chuyện của chúng tôi" (trang chủ)
+    lyx-about.jpg (600×868)     → ảnh đầu trang Giới thiệu
+  Khi cờ = false: dùng ảnh thật có sẵn trên Sapo (ảnh danh mục / sản phẩm) để không hiện khung trống.
+
+  16/10/2026 — Hero video trang chủ (anh Công chọn MP4):
+    lyx_hero_mp4_pc  = đường dẫn MP4 ngang (1920×1080, không tiếng, ~15–30 giây, < 10 MB) — vd. link file tải ở Cài đặt → Quản lý file
+    lyx_hero_mp4_mb  = MP4 riêng cho điện thoại, khung 5:4 (vd. 1080×864, nội dung chính ở giữa); để trống thì điện thoại phát bản ngang PC cắt hai mép (17/10)
+    lyx_hero_yt      = video YouTube chạy tạm (tắt tiếng, lặp) khi chưa có MP4; cũng là video của nút "Xem câu chuyện"
+  Đếm ngược Săn sale: nếu có ngày thật ở cài đặt ly_home_sale_end thì đếm tới ngày đó;
+    không có thì lyx_sale_cd = 'month' → đếm tới 23:59 ngày cuối tháng hiện tại (anh Công chọn 16/10); '' = ẩn đồng hồ.
+
+  16/10/2026 — Khối Video trang chủ (lyx_vid_list): mỗi video cách nhau bằng |, các trường cách nhau bằng ~ :
+    loại ~ mã/link ~ tiêu đề có dấu ~ alias sản phẩm xuất hiện trong video ~ ảnh bìa trong Assets (tuỳ chọn)
+    loại: yt = YouTube thường (mã 11 ký tự), ys = YouTube Shorts (mã 11 ký tự), tt = TikTok (dán nguyên link video TikTok)
+    alias sản phẩm (vd tham-tap-yoga-cao-su-asana) → hiện ô sản phẩm (ảnh nhỏ + tên + giá + nút +) dưới video; để trống thì không hiện.
+    Hiện tại: 7 video YouTube chính thức LOUISYOGA. 17/10 gắn SP theo hình thảm trong video: 2 & 7 = BASIC, 3 & 4 = ASANA; 5 (phỏng vấn), 6 (thảm đen hoạ tiết hoa trên), 8 chưa rõ → hiện ô "Khám phá thảm". CHỜ anh Công xác nhận + gửi link TikTok.
+  Khối Màu sắc (lyx_colors): tên ~ màu nền ~ màu chữ ~ các tag màu sản phẩm (cách nhau dấu phẩy); thứ tự = thứ tự hiển thị
+    (đặt màu bán chạy lên đầu khi có số liệu bán hàng — CHỜ anh Công xác nhận nguồn số liệu).
+{%- endcomment -%}
+{%- assign lyx_has_cat_mats = false -%}
+{%- assign lyx_has_story = false -%}
+{%- assign lyx_has_about = false -%}
+{%- assign lyx_hero_mp4_pc = '' -%}
+{%- assign lyx_hero_mp4_mb = '' -%}
+{%- assign lyx_hero_yt = 'ZoOMtbkA-8A' -%}
+{%- assign lyx_sale_cd = 'month' -%}
+{%- assign lyx_vid_list = 'yt~AFo_DvpQWf0~Louis Yoga × Hoa hậu Yoga Việt Nam 2024 Nguyễn Thị Huyền~tham-tap-yoga-cao-su-basic~img_video_2.jpg|yt~dBatrt6nTo4~Louis Yoga × Kiện tướng Yoga Việt Nam Nguyễn Thành Nam~tham-tap-yoga-cao-su-asana~img_video_3.jpg|yt~PTjSsUryhLM~Louis Yoga × Kiện tướng Yoga Việt Nam~tham-tap-yoga-cao-su-asana~img_video_4.jpg|yt~-5WTI02fUVE~Thảm yoga có tác dụng quan trọng như thế nào đến người tập?~~img_video_5.jpg|yt~ZoOMtbkA-8A~Hoa hậu Yoga Việt Nam 2024 chọn Louis Yoga làm người bạn đồng hành~~img_video_6.jpg|yt~n86CyFFu3ZQ~Thảm yoga Louis: Có gì mà nhiều người mua đến vậy?~tham-tap-yoga-cao-su-basic~img_video_7.jpg|yt~WjpS3jxtcg0~Review sau 3 tháng sử dụng thảm Louis Yoga: Có nên mua không?~~img_video_8.jpg' -%}
+{%- assign lyx_colors = 'Xanh~#334a5b~#ffffff~Xanh Đậm,Xanh Coban,Xanh Ngọc|Hồng~#f58bb2~#141414~Hồng,Hồng Nhạt|Khói~#a99d8b~#ffffff~Ghi Khói,Ghi Đậm|Xanh lá~#245638~#ffffff~Xanh Lá,Xanh Rêu,Xanh Cốm|Đen~#141414~#ffffff~Đen|Trắng~#f6eee3~#141414~Trắng' -%}
+{%- comment -%} 17/10/2026 — Ảnh 2 thẻ "Danh mục sản phẩm" trang chủ (kiểu thẻ bộ sưu tập olaben). Ảnh Unsplash, giấy phép Unsplash (dùng thương mại miễn phí, không logo hãng khác):
+  1 = người tập trên thảm, phòng gỗ (unsplash.com/photos/Mzbe_2BJwMI) · 2 = gạch gỗ bần trên thảm (unsplash.com/photos/... photo-1646239646963).
+  Muốn dùng ảnh riêng của Louis: tải ảnh lên (Assets hoặc Quản lý file) rồi dán link ảnh vào đây (khổ ngang ~16:10). Để trống = quay về ảnh danh mục trên Sapo. {%- endcomment -%}
+{%- assign lyx_cat_img_1 = 'https://images.unsplash.com/photo-1678985854460-94df3afe13f4?auto=format&fit=crop&w=1400&h=875&q=80' -%}
+{%- assign lyx_cat_img_2 = 'https://images.unsplash.com/photo-1646239646963-b0b9be56d6b5?auto=format&fit=crop&w=1400&h=875&q=80' -%}

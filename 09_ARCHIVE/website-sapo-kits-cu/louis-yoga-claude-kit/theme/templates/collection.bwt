@@ -1,0 +1,59 @@
+{%- comment -%} 15/10/2026: trang danh mục theo bản thiết kế mới (CSS assets/lyx-col.css, JS assets/lyx-col.js).
+Giữ nguyên khung cho col.js + ly-filter.js: .dqdt-sidebar, .opacity_sidebar, #open-filters, .category-products, collection-sortby, products-grid-item.
+Link phân khúc mở /collections/all đã lọc sẵn → lưới tạm ẩn (html.ly-qwait) tới khi bộ lọc trả kết quả. Bản trước: theme main 1170134 / backups.
+17/10/2026 editorial: H1 + mô tả gộp vào khối đầu trang (hiện cả mobile), bỏ h2 lặp tên danh mục. lyx-home.css + lyx-col.css do layout nạp (bỏ link trùng ở đây). {%- endcomment -%}
+<script>if(/[?&]q=[^&]*(id|tags)(:|%3A)/i.test(location.search))document.documentElement.classList.add('ly-qwait');</script>
+<style>.ly-qwait .category-products .products-view,.ly-qwait .category-products .pagination{visibility:hidden}</style>
+{%- include 'ly-segments' -%}
+{%- assign ly_col_name = collection.name | downcase -%}
+{%- assign lyx_is_all = false -%}{%- if collection.alias == 'all' or collection.handle == 'all' or ly_col_name == 'all' or ly_col_name == 'tất cả sản phẩm' -%}{%- assign lyx_is_all = true -%}{%- endif -%}
+{%- if lyx_is_all -%}{%- assign lyx_title = 'Tất cả sản phẩm' -%}{%- else -%}{%- assign lyx_title = collection.name -%}{%- endif -%}
+<div class="lyxc layout-collection ly-collection">
+  <nav class="lyxc-crumb" aria-label="Breadcrumb"><div class="lyx-wrap"><ol><li><a href="/">Trang chủ</a></li><li aria-current="page">{{ lyx_title }}</li></ol></div></nav>
+  <section class="lyxc-hero"><div class="lyx-wrap">
+    <p class="lyx-eyebrow">{% if lyx_is_all %}Cửa hàng Louis Yoga{% else %}Bộ sưu tập{% endif %}</p>
+    <h1>{{ lyx_title }}</h1>
+    <div class="lyxc-desc">{% if collection.description != blank and lyx_is_all == false %}{{ collection.description }}{% else %}<p>Khám phá các sản phẩm của Louis Yoga, được lựa chọn để đồng hành cùng bạn trong từng buổi tập. Với thiết kế tinh tế, chất liệu thoải mái và tính ứng dụng cao, mỗi sản phẩm giúp bạn tự tin vận động, tìm lại sự cân bằng và nuôi dưỡng lối sống khỏe mạnh mỗi ngày.</p>{% endif %}</div>
+  </div></section>
+  {%- if lyx_is_all -%}<div class="lyxc-sale-m"><div class="lyx-wrap">{% include 'lyx-sale' %}</div></div>{%- endif -%}
+  <div class="lyxc-shop-h"><h2>Cửa hàng</h2><p>Toàn bộ sản phẩm</p></div>
+  <div class="lyxc-body">
+    <div class="lyxc-bar-m">
+      <button type="button" data-lyxc-filter aria-controls="lyxc-side" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18l-7 8.5V19l-4 2v-8.5z"/></svg>Bộ lọc</button>
+      <button type="button" data-lyxc-sort aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4v16M4 8l4-4 4 4M16 20V4M12 16l4 4 4-4"/></svg>Sắp xếp</button>
+    </div>
+    <aside class="lyxc-side dqdt-sidebar sidebar" id="lyxc-side" aria-label="Bộ lọc sản phẩm">
+      <div class="lyxc-side-head"><span class="lyx-logo" aria-hidden="true">{% include 'lyx-logo' %}</span><button type="button" class="lyx-ico lyx-drawer-x" aria-label="Đóng bộ lọc" data-lyxc-close><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
+      <p class="lyxc-side-h"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18l-7 8.5V19l-4 2v-8.5z"/></svg>Bộ lọc</p>
+      <div class="section-box-bg">{%- include 'sidebar-collection' -%}</div>
+    </aside>
+    <div class="lyxc-main block-collection">
+      <div class="lyxc-toolbar">{%include 'collection-sortby'%}</div>
+      <div class="section-box-bg">
+        <div class="category-products">
+          <div id="open-filters" class="open-filters" aria-hidden="true"><span>Bộ lọc</span></div>
+          <div class="clearfix clear-fix"></div>
+          {% paginate collection.products by settings.collection_number_product %}
+          {% if collection.products.size > 0 %}{% include 'products-grid-item' %}
+          {% else %}
+          <div class="alert alert-warning alert-dismissible margin-top-15 section" role="alert">Sản phẩm đang được cập nhật.</div>{% endif %}
+          {% endpaginate %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="lyx-wrap">
+    <div class="lyxc-cta">
+      <a href="/apps/affiliate-v2"><small>Thu nhập hấp dẫn</small><b>Cộng tác viên</b><em>Đăng ký CTV đơn giản nhanh chóng</em><span class="lyxc-pill">Đăng ký cộng tác viên</span></a>
+      <a href="/chinh-sach-bao-hanh-doi-tra-san-pham"><small>Chính sách bảo hành rõ ràng</small><b>Bảo hành</b><em>Lỗi 1 đổi 1 giao hàng tiện lợi</em><span class="lyxc-pill">Bảo hành sản phẩm</span></a>
+    </div>
+    <div class="lyxc-outro"><h2>Điểm đặc biệt trong sản phẩm của Louisyoga</h2><p>Khám phá các sản phẩm của Louis Yoga, được lựa chọn để đồng hành cùng bạn trong từng buổi tập. Với thiết kế tinh tế, chất liệu thoải mái và tính ứng dụng cao, mỗi sản phẩm giúp bạn tự tin vận động, tìm lại sự cân bằng và nuôi dưỡng lối sống khỏe mạnh mỗi ngày.</p></div>
+  </div>
+</div>
+<div class="opacity_sidebar"></div>
+<script>
+	var colName = "{% if page_title == 'All' %}Tất cả sản phẩm{% else %}{{ page_title }}{% endif %}";
+	{% if collection.id > 0 %}var colId = {{collection.id}};{% else %}var colId = 0;{% endif %}
+	var selectedViewData = "{% if template contains '.list' %}data_list{% else %}data{% endif %}";
+</script>
+<script src="{{ 'lyx-col.js' | asset_url }}" defer></script>

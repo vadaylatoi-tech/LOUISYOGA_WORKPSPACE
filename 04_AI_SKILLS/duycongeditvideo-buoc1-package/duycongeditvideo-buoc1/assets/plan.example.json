@@ -1,0 +1,15 @@
+{
+  "videos": [
+    {
+      "id": "06",
+      "title": "Dòng thảm chuyên sâu khác gì thảm thường",
+      "topic": "Mastery: bề mặt PU nhám lì, thấm hút nhanh, bám chắc; tập thường thì dòng 5 ly là đủ.",
+      "keywords": ["Mastery", "PU", "độ bám", "thấm hút", "5 ly"],
+      "segments": [
+        {"role": "hook", "start": "00:19:58.900", "end": "00:20:06.700", "first": "nếu như mà mọi người", "last": "lên dòng Mastery"},
+        {"role": "body", "start": "00:19:26.500", "end": "00:19:58.900", "first": "thì cái dòng Mastery", "last": "mọi người nhá"},
+        {"role": "end",  "start": "00:20:08.520", "end": "00:20:24.080", "first": "nếu mà mọi người tập", "last": "mọi người nhé"}
+      ]
+    }
+  ]
+}

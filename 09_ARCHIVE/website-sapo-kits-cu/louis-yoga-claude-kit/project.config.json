@@ -1,0 +1,35 @@
+{
+  "project": "Louis Yoga Sapo Theme",
+  "prepared_on": "2026-10-15",
+  "timezone": "Asia/Ho_Chi_Minh",
+  "public_url": "https://louisyoga.vn",
+  "source_root": "D:/Tổng dư liệu - Duy Công/Dự án - Thay đổi giao diện website sapo",
+  "source_read_only": true,
+  "legacy_root": "C:/Users/ADMIN/.codex/.chatgpt-projects/g-p-6ac71ba95ec481918d2c26d004ace1a9",
+  "legacy_wrapper_relative": "sapo-connection/sapo.ps1",
+  "credential_provider": "existing Windows DPAPI; verify same Windows user",
+  "historical": {
+    "recorded_on": "2026-10-08",
+    "store_host": "hung-yen-sport.mysapo.net",
+    "live_theme_id": 983840,
+    "draft_theme_id": 1151386,
+    "authentication": "private_app_basic"
+  },
+  "verified_current": {
+    "checked_at": "2026-10-15T11:14:44Z",
+    "store_host": "hung-yen-sport.mysapo.net",
+    "live_theme_id": 1170134,
+    "mobile_theme_id": null,
+    "draft_theme_id": 1170160,
+    "preview_url": "https://louisyoga.vn/?previewThemeId=1170160",
+    "authentication": "Claude Code MCP Sapo connector (read PASS; method not visible); legacy sapo.ps1 + credentials.dpapi not found on this machine"
+  },
+  "working_paths": {
+    "theme": "theme",
+    "derived_assets": "generated",
+    "reports": "reports",
+    "backups": "backups"
+  },
+  "publish_authorized": false,
+  "note": "Configuration is context only, not an executable security boundary. Revalidate remote role and actual user authorization for every release."
+}

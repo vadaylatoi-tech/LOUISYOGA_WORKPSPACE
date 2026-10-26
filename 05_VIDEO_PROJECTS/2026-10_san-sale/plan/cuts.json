@@ -1,0 +1,556 @@
+{
+ "source": "../../../03_MEDIA_LIBRARY/raw-footage/San-sale-cung-louis-yoga_2026-10.mp4",
+ "videos": [
+  {
+   "id": "01",
+   "title": "Lau thảm bằng cồn có sao không",
+   "topic": "Cồn và chất tẩy có thể làm mủn bề mặt thảm cao su; nên dùng nước vệ sinh chuyên dụng, làm theo khuyến nghị nhà sản xuất.",
+   "name": "01 - Lau thảm bằng cồn có sao không",
+   "duration": 94.76,
+   "segments": [
+    {
+     "role": "hook",
+     "in": 774.8,
+     "out": 784.3,
+     "in_ts": "00:12:53.180",
+     "out_ts": "00:13:04.290",
+     "first_heard": "còn rất là nhiều ví dụ",
+     "last_heard": "lấy cồn để lau thảm ấy.",
+     "flags": [
+      "SUA-TAY"
+     ]
+    },
+    {
+     "role": "body",
+     "in": 935.04,
+     "out": 993.3,
+     "in_ts": "00:15:35.040",
+     "out_ts": "00:16:33.300",
+     "first_heard": "lỗi đầu tiên là em thấy",
+     "last_heard": "ấy Thì nó sẽ tốt hơn",
+     "flags": []
+    },
+    {
+     "role": "body",
+     "in": 993.24,
+     "out": 1008.82,
+     "in_ts": "00:16:33.240",
+     "out_ts": "00:16:48.820",
+     "first_heard": "Còn cồn thì nó không phải",
+     "last_heard": "vệ sinh nó sẽ dễ hơn",
+     "flags": [
+      "NOMATCH-cuoi"
+     ]
+    },
+    {
+     "role": "end",
+     "in": 1016.33,
+     "out": 1027.75,
+     "in_ts": "00:16:56.330",
+     "out_ts": "00:17:07.750",
+     "first_heard": "nên là thay vì là mình",
+     "last_heard": "đúng hơn nhé mọi người nhé",
+     "flags": []
+    }
+   ]
+  },
+  {
+   "id": "02",
+   "title": "Tập xong cuộn thảm luôn - lỗi khiến thảm nhanh mủn",
+   "topic": "Cuộn thảm khi còn ẩm mồ hôi làm hơi ẩm đọng lại, sinh mùi, giảm độ bền; để khô rồi mới cuộn, ở lớp thì cuộn lỏng tay.",
+   "name": "02 - Tập xong cuộn thảm luôn - lỗi khiến thảm nhanh mủn",
+   "duration": 107.27,
+   "segments": [
+    {
+     "role": "hook",
+     "in": 1085.16,
+     "out": 1095.64,
+     "in_ts": "00:18:05.160",
+     "out_ts": "00:18:15.290",
+     "first_heard": "Còn lỗi thứ 2 trong cái",
+     "last_heard": "khi tập Bởi vì sao?",
+     "flags": [
+      "TIGHT-dau",
+      "TIGHT-cuoi"
+     ]
+    },
+    {
+     "role": "body",
+     "in": 1097.41,
+     "out": 1143.65,
+     "in_ts": "00:18:17.410",
+     "out_ts": "00:19:03.630",
+     "first_heard": "Là khi mà mọi người cuộn",
+     "last_heard": "người lưu ý giúp em nhé",
+     "flags": [
+      "SUA-TAY"
+     ]
+    },
+    {
+     "role": "body",
+     "in": 1164.22,
+     "out": 1200.67,
+     "in_ts": "00:19:24.220",
+     "out_ts": "00:20:00.670",
+     "first_heard": "Đó, và không cuộn thảm hư",
+     "last_heard": "thảm thoáng ra giúp em nhá",
+     "flags": [
+      "NOMATCH-cuoi"
+     ]
+    },
+    {
+     "role": "end",
+     "in": 1299.3,
+     "out": 1313.4,
+     "in_ts": "00:21:41.570",
+     "out_ts": "00:21:53.400",
+     "first_heard": "khi mình tập thì mình nên",
+     "last_heard": "ra bên ngoài đâu mọi người",
+     "flags": [
+      "SUA-TAY"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "03",
+   "title": "Phơi thảm ngoài nắng cho nhanh khô - sai lầm",
+   "topic": "Thảm cao su không phơi nắng gắt (giảm độ bền bề mặt); phơi trong bóng mát.",
+   "name": "03 - Phơi thảm ngoài nắng cho nhanh khô - sai lầm",
+   "duration": 55.97,
+   "segments": [
+    {
+     "role": "hook",
+     "in": 1152.74,
+     "out": 1164.19,
+     "in_ts": "00:19:12.740",
+     "out_ts": "00:19:24.190",
+     "first_heard": "Đó, nhiều chị là mình cứ",
+     "last_heard": "dưới ánh nắng mặt trời nhá",
+     "flags": []
+    },
+    {
+     "role": "body",
+     "in": 1361.08,
+     "out": 1384.1,
+     "in_ts": "00:22:41.080",
+     "out_ts": "00:23:04.100",
+     "first_heard": "trên Đấy là mình phơi cái",
+     "last_heard": "từ ảnh nắng mặt trời Với",
+     "flags": []
+    },
+    {
+     "role": "body",
+     "in": 1422.62,
+     "out": 1434.81,
+     "in_ts": "00:23:43.400",
+     "out_ts": "00:23:54.810",
+     "first_heard": "Đôi khi là cái việc là",
+     "last_heard": "lưu ý giúp em nhé Và",
+     "flags": [
+      "SUA-TAY"
+     ]
+    },
+    {
+     "role": "end",
+     "in": 1143.53,
+     "out": 1152.84,
+     "in_ts": "00:19:03.530",
+     "out_ts": "00:19:12.840",
+     "first_heard": "Khi mà mọi người tập xong",
+     "last_heard": "tiếp dưới ánh nắng mặt trời",
+     "flags": []
+    }
+   ]
+  },
+  {
+   "id": "04",
+   "title": "Giặt thảm và chà xát mạnh - lỗi làm thảm mất độ bám",
+   "topic": "Chà xát mạnh khi làm sạch vết bẩn làm bong, mủn, mất độ bám; thảm cao su nhạy cảm hơn TPE; ưu tiên cách làm sạch nhẹ nhàng.",
+   "name": "04 - Giặt thảm và chà xát mạnh - lỗi làm thảm mất độ bám",
+   "duration": 96.71,
+   "segments": [
+    {
+     "role": "hook",
+     "in": 1434.72,
+     "out": 1465.85,
+     "in_ts": "00:23:54.520",
+     "out_ts": "00:24:25.850",
+     "first_heard": "cái lỗi thứ 4 mà em",
+     "last_heard": "hết được cái vết bẩn ấy",
+     "flags": [
+      "SUA-TAY"
+     ]
+    },
+    {
+     "role": "body",
+     "in": 1465.88,
+     "out": 1476.08,
+     "in_ts": "00:24:25.880",
+     "out_ts": "00:24:36.080",
+     "first_heard": "Thì thực chất là đối với",
+     "last_heard": "sát xong ấy mọi người Đây",
+     "flags": []
+    },
+    {
+     "role": "body",
+     "in": 1495.5,
+     "out": 1509.93,
+     "in_ts": "00:24:55.030",
+     "out_ts": "00:25:09.930",
+     "first_heard": "sát mạnh và thường xuyên luôn",
+     "last_heard": "ở trên bề mặt thảm nhé",
+     "flags": [
+      "SUA-TAY"
+     ]
+    },
+    {
+     "role": "body",
+     "in": 1559.82,
+     "out": 1589.16,
+     "in_ts": "00:25:59.820",
+     "out_ts": "00:26:29.160",
+     "first_heard": "Đó chứ còn không phải là",
+     "last_heard": "ý nó cũng khác nhau luôn",
+     "flags": [
+      "NOMATCH-dau"
+     ]
+    },
+    {
+     "role": "end",
+     "in": 1509.83,
+     "out": 1521.44,
+     "in_ts": "00:25:09.830",
+     "out_ts": "00:25:21.440",
+     "first_heard": "Không sử dụng các cái chất",
+     "last_heard": "làm sạch cái bề mặt thảm",
+     "flags": []
+    }
+   ]
+  },
+  {
+   "id": "05",
+   "title": "Tập xong có cần lau thảm mỗi ngày",
+   "topic": "Nên lau bằng khăn mềm ẩm sau mỗi buổi, để thoáng cho khô rồi mới cất; mồ hôi để lâu sinh mùi, giảm độ bền.",
+   "name": "05 - Tập xong có cần lau thảm mỗi ngày",
+   "duration": 85.04,
+   "segments": [
+    {
+     "role": "hook",
+     "in": 1242.09,
+     "out": 1272.61,
+     "in_ts": "00:20:42.090",
+     "out_ts": "00:20:47.470",
+     "first_heard": "tại vì cũng rất là nhiều",
+     "last_heard": "cái vệ sinh nó tốt hơn",
+     "flags": []
+    },
+    {
+     "role": "body",
+     "in": 1277.38,
+     "out": 1286.77,
+     "in_ts": "00:21:17.380",
+     "out_ts": "00:21:26.770",
+     "first_heard": "mọi người thấy là Cái mồ",
+     "last_heard": "lại mùi ở trên thảm Sau",
+     "flags": []
+    },
+    {
+     "role": "body",
+     "in": 1219.69,
+     "out": 1241.7,
+     "in_ts": "00:20:19.690",
+     "out_ts": "00:20:41.700",
+     "first_heard": "Đối với cái tần suất tập",
+     "last_heard": "sẽ sạch hơn đấy mọi người",
+     "flags": [
+      "NOMATCH-dau"
+     ]
+    },
+    {
+     "role": "end",
+     "in": 1319.4,
+     "out": 1342.52,
+     "in_ts": "00:21:59.360",
+     "out_ts": "00:22:22.520",
+     "first_heard": "Nhất là trong cái điều kiện",
+     "last_heard": "người lưu ý giúp em nhá",
+     "flags": [
+      "SUA-TAY"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "06",
+   "title": "Vệ sinh thảm thường xuyên có làm giảm độ bám",
+   "topic": "Vệ sinh đúng cách không làm giảm độ bám; lau bằng khăn xịt nước vệ sinh, để khô trong bóng mát rồi mới cuộn.",
+   "name": "06 - Vệ sinh thảm thường xuyên có làm giảm độ bám",
+   "duration": 77.67,
+   "segments": [
+    {
+     "role": "hook",
+     "in": 2316.12,
+     "out": 2348.52,
+     "in_ts": "00:38:36.120",
+     "out_ts": "00:38:53.880",
+     "first_heard": "sinh thảm thường xuyên có làm",
+     "last_heard": "trong bóng mát giúp em nha",
+     "flags": [
+      "NOMATCH-dau"
+     ]
+    },
+    {
+     "role": "body",
+     "in": 1706.27,
+     "out": 1717.76,
+     "in_ts": "00:28:26.270",
+     "out_ts": "00:28:37.760",
+     "first_heard": "Đó, nếu như mà mọi người",
+     "last_heard": "thảm chuyên dụng như thế này",
+     "flags": [
+      "NOMATCH-dau"
+     ]
+    },
+    {
+     "role": "body",
+     "in": 1730.8,
+     "out": 1753.8,
+     "in_ts": "00:28:52.410",
+     "out_ts": "00:29:12.270",
+     "first_heard": "tích của nó sẽ là 100ml",
+     "last_heard": "cho nó khô chút em nhé",
+     "flags": [
+      "SUA-TAY"
+     ]
+    },
+    {
+     "role": "end",
+     "in": 2351.42,
+     "out": 2362.2,
+     "in_ts": "00:39:11.420",
+     "out_ts": "00:39:22.200",
+     "first_heard": "nếu mà vệ sinh thảm đúng",
+     "last_heard": "đến chất lượng của thảm nha",
+     "flags": [
+      "TIGHT-dau"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "07",
+   "title": "Thảm mới dùng đã mủn - do chất lượng hay do cách dùng",
+   "topic": "Độ bền thảm không chỉ do chất lượng mà còn do thời tiết, cách vệ sinh, bảo quản; mỗi loại thảm có cách vệ sinh riêng.",
+   "name": "07 - Thảm mới dùng đã mủn - do chất lượng hay do cách dùng",
+   "duration": 108.17,
+   "segments": [
+    {
+     "role": "hook",
+     "in": 646.48,
+     "out": 692.18,
+     "in_ts": "00:10:46.480",
+     "out_ts": "00:11:32.180",
+     "first_heard": "Khi mà mọi người mà dùng",
+     "last_heard": "đến cái độ bền của thảm",
+     "flags": [
+      "TIGHT-cuoi"
+     ]
+    },
+    {
+     "role": "body",
+     "in": 726.4,
+     "out": 761.27,
+     "in_ts": "00:12:06.400",
+     "out_ts": "00:12:41.270",
+     "first_heard": "đây là nhiều khi là có",
+     "last_heard": "dụng nó được lâu dài hơn",
+     "flags": [
+      "NOMATCH-dau"
+     ]
+    },
+    {
+     "role": "end",
+     "in": 1677.59,
+     "out": 1705.19,
+     "in_ts": "00:27:57.590",
+     "out_ts": "00:28:25.190",
+     "first_heard": "là như là đầu lai em",
+     "last_heard": "nó cũng sẽ thoải mái hơn.",
+     "flags": []
+    }
+   ]
+  },
+  {
+   "id": "08",
+   "title": "Khi nào nên thay thảm mới",
+   "topic": "Thảm mủn, mất độ bám không hẳn do vệ sinh mà có thể đã đến lúc thay; thay để đảm bảo sức khỏe và hiệu quả tập.",
+   "name": "08 - Khi nào nên thay thảm mới",
+   "duration": 67.59,
+   "segments": [
+    {
+     "role": "hook",
+     "in": 1609.88,
+     "out": 1677.47,
+     "in_ts": "00:26:49.710",
+     "out_ts": "00:27:57.470",
+     "first_heard": "ngoài ra là khi mà mọi",
+     "last_heard": "nên thay thảm mới rồi như",
+     "flags": [
+      "SUA-TAY"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "09",
+   "title": "Ưu tiên độ êm hay độ bám - chọn thảm nào",
+   "topic": "Ưu tiên êm, giá thấp: TPE 9 ly; vừa êm vừa bám: cao su 5 ly; đầu tư cao: Lilium 6,5 ly.",
+   "name": "09 - Ưu tiên độ êm hay độ bám - chọn thảm nào",
+   "duration": 70.92,
+   "segments": [
+    {
+     "role": "hook",
+     "in": 192.53,
+     "out": 263.45,
+     "in_ts": "00:03:12.530",
+     "out_ts": "00:04:23.450",
+     "first_heard": "Nếu mà bị tê thất ý",
+     "last_heard": "ly cũng nhờ chị ạ. Đây,",
+     "flags": []
+    }
+   ]
+  },
+  {
+   "id": "10",
+   "title": "Thảm tập thường xuyên và Mastery khác nhau ở bề mặt",
+   "topic": "Mastery bề mặt PU sinh thái nhám lì, bám và chống trượt vượt trội; dòng thường xuyên bề mặt nhẵn hơn, tập thông thường là đủ.",
+   "name": "10 - Thảm tập thường xuyên và Mastery khác nhau ở bề mặt",
+   "duration": 72.89,
+   "segments": [
+    {
+     "role": "hook",
+     "in": 300.66,
+     "out": 373.55,
+     "in_ts": "00:05:00.860",
+     "out_ts": "00:06:16.980",
+     "first_heard": "hơn dòng thì cái bề mặt",
+     "last_heard": "thoải mái hơn cho mọi người",
+     "flags": [
+      "SUA-TAY"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "11",
+   "title": "Asana hay Asana 25 - chọn mẫu nào",
+   "topic": "Asana 4,5 ly in 1 màu cho tập cơ bản; Asana 25 dày 5 ly in đa màu, êm và bám hơn cho tập nâng cao; cả hai đủ đường định tuyến.",
+   "name": "11 - Asana hay Asana 25 - chọn mẫu nào",
+   "duration": 119.77,
+   "segments": [
+    {
+     "role": "hook",
+     "in": 2525.6,
+     "out": 2534.84,
+     "in_ts": "00:42:05.600",
+     "out_ts": "00:42:14.940",
+     "first_heard": "mọi người lưu ý nhất Đây",
+     "last_heard": "1 màu nhé mọi người nhé",
+     "flags": [
+      "SUA-TAY"
+     ]
+    },
+    {
+     "role": "body",
+     "in": 2423.55,
+     "out": 2449.74,
+     "in_ts": "00:40:23.550",
+     "out_ts": "00:40:49.740",
+     "first_heard": "đây là Asana thường Asana này",
+     "last_heard": "là hoàn toàn yên tâm nhé.",
+     "flags": [
+      "TIGHT-dau"
+     ]
+    },
+    {
+     "role": "body",
+     "in": 2458.28,
+     "out": 2515.49,
+     "in_ts": "00:40:58.280",
+     "out_ts": "00:41:55.490",
+     "first_heard": "Còn bên này thì nó sẽ",
+     "last_heard": "nó sẽ thoải mái hơn nhé",
+     "flags": [
+      "NOMATCH-cuoi"
+     ]
+    },
+    {
+     "role": "body",
+     "in": 2535.4,
+     "out": 2544.58,
+     "in_ts": "00:42:15.540",
+     "out_ts": "00:42:24.580",
+     "first_heard": "Và mọi người hoàn toàn yên",
+     "last_heard": "Mình hoàn toàn yên tâm nha",
+     "flags": [
+      "SUA-TAY"
+     ]
+    },
+    {
+     "role": "end",
+     "in": 2546.29,
+     "out": 2564.24,
+     "in_ts": "00:42:26.290",
+     "out_ts": "00:42:44.240",
+     "first_heard": "Nếu mà mọi người mà Cái",
+     "last_heard": "định tuyến luôn mọi người đây",
+     "flags": []
+    }
+   ]
+  },
+  {
+   "id": "12",
+   "title": "Cuộn thảm ngược chiều - vì sao thảm bị hằn và gãy",
+   "topic": "Cuộn ngược để lại vết hằn, gãy, dính bề mặt; cuộn mặt chính ra ngoài, mặt đen vào trong, đúng chiều như khi nhận thảm.",
+   "name": "12 - Cuộn thảm ngược chiều - vì sao thảm bị hằn và gãy",
+   "duration": 70.07,
+   "segments": [
+    {
+     "role": "hook",
+     "in": 4210.81,
+     "out": 4234.61,
+     "in_ts": "01:10:10.810",
+     "out_ts": "01:10:34.610",
+     "first_heard": "ví dụ như là mọi người",
+     "last_heard": "như bề mặt thảm đấy Mọi",
+     "flags": []
+    },
+    {
+     "role": "body",
+     "in": 4173.4,
+     "out": 4209.85,
+     "in_ts": "01:09:36.470",
+     "out_ts": "01:10:10.890",
+     "first_heard": "mọi người cuộn thảm 4 chiều",
+     "last_heard": "bị gãy cái bề mặt thảm",
+     "flags": [
+      "SUA-TAY"
+     ]
+    },
+    {
+     "role": "end",
+     "in": 4234.6,
+     "out": 4244.42,
+     "in_ts": "01:10:34.600",
+     "out_ts": "01:10:44.420",
+     "first_heard": "Mọi người lưu ý giúp em",
+     "last_heard": "sẽ úp vào bên trong nhé",
+     "flags": [
+      "NOMATCH-cuoi"
+     ]
+    }
+   ]
+  }
+ ]
+}

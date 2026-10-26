@@ -1,0 +1,6 @@
+- [Hook & ending rule for shorts](short-video-hook-and-ending.md) — open with hook, end with clear conclusion; no color grade unless asked
+- [Yoga mat shorts project](yoga-mat-shorts-project.md) — 17 shorts from livestream; paths, status, machine notes
+- [Louis Yoga reel edit rules](louis-yoga-reel-edit-style.md) — full-bleed, pink+gold, real photos, varied SFX, voice-first mix
+- [Louis Yoga reel pipeline](louis-yoga-reel-pipeline.md) — Remotion app, assets, stem-mix render steps, gotchas
+- [Hồ sơ dựng workflow](hoso-workflow.md) — words.json+brief beside each short; transcribe.py patched; GPU whisper setup
+- [Skill Duycongeditvideo_Buoc1](skill-duycongeditvideo-buoc1.md) — packaged step-1 skill location & pipeline

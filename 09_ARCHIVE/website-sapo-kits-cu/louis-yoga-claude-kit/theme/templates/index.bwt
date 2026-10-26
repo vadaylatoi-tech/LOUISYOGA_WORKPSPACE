@@ -1,0 +1,1 @@
+{% comment %} 15/10/2026: trang chủ theo bản thiết kế mới (snippets/lyx-home.bwt). Bản trước: {% include 'ly-home-main' %}. 17/10/2026: bỏ link lyx-home.css ở đây (layout đã nạp trong head; link thứ 2 giữa trang đè lyx-editorial.css). {% endcomment %}{% include 'lyx-home' %}

@@ -1,0 +1,3 @@
+- [Louis Yoga Elementor build project](louis-yoga-elementor-build-project.md) — status, requirements, and platform findings for the ongoing 5-page Elementor rebuild on thamtapyogacaocap.com
+- [Elementor v4 atomic JSON schema](elementor-v4-atomic-json-schema.md) — working PHP recipes for global variables/classes/page trees, plus the image & link prop shape gotchas
+- [Astra header/footer abilities](astra-header-footer-abilities.md) — how to configure Astra's native header/footer builder, palette, typography, and buttons via its own PHP ability classes

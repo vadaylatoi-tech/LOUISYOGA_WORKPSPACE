@@ -1,0 +1,24 @@
+{%- comment -%} 22/10/2026 tối ưu: mã Live chat (cài đặt livechat_web — khung chat Zalo) giữ nguyên, chỉ đổi cách nạp:
+  - Điện thoại (≤767px): data-autopopup="0" → không tự bung khung chat 675px che màn hình (gây nhảy bố cục CLS ~1,1); nút Zalo vẫn hiện, bấm vẫn mở chat. PC giữ tự bật như cài đặt.
+  - Điện thoại: khung Zalo ẩn (visibility, vẫn giữ chỗ) tới khi SDK đã bung rồi thu về dạng nút ≤90px, hoặc đứng yên ở dạng nút 1,5 giây (tối đa 12 giây) — SDK luôn dựng khung 675px rồi thu lại.
+  - Zalo SDK nạp sau sự kiện load (trước đây là <script> chặn hiển thị).
+  Bản trước: snippets/zz-backup-livechat-20261022-opt.bwt {%- endcomment -%}
+{% assign livechat_enable = settings.livechat_enable %}
+{% if livechat_enable != 'none' %}
+{% if livechat_enable == 'link' %}
+<a target="_blank" class="livechat-mes" href="{{ settings.livechat_mes }}">
+	<img src="{{ 'messenger.svg' | asset_url }}" alt="Messenger">
+</a>
+{% elsif livechat_enable == 'live' %}
+{%- assign lyz_sdk = '<script src="https://sp.zalo.me/plugins/sdk.js"></script>' -%}
+{%- if settings.livechat_web contains 'sp.zalo.me/plugins/sdk.js' -%}
+{{ settings.livechat_web | remove: lyz_sdk }}
+<script>(function(){if(window.matchMedia&&matchMedia('(max-width:767px)').matches){var w=document.querySelectorAll('.zalo-chat-widget');for(var i=0;i<w.length;i++)w[i].setAttribute('data-autopopup','0');
+/* SDK dựng khung 675px rồi thu về nút 60px → ẩn (visibility) tới khi khung đã ở dạng nút, tối đa 12 giây */
+if(w.length){var st=document.createElement('style');st.textContent='html:not(.lyz-ok) .zalo-chat-widget{visibility:hidden!important}';document.head.appendChild(st);var n=0,ok=0,big=0,t=setInterval(function(){n++;var f=document.querySelector('.zalo-chat-widget iframe'),h=f&&f.getBoundingClientRect().height;if(h>90)big=1;ok=(h&&h<=90)?ok+1:0;if((big&&ok>=2)||ok>=5||n>=40){clearInterval(t);document.documentElement.classList.add('lyz-ok')}},300)}}
+function load(){if(window.__lyzSdk)return;window.__lyzSdk=1;var s=document.createElement('script');s.src='https://sp.zalo.me/plugins/sdk.js';s.async=true;document.body.appendChild(s)}if(document.readyState==='complete')load();else window.addEventListener('load',load)})();</script>
+{%- else -%}
+{{ settings.livechat_web }}
+{%- endif -%}
+{% endif %}
+{% endif %}

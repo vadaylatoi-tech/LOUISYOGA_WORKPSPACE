@@ -1,0 +1,64 @@
+{% comment %}
+  15/10/2026 — Trang Giới thiệu theo bản thiết kế mobile trang 5: hero ảnh + 2 nút, "Câu chuyện của chúng tôi — Sự chân thành",
+  "Giới thiệu — Về Louis Yoga" + video. CSS: assets/lyx-about.css. Gọi từ templates/page.about.bwt, phía trên snippets/ly-about.bwt
+  (các khối giá trị cốt lõi, văn hoá, giải thưởng, kêu gọi vẫn lấy từ ly-about; hero/số liệu/giới thiệu/video cũ được ẩn bằng CSS).
+  Nội dung lấy từ cài đặt theme như bản cũ: settings.content_about (câu đầu = đoạn dẫn, phần còn lại = Về Louis Yoga), settings.id_video.
+  Ảnh đầu trang: lyx-about.jpg khi cờ lyx_has_about = true (snippets/lyx-flags.bwt; chữ "Tập chuẩn đều nhịp" đã có trong ảnh),
+  chưa có thì dùng nền gradient tông nâu của thiết kế + chữ HTML (không dùng ảnh khác vì các banner sẵn có đều đã in chữ).
+{% endcomment %}
+{%- include 'lyx-flags' -%}
+{%- assign lyxa_parts = settings.content_about | strip | split: '. ' -%}
+{%- assign lyxa_lead = lyxa_parts | first | append: '.' -%}
+{%- assign lyxa_rest = settings.content_about | strip | remove_first: lyxa_parts.first | remove_first: '.' | strip -%}
+{%- assign lyxa_vid = settings.id_video | strip -%}
+<div class="lyxa">
+  <section class="lyxa-hero{% if lyx_has_about %} is-baked{% endif %}" aria-labelledby="lyxa-h1">
+    <div class="lyxa-hero-media{% unless lyx_has_about %} no-img{% endunless %}">
+      {%- if lyx_has_about -%}
+      <img src="{{ 'lyx-about.jpg' | asset_url }}" width="600" height="868" alt="" fetchpriority="high" decoding="async">
+      {%- endif -%}
+      <div class="lyxa-hero-over">
+        <h1 class="lyxa-brand" id="lyxa-h1"><span class="lyxa-brand-logo">LOUISYOGA</span> <em>Tập</em> <b>CHUẨN</b> <b>ĐỀU</b> <em>Nhịp</em></h1>
+        <div class="lyxa-hero-btns">
+          <a class="lyxa-btn lyxa-btn-out" href="/collections/all">Khám phá sản phẩm</a>
+          {%- if lyxa_vid != blank -%}<a class="lyxa-btn lyxa-btn-dark" href="#lyxa-video">Video về chúng tôi</a>{%- endif -%}
+        </div>
+      </div>
+    </div>
+    <div class="lyxa-story">
+      <p class="lyxa-eyebrow">Câu chuyện của chúng tôi</p>
+      <h2 class="lyxa-h2">Sự chân thành</h2>
+      {%- if lyxa_lead != '.' -%}<p class="lyxa-lead">{{ lyxa_lead }}</p>{%- endif -%}
+    </div>
+  </section>
+
+  {%- if lyxa_rest != blank or lyxa_vid != blank -%}
+  <section class="lyxa-about" aria-labelledby="lyxa-about-h">
+    <p class="lyxa-eyebrow">Giới thiệu</p>
+    <h2 class="lyxa-h2" id="lyxa-about-h">Về Louis Yoga</h2>
+    {%- if lyxa_rest != blank -%}<p class="lyxa-text">{{ lyxa_rest }}</p>{%- endif -%}
+    {%- if lyxa_vid != blank -%}
+    <div class="lyxa-video" id="lyxa-video">
+      <button type="button" class="lyxa-video-poster" data-lyxa-video="{{ lyxa_vid | escape }}" aria-label="Xem video về Louis Yoga">
+        <img src="{{ 'video.png' | asset_url }}" width="730" height="456" loading="lazy" alt="">
+        <span class="lyxa-play" aria-hidden="true"></span>
+      </button>
+    </div>
+    {%- endif -%}
+  </section>
+  {%- endif -%}
+</div>
+<script>
+(function(){
+  var b = document.querySelector('[data-lyxa-video]'); if (!b) return;
+  b.addEventListener('click', function(){
+    var id = b.getAttribute('data-lyxa-video');
+    if (!/^[A-Za-z0-9_-]{11}$/.test(id)) return;
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+    f.title = 'Video về Louis Yoga';
+    f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen = true;
+    b.replaceWith(f);
+  });
+})();
+</script>

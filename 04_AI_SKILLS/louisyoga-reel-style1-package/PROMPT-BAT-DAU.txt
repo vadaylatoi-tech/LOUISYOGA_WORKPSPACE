@@ -1,0 +1,48 @@
+================================================================================
+ PROMPT DÙNG SKILL "louisyoga-reel-style1" (Edit video phong cách 1 – Louis Yoga)
+================================================================================
+
+Cài skill trước (xem HUONG-DAN-CAI-DAT.md), mở lại Claude Code, rồi copy 1 trong các prompt dưới.
+Thay phần trong <...> bằng thông tin của anh.
+
+
+--- PROMPT 1: EDIT 1 VIDEO MỚI (dùng thường xuyên) ---------------------------
+
+/louisyoga-reel-style1
+Edit cho anh video này theo phong cách 1 Louis Yoga: "<đường dẫn video thô>.mp4"
+Lưu kết quả vào thư mục mới: "<thư mục muốn lưu>"
+Ảnh sản phẩm Louis Yoga có thể lấy ở: "<thư mục ảnh sản phẩm, nếu có>"
+Làm đúng quy trình của skill: kiểm tra máy, nghiên cứu nội dung + điểm yếu, đưa anh bảng cắt
+và ý tưởng dựng để duyệt trước, rồi dựng, mix âm (giọng rõ nhất, SFX vừa đủ, nhạc nhẹ),
+QC và gửi anh video + báo cáo.
+
+
+--- PROMPT 2: CHỌN VÀ EDIT TỪ 1 THƯ MỤC NHIỀU VIDEO -------------------------
+
+/louisyoga-reel-style1
+Trong thư mục "<thư mục chứa nhiều video thô>" em hãy chọn video có tiềm năng nhất
+(hook mạnh, nội dung rõ), giải thích lý do chọn, rồi edit theo phong cách 1 Louis Yoga.
+Lưu vào thư mục mới "<thư mục lưu>". Duyệt bảng cắt với anh trước khi dựng.
+
+
+--- PROMPT 3: LÀM NHANH, KHÔNG CẦN DUYỆT GIỮA CHỪNG -------------------------
+
+/louisyoga-reel-style1
+Edit video "<đường dẫn>.mp4" theo phong cách 1 Louis Yoga, lưu vào "<thư mục lưu>".
+Anh cho phép tự quyết bảng cắt và ý tưởng dựng, không cần hỏi giữa chừng; ghi rõ mọi
+quyết định vào báo cáo để anh xem sau.
+
+
+--- PROMPT 4: SỬA BẢN ĐÃ DỰNG -----------------------------------------------
+
+/louisyoga-reel-style1
+Video "<file đã xuất>.mp4" (project ở "<thư mục project>") cần sửa:
+- <ví dụ: SFX đoạn 20–30s hơi nhiều>
+- <ví dụ: đổi ảnh minh hoạ đoạn so sánh sang ảnh sản phẩm X>
+Sửa theo đúng luật của skill, xuất bản mới (_v2), không ghi đè bản cũ.
+
+
+--- NẾU CLAUDE KHÔNG NHẬN LỆNH /louisyoga-reel-style1 -------------------------
+
+Dán câu này thay cho dòng đầu:
+Đọc và làm theo skill ở "<đường dẫn tới>\louisyoga-reel-style1\SKILL.md" (đọc cả thư mục references).

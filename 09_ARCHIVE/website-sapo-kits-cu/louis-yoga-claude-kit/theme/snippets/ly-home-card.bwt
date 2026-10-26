@@ -1,0 +1,49 @@
+{% comment %}15/10/2026: thẻ sản phẩm theo bản thiết kế mới (lớp .lyx-card, CSS trong assets/lyx-home.css). Giữ móc JS ly-design.js / ly-site.js: .ly-card, data-add/data-buy/data-pick, .ly-variant-list, data-wish.
+Điểm sao = gộp đánh giá web (product.metafields.bpr) + Shopee (snippets/ly-shopee-reviews-data.bwt), có trọng số theo số lượt.
+Logic ẩn biến thể 0đ / gộp phân loại trùng giữ nguyên bản 10/2026 (bản gốc: snippets/zz-backup-ly-home-card.bwt){% endcomment %}
+{% assign ly_variant = product.selected_or_first_available_variant | default: product.variants[0] %}
+{% assign ly_has_price = false %}
+{% assign ly_priced_avail = false %}
+{% for v in product.variants %}{% if v.price > 0 %}{% assign ly_has_price = true %}{% if v.available %}{% assign ly_priced_avail = true %}{% endif %}{% endif %}{% endfor %}
+{% assign ly_soldout = false %}
+{% if product.available == false %}{% assign ly_soldout = true %}{% endif %}
+{% if ly_has_price and ly_priced_avail == false %}{% assign ly_soldout = true %}{% endif %}
+{% if ly_has_price and ly_variant.price == 0 %}{% assign ly_pick_done = false %}{% for v in product.variants %}{% unless ly_pick_done %}{% if v.price > 0 %}{% if v.available or ly_priced_avail == false %}{% assign ly_variant = v %}{% assign ly_pick_done = true %}{% endif %}{% endif %}{% endunless %}{% endfor %}{% endif %}
+{% assign ly_seen = '|' %}
+{% assign ly_opt_n = 0 %}
+{% capture ly_variant_buttons %}{% for v in product.variants %}{% assign ly_skip = false %}{% if ly_has_price and v.price == 0 %}{% assign ly_skip = true %}{% endif %}{% unless ly_skip %}{% assign ly_key = v.title | strip | replace: '  ', ' ' | replace: '  ', ' ' | handle %}{% capture ly_tok %}|{{ ly_key }}|{% endcapture %}{% unless ly_seen contains ly_tok %}{% assign ly_seen = ly_seen | append: ly_key | append: '|' %}{% assign ly_rep = v %}{% unless v.available %}{% assign ly_found = false %}{% for v2 in product.variants %}{% unless ly_found %}{% if v2.available %}{% unless ly_has_price and v2.price == 0 %}{% assign ly_key2 = v2.title | strip | replace: '  ', ' ' | replace: '  ', ' ' | handle %}{% if ly_key2 == ly_key %}{% assign ly_rep = v2 %}{% assign ly_found = true %}{% endif %}{% endunless %}{% endif %}{% endunless %}{% endfor %}{% endunless %}{% assign ly_opt_n = ly_opt_n | plus: 1 %}<button type="button" data-vid="{{ ly_rep.id }}" data-price="{{ ly_rep.price | money | remove: '₫' | strip }} đ"{% unless ly_rep.available %} disabled{% endunless %}>{{ ly_rep.title | strip | downcase | escape }}{% unless ly_rep.available %} (hết hàng){% endunless %}</button>{% endunless %}{% endunless %}{% endfor %}{% endcapture %}
+{%- comment -%} Điểm gộp web + Shopee — 16/10: tính bằng số nguyên (phần trăm điểm) vì Liquid Sapo đọc "4,8" / "4.8" thành 48 → điểm sai (24.1…).
+  web: metafields.bpr.rating (vd "4,8") × votes; Shopee: lysr_a (vd "4,97") × lysr_t. Hiện 1 chữ số thập phân + tổng lượt, giống trang SP (assets/lyx-pdp.js). {%- endcomment -%}
+{%- assign lyc_wv = 0 -%}{%- assign lyc_wr = 0 -%}
+{%- assign lyc_rs = product.metafields.bpr.rating | append: '' | strip -%}{%- assign lyc_vs = product.metafields.bpr.votes | append: '' | strip -%}
+{%- if lyc_rs != blank and lyc_vs != blank and lyc_vs != '0' -%}
+{%- assign lyc_wv = lyc_vs | plus: 0 -%}
+{%- assign lyc_p = lyc_rs | replace: ',', '.' | split: '.' -%}
+{%- assign lyc_wr = lyc_p[0] | plus: 0 | times: 100 -%}{%- assign lyc_d = lyc_p[1] | append: '00' | truncate: 2, '' | plus: 0 -%}{%- assign lyc_wr = lyc_wr | plus: lyc_d -%}
+{%- if lyc_wr > 500 -%}{%- assign lyc_wr = lyc_wr | divided_by: 10 -%}{%- endif -%}{%- if lyc_wr > 500 or lyc_wr < 100 -%}{%- assign lyc_wv = 0 -%}{%- assign lyc_wr = 0 -%}{%- endif -%}
+{%- endif -%}
+{%- include 'ly-shopee-reviews-data' -%}
+{%- assign lyc_sv = lysr_t | plus: 0 -%}
+{%- assign lyc_sr = 0 -%}{%- if lyc_sv > 0 -%}{%- assign lyc_p = lysr_a | append: '' | strip | replace: ',', '.' | split: '.' -%}{%- assign lyc_sr = lyc_p[0] | plus: 0 | times: 100 -%}{%- assign lyc_d = lyc_p[1] | append: '00' | truncate: 2, '' | plus: 0 -%}{%- assign lyc_sr = lyc_sr | plus: lyc_d -%}{%- if lyc_sr > 500 or lyc_sr < 100 -%}{%- assign lyc_sv = 0 -%}{%- endif -%}{%- endif -%}
+{%- assign lyc_n = lyc_wv | plus: lyc_sv -%}
+{%- assign lyc_a10 = 0 -%}
+{%- if lyc_n > 0 -%}{%- assign lyc_sum = lyc_wr | times: lyc_wv -%}{%- assign lyc_sum2 = lyc_sr | times: lyc_sv -%}{%- assign lyc_a10 = lyc_sum | plus: lyc_sum2 | divided_by: lyc_n | divided_by: 10 | round -%}{%- endif -%}
+{%- assign lyc_ad = lyc_a10 | modulo: 10 -%}{%- assign lyc_ai = lyc_a10 | minus: lyc_ad | divided_by: 10 -%}
+{%- capture lyc_avg -%}{{ lyc_ai }}.{{ lyc_ad }}{%- endcapture -%}
+{%- assign lyc_pct = 0 -%}
+{%- if ly_variant.compare_at_price > ly_variant.price and ly_variant.price > 0 -%}{%- assign lyc_pct = ly_variant.compare_at_price | minus: ly_variant.price | times: 100 | divided_by: ly_variant.compare_at_price | round -%}{%- endif -%}
+<article class="ly-card lyx-card" data-product="{{ product.id }}" data-name="{{ product.name | escape }}" data-url="{{ product.url }}" data-rating="{{ lyc_avg }}">
+  <a class="lyx-card-img" href="{{ product.url }}" aria-label="{{ product.name | escape }}">{% if product.featured_image.src != blank %}<img src="{{ product.featured_image.src | img_url: 'large' }}" width="480" height="480" loading="lazy" decoding="async" alt="{{ product.name | escape }}">{% endif %}</a>
+  {%- if lyc_pct > 0 and ly_soldout == false -%}<span class="lyx-card-sale">Sale<br>{{ lyc_pct }}%</span>{%- endif -%}
+  {%- if ly_soldout -%}<span class="lyx-card-sale is-out">Hết<br>hàng</span>{%- endif -%}
+  <button type="button" class="ly-wish lyx-card-wish" aria-label="Yêu thích {{ product.name | escape }}" aria-pressed="false" data-wish="{{ product.id }}" data-name="{{ product.name | escape }}" data-url="{{ product.url }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.7 7.9 3.8 4.5 7.2 4.5c2 0 3.6 1.1 4.8 2.8 1.2-1.7 2.8-2.8 4.8-2.8 3.4 0 5.5 3.4 4.4 6.6-1.7 4.8-9.2 9.4-9.2 9.4Z"/></svg></button>
+  <div class="lyx-card-info">
+    <h3 class="lyx-card-name"><a href="{{ product.url }}">{{ product.name | escape }}</a></h3>
+    <div class="lyx-card-row">
+      {%- if lyc_n > 0 -%}<p class="lyx-card-rate" aria-label="{{ lyc_avg }} trên 5 sao, {{ lyc_n }} đánh giá"><span class="lyx-stars" style="--v:{{ lyc_a10 | times: 2 }}%" aria-hidden="true">★★★★★</span><b aria-hidden="true">{{ lyc_avg }}</b><span aria-hidden="true">({{ lyc_n }})</span></p>{%- endif -%}
+      <div class="lyx-card-price">{% if ly_variant.price == 0 %}<strong>Liên hệ</strong>{% else %}{% if ly_variant.compare_at_price > ly_variant.price %}<del>{{ ly_variant.compare_at_price | money | remove: '₫' | strip }} <u>đ</u></del>{% endif %}<strong>{{ ly_variant.price | money | remove: '₫' | strip }} <u>đ</u></strong>{% endif %}</div>
+    </div>
+    <div class="lyx-card-actions">{% if ly_soldout %}<button type="button" class="ly-btn-cart lyx-card-cart" disabled aria-label="Hết hàng">Hết hàng</button><a class="ly-btn-buy lyx-card-buy is-ghost" href="{{ product.url }}">Xem chi tiết</a>{% elsif ly_variant.price == 0 %}<a class="ly-btn-cart lyx-card-cart" href="{{ product.url }}" aria-label="Xem chi tiết">Xem chi tiết</a><a class="ly-btn-buy lyx-card-buy" href="tel:{{ settings.store_phone | split: '-' | first | strip | remove: '.' | remove: ' ' }}">Liên hệ</a>{% elsif ly_opt_n > 1 %}<button type="button" class="ly-btn-cart lyx-card-cart" data-pick="cart" aria-label="Thêm vào giỏ">Thêm vào giỏ</button><button type="button" class="ly-btn-buy lyx-card-buy" data-pick="buy">Mua ngay</button>
+      <div class="ly-variant-list" hidden data-option="{{ product.options.first | escape }}">{{ ly_variant_buttons }}</div>{% else %}<button type="button" class="ly-btn-cart lyx-card-cart" data-add="{{ ly_variant.id }}" aria-label="Thêm vào giỏ">Thêm vào giỏ</button><button type="button" class="ly-btn-buy lyx-card-buy" data-buy="{{ ly_variant.id }}">Mua ngay</button>{% endif %}</div>
+  </div>
+</article>

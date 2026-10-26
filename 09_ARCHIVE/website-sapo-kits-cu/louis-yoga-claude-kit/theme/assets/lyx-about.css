@@ -1,0 +1,62 @@
+/* Louis Yoga — trang Giới thiệu theo bản thiết kế 15/10/2026 (mobile trang 5; PC kế thừa hệ thống thiết kế). Đi kèm snippets/lyx-about.bwt.
+   Các khối hero / số liệu / giới thiệu / video của snippets/ly-about.bwt được thay bằng lyx-about nên ẩn ở đây; khối còn lại giữ nguyên. */
+.lyx-about-page .lya-hero,.lyx-about-page .lya-stats,.lyx-about-page .lya-intro,.lyx-about-page .lya-story{display:none!important}
+.lyxa{--lyxa-ink:#111;--lyxa-grey:#666;font-family:var(--lyx-font,Montserrat,Arial,sans-serif);color:var(--lyxa-ink)}
+.lyxa-eyebrow{margin:0 0 6px;font:400 14px/1.3 var(--lyx-font);letter-spacing:.06em;text-transform:uppercase;color:var(--lyxa-ink)}
+.lyxa-h2{margin:0 0 16px;font:800 34px/1.15 var(--lyx-font);letter-spacing:.01em;text-transform:uppercase;color:var(--lyxa-ink)}
+
+/* Hero: ảnh dọc, nút đè bên phải, chân ảnh mờ dần sang trắng */
+.lyxa-hero{position:relative}
+.lyxa-hero-media{position:relative;overflow:hidden;background:#b98a5e}
+.lyxa-hero-media img{display:block;width:100%;height:auto;aspect-ratio:600/868;object-fit:cover}
+.lyxa-hero-media.no-img{aspect-ratio:600/868;background:radial-gradient(120% 80% at 70% 30%,#e7c7a0 0%,#b98a5e 45%,#6e4527 100%)}
+.lyxa-hero-media.no-img .lyxa-hero-over{left:18%;right:18%;width:auto;top:30%}
+.lyxa-hero-media::after{content:'';position:absolute;left:0;right:0;bottom:0;height:22%;background:linear-gradient(to bottom,rgba(255,255,255,0),#fff 92%);pointer-events:none}
+.lyxa-hero-over{position:absolute;right:7%;top:38%;width:40%;display:flex;flex-direction:column;align-items:center;gap:14px;z-index:1}
+.lyxa-brand{margin:0 0 18px;color:#fff;text-align:center;font:400 30px/1.15 var(--lyx-font);text-shadow:0 1px 8px rgba(0,0,0,.18)}
+.lyxa-brand-logo{display:block;margin:0 0 6px;font:500 20px/1 var(--lyx-font);letter-spacing:.06em}
+.lyxa-brand em{font:italic 300 .72em/1 var(--lyx-font)}
+.lyxa-brand b{font-weight:400}
+.lyxa-hero.is-baked .lyxa-brand{position:absolute!important;width:1px;height:1px;margin:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.lyxa-hero.is-baked .lyxa-hero-over{top:57%}
+.lyxa-hero-btns{display:flex;flex-direction:column;gap:10px;width:100%}
+.lyxa-btn{display:flex;align-items:center;justify-content:center;min-height:34px;padding:6px 10px;border-radius:999px;font:500 11px/1.2 var(--lyx-font);letter-spacing:.16em;text-align:center;text-transform:uppercase;text-decoration:none!important;transition:background .2s,color .2s}
+.lyxa-btn-out{border:1px solid #fff;color:#fff!important;background:rgba(255,255,255,.04)}
+.lyxa-btn-out:hover,.lyxa-btn-out:focus-visible{background:#fff;color:var(--lyxa-ink)!important}
+.lyxa-btn-dark{border:1px solid #000;background:#000;color:#fff!important}
+.lyxa-btn-dark:hover,.lyxa-btn-dark:focus-visible{background:#333}
+.lyxa-btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.lyxa-story{position:relative;z-index:2;margin:-64px 0 0;padding:0 24px 28px}
+.lyxa-lead{margin:0;font:400 16px/1.6 var(--lyx-font);letter-spacing:.04em;color:var(--lyxa-grey)}
+
+/* Về Louis Yoga + video */
+.lyxa-about{padding:28px 24px 48px}
+.lyxa-text{margin:0 0 26px;font:400 15px/1.75 var(--lyx-font);letter-spacing:.03em;color:var(--lyxa-grey);text-align:justify}
+.lyxa-video{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#f2f2f2;border:1px solid #e6e6e6}
+.lyxa-video-poster{position:absolute;inset:0;display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:pointer}
+.lyxa-video-poster img{width:100%;height:100%;object-fit:cover}
+.lyxa-play{position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:50%;background:rgba(0,0,0,.55);transition:transform .2s,background .2s}
+.lyxa-play::after{content:'';position:absolute;left:27px;top:21px;border-style:solid;border-width:13px 0 13px 21px;border-color:transparent transparent transparent #fff}
+.lyxa-video-poster:hover .lyxa-play,.lyxa-video-poster:focus-visible .lyxa-play{transform:scale(1.06);background:var(--lyx-cta,#be3a63)}
+.lyxa-video-poster:focus-visible{outline:3px solid var(--lyxa-ink);outline-offset:3px}
+.lyxa-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+@media (max-width:420px){
+  .lyxa-brand{font-size:24px;margin-bottom:12px}
+  .lyxa-brand-logo{font-size:15px}
+  .lyxa-btn{min-height:30px;font-size:9.5px;letter-spacing:.12em;padding:5px 6px}
+  .lyxa-h2{font-size:30px}
+}
+@media (min-width:768px){
+  .lyxa-hero{display:grid;grid-template-columns:minmax(0,480px) minmax(0,1fr);align-items:center;gap:56px;max-width:var(--lyx-w,1080px);margin:0 auto;padding:36px 16px 24px}
+  .lyxa-hero-media{border-radius:12px}
+  .lyxa-hero-media::after{display:none}
+  .lyxa-story{margin:0;padding:0}
+  .lyxa-h2{font-size:42px}
+  .lyxa-lead{font-size:18px}
+  .lyxa-about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);grid-template-areas:"eye video" "h2 video" "text video";column-gap:56px;align-items:start;max-width:var(--lyx-w,1080px);margin:0 auto;padding:40px 16px 64px}
+  .lyxa-about>.lyxa-eyebrow{grid-area:eye}
+  .lyxa-about>.lyxa-h2{grid-area:h2}
+  .lyxa-about>.lyxa-text{grid-area:text}
+  .lyxa-about>.lyxa-video{grid-area:video;align-self:center}
+}

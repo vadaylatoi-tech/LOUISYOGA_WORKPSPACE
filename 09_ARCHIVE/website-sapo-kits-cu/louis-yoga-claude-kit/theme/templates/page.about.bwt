@@ -1,0 +1,7 @@
+{% comment %}Trang Giới thiệu — 15/10/2026 theo bản thiết kế mobile trang 5: snippets/lyx-about.bwt + assets/lyx-about.css ở đầu trang; các khối còn lại (giá trị cốt lõi, văn hoá, giải thưởng, kêu gọi) giữ từ snippets/ly-about.bwt (thiết kế lại 10/2026). Bản cũ hơn: snippets/zz-backup-page-about.bwt{% endcomment %}
+{{ 'ly-about.css' | asset_url | stylesheet_tag }}
+{{ 'lyx-about.css' | asset_url | stylesheet_tag }}
+<section class="page page-about ly-about-page lyx-about-page">
+	{% include 'lyx-about' %}
+	{% include 'ly-about' %}
+</section>

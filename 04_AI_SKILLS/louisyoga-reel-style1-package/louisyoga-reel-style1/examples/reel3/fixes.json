@@ -1,0 +1,8 @@
+{
+  "replace": {"tp": "TPE", "soap": "foam", "thẳng": "thảm", "lúm": "lún", "tí": "tì", "khủy": "quỳ", "sáu": "6", "chín": "9", "năm": "5", "nhá": "nha"},
+  "drop": [79, 80, 221],
+  "insert": [
+    {"w": "Độ", "start": 8.51, "end": 8.73, "brk_before": true},
+    {"w": "thoải", "start": 45.993, "end": 46.597}
+  ]
+}

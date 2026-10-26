@@ -1,0 +1,21 @@
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+*.dpapi
+*.pem
+*.key
+credentials*
+secrets/
+*.local.json
+*.local.txt
+.claude/settings.local.json
+# Snapshots can include private settings; keep local, outside public repo
+backups/
+reports/
+tmp/
+node_modules/
+__pycache__/
+.DS_Store
+Thumbs.db
+baseline/

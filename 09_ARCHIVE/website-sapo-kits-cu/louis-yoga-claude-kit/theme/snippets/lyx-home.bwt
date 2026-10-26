@@ -1,0 +1,302 @@
+{% comment %}
+  16/10/2026 — TRANG CHỦ phong cách "editorial sang trọng" (anh Công duyệt 16/10): nền trắng/kem, đỏ rượu chủ đạo, hồng logo làm điểm nhấn,
+  tiêu đề in hoa giãn chữ, nút viền mảnh bo tròn, ảnh lớn, hero video toàn màn hình. CSS: assets/lyx-home.css · JS: assets/lyx-home.js.
+  Thứ tự: Hero video → Danh mục → Săn sale (đếm ngược) → Yoga mat 3 phân khúc → Phụ kiện → Video → Màu sắc → Câu chuyện → Louis News.
+  Dữ liệu thật: sản phẩm/giá từ danh mục Sapo; phân khúc từ snippets/ly-segments.bwt; video từ cài đặt url_video_2..8 + ảnh img_video_*;
+  báo chí từ blog settings.section_baochi_blog. "GIẢM tới …%" tính từ giá gốc/giá bán thật của danh mục sale.
+  Hero video + chế độ đếm ngược + ảnh dẫn xuất cấu hình ở snippets/lyx-flags.bwt. Bản 15/10: backups/pre-home-20261016-*/ (kit).
+  16/10 chiều — 7 góp ý anh Công: bỏ hoa sen; Danh mục phổ biến dùng icon line; video lấy từ lyx_vid_list (lyx-flags) + sản phẩm kèm dưới video;
+  ô màu bo góc chữ giữa (lyx_colors); hero điện thoại đúng khung ảnh 875×1451, không nhúng YouTube trên điện thoại;
+  điện thoại giữ bố cục PDF mobile trang 1 (các phần tử .lyx-only-m + CSS ≤767px). Bản trước: backups/pre-home7-20261016-1012/ (kit).
+{% endcomment %}
+{%- include 'ly-segments' -%}
+{%- include 'lyx-flags' -%}
+{%- assign lyx_fb = settings.social_fb -%}{%- if lyx_fb contains 'thamtapyogalouis' or lyx_fb contains 'sapoweb' -%}{%- assign lyx_fb = 'https://www.facebook.com/thamlouisyoga' -%}{%- endif -%}
+{%- assign lyx_sale_h = settings.section_deal_product | default: 'san-pham-khuyen-mai' -%}
+{%- if collections[lyx_sale_h].products.size == 0 -%}{%- assign lyx_sale_h = 'san-pham-khuyen-mai' -%}{%- endif -%}
+{%- assign lyx_acc_h = settings.url_1_all2pro | default: 'phu-kien-yoga' -%}
+{%- if collections[lyx_acc_h].products.size == 0 -%}{%- assign lyx_acc_h = 'phu-kien-yoga' -%}{%- endif -%}
+{%- assign lyx_max = 0 -%}
+{%- for product in collections[lyx_sale_h].products limit: 24 -%}{%- for v in product.variants -%}{%- if v.compare_at_price > v.price and v.price > 0 -%}{%- assign p = v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price | round -%}{%- if p > lyx_max -%}{%- assign lyx_max = p -%}{%- endif -%}{%- endif -%}{%- endfor -%}{%- endfor -%}
+{%- assign lyx_sale_end = settings.ly_home_sale_end | default: '' | strip -%}
+{%- assign lyx_sale_start = settings.ly_home_sale_start | default: '' | strip -%}
+{%- capture lyx_arrow -%}<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h20M16 1l4 4-4 4"/></svg>{%- endcapture -%}
+<main id="ly-main" class="lyxh">
+
+  {%- comment -%} 1. HERO VIDEO — MP4 khi có (lyx_hero_mp4_*), chưa có thì phim thương hiệu YouTube tắt tiếng; luôn có ảnh poster làm nền chờ.
+    17/10 (anh Công): điện thoại khung ngang 5:4 để chiếu cả ảnh lẫn video — dùng ảnh ngang ly-hero-pc.jpg căn cắt hai mép (CSS ≤767px) {%- endcomment -%}
+  {%- assign lyx_hv_full = lyx_hero_yt | default: settings.id_video | strip -%}
+  {%- comment -%} 17/10 (anh Công): chữ hero "Louis Yoga / Vững vàng / trong từng chuyển động", đặt giữa khung kiểu olaben + hiện dần khi video chạy (PC ≥768px; điện thoại giữ như cũ) {%- endcomment -%}
+  <style>
+  @keyframes lyxh-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes lyxh-track{from{opacity:0;letter-spacing:.42em}to{opacity:1;letter-spacing:.12em}}
+  @media (min-width:768px){
+    .lyxh-hero .lyxh-hero-copy{top:50%;bottom:auto;transform:translateY(-50%)}
+    .lyxh-hero:not(.is-playing) .lyxh-hero-copy{top:auto;bottom:clamp(28px,7%,72px);transform:none}
+    .lyxh-hero-media::after{background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(20,10,14,.34),rgba(20,10,14,.14) 70%,rgba(20,10,14,.08))}
+    .lyxh-hero-kick{margin:0 0 18px;font:600 10.5px/1 var(--lyx-font);letter-spacing:.5em;padding-left:.5em}
+    .lyxh-hero-t{margin:0;font:400 clamp(44px,6vw,92px)/1 var(--lyx-font);letter-spacing:.12em;padding-left:.12em;text-shadow:0 2px 30px rgba(0,0,0,.18)}
+    .lyxh-hero-t span{margin-top:18px;font:500 clamp(11px,1vw,14px)/1.2 var(--lyx-font);letter-spacing:.34em;padding-left:.34em}
+    .lyxh-hero-btns{align-items:center;gap:26px;margin-top:36px}
+    .lyxh-hero .lyxh-hero-btns .lyx-btn{min-width:0}
+    .lyxh-hero.is-playing .lyx-btn-light{min-height:42px;padding:0 34px;background:transparent;border-color:rgba(255,255,255,.85);color:#fff!important;font-size:10.5px;letter-spacing:.3em;transition:background .35s,color .35s}
+    .lyxh-hero.is-playing .lyx-btn-light:hover{background:#fff;color:var(--lyx-ink)!important}
+    .lyxh-hero .lyx-btn-ghost-light{min-height:0;padding:4px 0;border:0;border-bottom:1px solid rgba(255,255,255,.6);border-radius:0;background:none;font-size:10.5px;letter-spacing:.24em}
+    .lyxh-hero .lyx-btn-ghost-light:hover{background:none;color:#fff!important;border-color:#fff}
+    .lyxh-hero.is-playing .lyxh-hero-kick{animation:lyxh-rise 1s var(--lyx-ease) .2s both}
+    .lyxh-hero.is-playing .lyxh-hero-t{animation:lyxh-track 1.8s var(--lyx-ease) .35s both}
+    .lyxh-hero.is-playing .lyxh-hero-t span{animation:lyxh-rise 1s var(--lyx-ease) 1s both}
+    .lyxh-hero.is-playing .lyxh-hero-btns{animation:lyxh-rise 1s var(--lyx-ease) 1.3s both}
+  }
+  @media (prefers-reduced-motion:reduce){.lyxh-hero *{animation:none!important}}
+  /* 17/10 khối Video: tiêu đề cố định 2 dòng để ô sản phẩm thẳng hàng; ô "Khám phá" khi video chưa gắn sản phẩm; nhãn nguồn TikTok/Shorts */
+  .lyxh-vid-t{min-height:2.9em}
+  .lyxh-vids .ly-card.lyxh-vp{margin-top:auto;border:1px solid transparent;transition:border-color .25s,background .25s}
+  .lyxh-vids .ly-card.lyxh-vp:hover{border-color:var(--lyx-line);background:#fff}
+  .lyxh-vid-card{height:100%}
+  .lyxh-vp-more{color:var(--lyx-ink)!important;text-decoration:none!important}
+  .lyxh-vp-more .lyxh-vp-img{display:grid;place-items:center}
+  .lyxh-vp-more .lyxh-vp-img svg{width:60%;height:60%;fill:none;stroke:var(--lyx-cta);stroke-width:1.4;stroke-linecap:round}
+  .lyxh-vp-more .lyxh-vp-p{font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+  .lyxh-vp-more .lyxh-vp-add{font-size:15px!important}
+  .lyxh-vp-more:hover .lyxh-vp-add{background:var(--lyx-cta);border-color:var(--lyx-cta);color:#fff!important}
+  .lyxh-vid-poster[data-lyxh-vid="tt"] .lyxh-vid-src{background:#111}
+  .lyxh-vid-poster[data-lyxh-vid="ys"] .lyxh-vid-src{background:rgba(196,30,58,.85)}
+  .lyxh-vids .lyxh-vp-p{white-space:nowrap}
+  .lyxh-vids .lyxh-vp-n{font-weight:600;letter-spacing:.02em}
+  @media (max-width:767px){
+    .lyxh-vid-card:has(.lyxh-vp-more) .lyxh-vid-t{display:-webkit-box}
+    .lyxh-vids .ly-card.lyxh-vp{grid-template-columns:42px minmax(0,1fr) 30px;gap:8px;padding:6px}
+    .lyxh-vids .ly-card.lyxh-vp .lyxh-vp-add{width:30px;height:30px;font-size:18px!important}
+    .lyxh-vids .lyxh-vp-n{font-size:11px}
+    .lyxh-vids .lyxh-vp-p{font-size:11px}
+  }
+  </style>
+  <section class="lyxh-hero" aria-labelledby="lyxh-hero-t" data-lyxh-hero data-mp4-pc="{{ lyx_hero_mp4_pc }}" data-mp4-mb="{{ lyx_hero_mp4_mb }}" data-yt="{{ lyx_hero_yt }}">
+    <div class="lyxh-hero-media" aria-hidden="true">
+      <picture>
+        <img src="{{ 'ly-hero-pc.jpg' | asset_url }}" width="2400" height="1146" alt="" fetchpriority="high" decoding="async">
+      </picture>
+      <div class="lyxh-hero-video" data-lyxh-hero-video></div>
+    </div>
+    <div class="lyxh-hero-copy">
+      <p class="lyxh-hero-kick">Louis Yoga</p>
+      <h1 id="lyxh-hero-t" class="lyxh-hero-t">Vững vàng<span>trong từng chuyển động</span></h1>
+      <div class="lyxh-hero-btns">
+        <a class="lyx-btn lyx-btn-light" href="#lyxh-mats">Khám phá ngay</a>
+        {%- if lyx_hv_full != blank -%}<button type="button" class="lyx-btn lyx-btn-ghost-light" data-lyxh-play="{{ lyx_hv_full | escape }}"><span class="lyxh-play-ico" aria-hidden="true"></span>Xem câu chuyện</button>{%- endif -%}
+      </div>
+    </div>
+    <a class="lyxh-hero-down" href="#lyxh-cats-t" aria-label="Cuộn xuống danh mục"><span aria-hidden="true"></span></a>
+  </section>
+
+  {%- comment -%} 2. DANH MỤC {%- endcomment -%}
+  {%- if lyx_has_cat_mats -%}{%- assign lyx_mat_img = 'lyx-cat-mats.jpg' | asset_url -%}{%- else -%}{%- assign lyx_mat_src = collections['tham-yoga-cao-su'].image.src -%}{%- if lyx_mat_src == blank -%}{%- for product in collections['tham-yoga-cao-su'].products limit: 1 -%}{%- assign lyx_mat_src = product.featured_image.src -%}{%- endfor -%}{%- endif -%}{%- assign lyx_mat_img = lyx_mat_src | img_url: '1024x1024' -%}{%- endif -%}
+  {%- assign lyx_acc_img = collections['phu-kien-yoga'].image.src -%}
+  {%- if lyx_acc_img == blank -%}{%- for product in collections['phu-kien-yoga'].products limit: 1 -%}{%- assign lyx_acc_img = product.featured_image.src -%}{%- endfor -%}{%- endif -%}
+  <section class="lyx-sec lyxh-cats-wrap" aria-labelledby="lyxh-cats-t">
+    <div class="lyx-wrap">
+      {%- comment -%} 17/10/2026: thẻ kiểu "bộ sưu tập" (tham chiếu olaben): ảnh ngang bo góc + nhãn, khung kem bên dưới với tên, câu ngắn, nút viền. Ảnh: lyx_cat_img_1/2 trong lyx-flags. {%- endcomment -%}
+      {%- if lyx_cat_img_1 != blank -%}{%- assign lyx_mat_img = lyx_cat_img_1 -%}{%- endif -%}
+      <div class="lyx-sec-head lyx-sec-split lyxh-cats-head"><div><p class="lyx-eyebrow">Louis Yoga có gì?</p><h2 class="lyx-h2" id="lyxh-cats-t">Danh mục sản phẩm</h2></div><a class="lyx-link" href="/collections/all">Xem tất cả {{ lyx_arrow }}</a></div>
+      <div class="lyxh-cats">
+        <a class="lyxh-cat" href="/tham-yoga-cao-su">
+          <span class="lyxh-cat-img"><img src="{{ lyx_mat_img }}" width="1400" height="875" loading="lazy" alt="Người tập yoga trên thảm cao su"><span class="lyxh-cat-tag">Bộ sưu tập</span></span>
+          <span class="lyxh-cat-body"><span class="lyxh-cat-n">01</span><h3>Thảm yoga cao su</h3><p>Độ bám vượt trội, độ đàn hồi cao.</p><span class="lyxh-cat-btn">Mua thảm cao su</span></span>
+        </a>
+        <a class="lyxh-cat" href="/phu-kien-yoga">
+          <span class="lyxh-cat-img">{% if lyx_cat_img_2 != blank %}<img src="{{ lyx_cat_img_2 }}" width="1400" height="875" loading="lazy" alt="Gạch tập yoga đặt trên thảm">{% elsif lyx_acc_img != blank %}<img src="{{ lyx_acc_img | img_url: '1024x1024' }}" width="760" height="560" loading="lazy" alt="Phụ kiện yoga Louis Yoga">{% endif %}<span class="lyxh-cat-tag">Dụng cụ hỗ trợ</span></span>
+          <span class="lyxh-cat-body"><span class="lyxh-cat-n">02</span><h3>Phụ kiện</h3><p>Hỗ trợ tập nâng cao và bảo vệ khi tập.</p><span class="lyxh-cat-btn">Xem phụ kiện</span></span>
+        </a>
+      </div>
+      <div class="lyxh-tiles-head"><h3>Danh mục phổ biến</h3><a class="lyx-link" href="/collections/all">Xem tất cả {{ lyx_arrow }}</a></div>
+      {%- comment -%} 17/10: bộ icon nét mảnh phối cảnh 3/4 (anh Công đổi) — thảm cuộn có dây buộc, thảm TPE mép 2 lớp, thảm du lịch gấp có dây đeo, gạch gỗ bần, vòng yoga {%- endcomment -%}
+      <div class="lyxh-tiles">
+        {%- assign lyx_tiles = 'tham-yoga-cao-su~Thảm cao su~roll|tham-tpe~Thảm TPE~tpe|tham-yoga-du-lich~Thảm du lịch~fold|gach-tap-yoga~Gạch tập yoga~block|vong-tap-yoga~Vòng tập yoga~wheel' | split: '|' -%}
+        {%- for t in lyx_tiles -%}{%- assign tp = t | split: '~' -%}
+        <a href="/{{ tp[0] }}"><span class="lyxh-tile-img"><svg viewBox="0 0 64 64" aria-hidden="true">{%- case tp[2] -%}
+          {%- when 'roll' -%}<path d="M15 20.5h31M15 39.5h31"/><path d="M15 20.5a4.6 9.5 0 0 0 0 19"/><ellipse cx="46" cy="30" rx="4.6" ry="9.5"/><ellipse cx="46" cy="30" rx="2.6" ry="5.4"/><ellipse cx="46" cy="30" rx=".9" ry="1.9"/><path d="M24 20.6v18.8M27.5 20.6v18.8"/>
+          {%- when 'tpe' -%}<path d="M8 32 34 23l22 8-26 9.5z"/><path d="M8 32v3.6l22 8 26-9.6V31"/><path d="M8 33.8l22 8 26-9.6" opacity=".45"/><path d="M30 40v3.6"/><path d="M27 31.5c3-1.1 6.5-1.1 8.5 0" opacity=".45"/>
+          {%- when 'fold' -%}<path d="M10 27 34 19l20 7-24 8z"/><path d="M10 27v12l20 7V34M54 26v12l-24 8"/><path d="M10 31l20 7M10 35l20 7" opacity=".45"/><path d="M21 30.9 45 22.9M24.2 32 48.2 24"/><path d="M21 30.9v12M24.2 32v12"/>
+          {%- when 'block' -%}<path d="M32 13 50 21.5 32 30 14 21.5z"/><path d="M14 21.5v19L32 49V30M50 21.5v19L32 49"/><path d="M36.5 35.8l9-4.3M36.5 40.3l9-4.3" opacity=".45"/>
+          {%- else -%}<ellipse cx="27" cy="32" rx="13" ry="19"/><ellipse cx="27" cy="32" rx="7.5" ry="11.5"/><path d="M27 13h9M27 51h9"/><path d="M36 13a13 19 0 0 1 0 38"/><path d="M33.5 21.2a7.5 11.5 0 0 1 0 21.6" opacity=".45"/>
+          {%- endcase -%}</svg></span><span class="lyxh-tile-t">{{ tp[1] }}</span></a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 3. SĂN SALE — đếm ngược: ngày thật (settings.ly_home_sale_end) hoặc tới cuối tháng (lyx_sale_cd = 'month') {%- endcomment -%}
+  <section class="lyx-sec lyxh-sale-sec" aria-labelledby="lyxh-sale-t">
+    <div class="lyx-wrap lyxh-sale">
+      <div class="lyxh-sale-txt">
+        <span class="lyxh-sale-ico" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 4l4.4 3.6 5.6-.8 2.2 5.2 5.2 2.2-.8 5.6L44 24l-3.6 4.4.8 5.6-5.2 2.2-2.2 5.2-5.6-.8L24 44l-4.4-3.6-5.6.8-2.2-5.2-5.2-2.2.8-5.6L4 24l3.6-4.4-.8-5.6 5.2-2.2 2.2-5.2 5.6.8z"/><path d="M17 31l14-14"/><circle cx="18.5" cy="18.5" r="2.5"/><circle cx="29.5" cy="29.5" r="2.5"/></svg></span>
+        <p class="lyx-eyebrow">Săn sale mùa thu đông</p>
+        <h2 class="lyxh-sale-big" id="lyxh-sale-t">{% if lyx_max > 0 %}Giảm tới<b>{{ lyx_max }}%</b>{% else %}Ưu đãi<b>Louis Yoga</b>{% endif %}</h2>
+        {%- if lyx_sale_end != blank or lyx_sale_cd == 'month' -%}
+        <div class="lyxh-cd" data-lyx-cd data-mode="{% if lyx_sale_end != blank %}date{% else %}{{ lyx_sale_cd }}{% endif %}" data-start="{{ lyx_sale_start }}" data-end="{{ lyx_sale_end }}" role="timer" aria-label="Thời gian còn lại của chương trình" hidden>
+          <span><b data-u="d">00</b><small>Ngày</small></span><span><b data-u="h">00</b><small>Giờ</small></span><span><b data-u="m">00</b><small>Phút</small></span><span><b data-u="s">00</b><small>Giây</small></span>
+        </div>
+        {%- endif -%}
+        <p class="lyxh-sale-note">Thời gian và số lượng có hạn</p>
+        <div class="lyxh-sale-btns">
+          <a class="lyx-btn lyx-btn-wine" href="/{{ lyx_sale_h }}">Xem tất cả ưu đãi</a>
+          {%- if lyx_fb != blank -%}<a class="lyx-link" href="{{ lyx_fb }}" target="_blank" rel="noopener">Theo dõi fanpage {{ lyx_arrow }}</a>{%- endif -%}
+        </div>
+      </div>
+      <div class="lyxh-track" data-lyxh-track>
+        <div class="lyxh-row">
+          {%- for product in collections[lyx_sale_h].products limit: 12 -%}<div class="lyxh-item">{% include 'ly-home-card' %}</div>{%- else -%}<p class="lyxh-empty">Sản phẩm ưu đãi đang được cập nhật.</p>{%- endfor -%}
+        </div>
+        <div class="lyxh-track-nav"><div class="lyxh-bar" aria-hidden="true"><i></i></div><button type="button" class="lyxh-arr" data-dir="-1" aria-label="Sản phẩm trước">‹</button><button type="button" class="lyxh-arr" data-dir="1" aria-label="Sản phẩm tiếp theo">›</button></div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 4. YOGA MAT — 3 phân khúc {%- endcomment -%}
+  {%- assign lyx_seg_for = 'Người mới tập yoga|Người tập yoga thường xuyên|Người tập yoga chuyên nghiệp' | split: '|' -%}
+  {%- comment -%} 17/10/2026 tối ưu: quét danh mục all MỘT lượt, dựng sẵn thẻ của 12 sản phẩm phân khúc (trước: 12 × 250 vòng lặp → TTFB trang chủ 0,7–1,4 s) {%- endcomment -%}
+  {%- capture lyx_seg_pool -%}{%- for product in collections['all'].products limit: 250 -%}{%- capture pid -%}{{ product.id }}{%- endcapture -%}{%- if ly_seg_all_ids contains pid -%}{{ pid }}@@LYID@@<div class="lyxh-item">{% include 'ly-home-card' %}</div>@@LYEND@@{%- endif -%}{%- endfor -%}{%- endcapture -%}
+  {%- assign lyx_seg_pool = lyx_seg_pool | split: '@@LYEND@@' -%}
+  <section class="lyx-sec lyxh-mat" id="lyxh-mats" aria-labelledby="lyxh-mat-t" data-lyxh-mat>
+    <div class="lyx-wrap">
+      <div class="lyx-sec-head lyx-sec-center"><p class="lyx-eyebrow">Thảm tập yoga</p><h2 class="lyx-h2" id="lyxh-mat-t">Yoga mat Louisyoga</h2></div>
+      <div class="lyxh-mat-rail">
+        <div class="lyxh-mat-tabs" role="tablist" aria-label="Phân khúc thảm">
+          {%- for h in ly_seg_handles -%}<button type="button" class="lyxh-mat-tab" role="tab" id="lyxh-tab-{{ h }}" aria-controls="lyxh-seg-{{ h }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" tabindex="{% if forloop.first %}0{% else %}-1{% endif %}" data-seg="{{ forloop.index0 }}"><b>{{ ly_seg_names[forloop.index0] }}</b><small>{{ lyx_seg_for[forloop.index0] }}</small></button>{%- endfor -%}
+        </div>
+        <a class="lyx-btn lyxh-mat-all" href="{{ ly_seg_urls[0] }}" data-lyxh-mat-all>Xem toàn bộ sản phẩm</a>
+      </div>
+      <div class="lyxh-mat-banner">{%- for h in ly_seg_handles -%}{%- capture bimg -%}ly-seg-{{ h }}.jpg{%- endcapture -%}<a href="{{ ly_seg_urls[forloop.index0] }}" data-seg="{{ forloop.index0 }}"{% unless forloop.first %} hidden{% endunless %}><img src="{{ bimg | asset_url }}" width="1600" height="400" loading="lazy" alt="{{ ly_seg_names[forloop.index0] }} – phù hợp cho {{ lyx_seg_for[forloop.index0] | downcase }}"></a>{%- endfor -%}</div>
+      {%- for h in ly_seg_handles -%}
+      {%- assign si = forloop.index0 -%}
+      {%- assign ids = ly_seg_ids[si] | split: ' ' -%}
+      <div class="lyxh-mat-panel" role="tabpanel" id="lyxh-seg-{{ h }}" aria-labelledby="lyxh-tab-{{ h }}" data-seg="{{ si }}" data-url="{{ ly_seg_urls[si] }}"{% unless forloop.first %} hidden{% endunless %}>
+        <p class="lyxh-mat-ptitle" aria-hidden="true"><b>{{ ly_seg_names[si] }}</b><small>Sinh ra dành cho</small><span>{{ lyx_seg_for[si] }}</span></p>
+        <div class="lyxh-mat-grid">
+          {%- assign n = 0 -%}
+          {%- for sid in ids -%}{%- for it in lyx_seg_pool -%}{%- assign itp = it | split: '@@LYID@@' -%}{%- assign itid = itp[0] | strip -%}{%- if itid == sid and n < 4 -%}{{ itp[1] }}{%- assign n = n | plus: 1 -%}{%- endif -%}{%- endfor -%}{%- endfor -%}
+          {%- if n == 0 -%}<p class="lyxh-empty">Phân khúc đang được cập nhật.</p>{%- endif -%}
+        </div>
+        <div class="lyxh-more"><a class="lyx-btn lyx-btn-out" href="{{ ly_seg_urls[si] }}">Xem toàn bộ {{ ly_seg_names[si] }}</a></div>
+      </div>
+      {%- endfor -%}
+    </div>
+  </section>
+
+  {%- comment -%} 5. PHỤ KIỆN {%- endcomment -%}
+  <section class="lyx-sec lyxh-acc" aria-labelledby="lyxh-acc-t">
+    <div class="lyx-wrap">
+      <div class="lyx-sec-head lyx-sec-split"><div><p class="lyx-eyebrow">Phụ kiện Louisyoga</p><h2 class="lyx-h2" id="lyxh-acc-t">Phụ kiện hỗ trợ tập yoga</h2></div><a class="lyx-link" href="/{{ lyx_acc_h }}">Xem toàn bộ {{ lyx_arrow }}</a></div>
+      <div class="lyxh-track" data-lyxh-track>
+        <div class="lyxh-row">
+          {%- for product in collections[lyx_acc_h].products limit: 16 -%}<div class="lyxh-item">{% include 'ly-home-card' %}</div>{%- else -%}<p class="lyxh-empty">Phụ kiện đang được cập nhật.</p>{%- endfor -%}
+        </div>
+        <div class="lyxh-track-nav"><div class="lyxh-bar" aria-hidden="true"><i></i></div><button type="button" class="lyxh-arr" data-dir="-1" aria-label="Phụ kiện trước">‹</button><button type="button" class="lyxh-arr" data-dir="1" aria-label="Phụ kiện tiếp theo">›</button><a class="lyx-btn lyxh-nav-more" href="/{{ lyx_acc_h }}">Xem toàn bộ sản phẩm</a></div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 6. VIDEO — 16/10: danh sách lyx_vid_list trong snippets/lyx-flags.bwt (YouTube / Shorts / TikTok thật của Louis Yoga),
+    mỗi video kèm sản phẩm xuất hiện trong video (alias sản phẩm) ngay bên dưới như bản thiết kế; ghi nhớ video "Hoa hậu" cho Louis News {%- endcomment -%}
+  {%- assign lyx_hh_vid = '' -%}
+  {%- assign lyx_vl = lyx_vid_list | split: '|' -%}
+  {%- comment -%} 17/10/2026 tối ưu: dựng sẵn ô sản phẩm của các alias trong lyx_vid_list bằng MỘT lượt quét (trước: mỗi video quét lại 250 sản phẩm) {%- endcomment -%}
+  {%- capture lyx_vid_alias -%}{%- for ve in lyx_vl -%}{%- assign vp = ve | split: '~' -%}{{ vp[3] | strip }} {% endfor -%}{%- endcapture -%}
+  {%- assign lyx_vid_alias = lyx_vid_alias | strip | split: ' ' -%}
+  {%- capture lyx_vp_pool -%}{%- if lyx_vid_alias.size > 0 -%}{%- for product in collections['all'].products limit: 250 -%}{%- if lyx_vid_alias contains product.alias -%}
+      {%- assign vv = product.selected_or_first_available_variant | default: product.variants[0] -%}
+      {%- assign vn = product.name -%}{%- if vn contains ' - ' -%}{%- assign vn1 = vn | split: ' ' | first -%}{%- assign vn2 = vn | split: ' - ' | last | strip -%}{%- assign vn = vn1 | append: ' ' | append: vn2 -%}{%- endif -%}
+      {{ product.alias }}@@LYID@@<article class="ly-card lyxh-vp" data-product="{{ product.id }}" data-name="{{ product.name | escape }}" data-url="{{ product.url }}">
+        <a class="lyxh-vp-img" href="{{ product.url }}" tabindex="-1" aria-hidden="true">{% if product.featured_image.src != blank %}<img src="{{ product.featured_image.src | img_url: 'compact' }}" width="160" height="160" loading="lazy" alt="">{% endif %}</a>
+        <div class="lyxh-vp-b"><a class="lyxh-vp-n" href="{{ product.url }}" title="{{ product.name | escape }}">{{ vn | escape }}</a>{% if vv.price > 0 %}<span class="lyxh-vp-p">{{ vv.price | money | remove: '₫' | strip }} <u>đ</u></span>{% endif %}</div>
+        {%- if product.available and vv.available and vv.price > 0 and product.variants.size == 1 -%}<button type="button" class="lyxh-vp-add" data-add="{{ vv.id }}" aria-label="Thêm {{ product.name | escape }} vào giỏ">+</button>{%- else -%}<a class="lyxh-vp-add" href="{{ product.url }}" aria-label="Chọn phân loại {{ product.name | escape }}">+</a>{%- endif -%}
+      </article>@@LYEND@@
+  {%- endif -%}{%- endfor -%}{%- endif -%}{%- endcapture -%}
+  {%- assign lyx_vp_pool = lyx_vp_pool | split: '@@LYEND@@' -%}
+  {%- capture lyx_vids -%}{%- for ve in lyx_vl -%}{%- assign vp = ve | split: '~' -%}{%- assign vs = vp[0] | strip -%}{%- assign vu = vp[1] | strip -%}{%- assign vt = vp[2] | strip -%}{%- assign vh = vp[3] | strip -%}{%- assign vi = vp[4] | strip -%}
+    {%- if vu != blank -%}
+    {%- if vs != 'tt' and lyx_hh_vid == blank and vt contains 'Hoa hậu' -%}{%- assign lyx_hh_vid = vu -%}{%- endif -%}
+    {%- if vi != blank -%}{%- assign vimg = vi | asset_url -%}{%- elsif vs == 'tt' -%}{%- assign vimg = '' -%}{%- else -%}{%- capture vimg -%}https://i.ytimg.com/vi/{{ vu }}/hqdefault.jpg{%- endcapture -%}{%- endif -%}
+    <div class="lyxh-item lyxh-vid-card">
+      <button type="button" class="lyxh-vid-poster" data-lyxh-vid="{{ vs }}" data-src="{{ vu | escape }}" aria-label="Xem video: {{ vt | escape }}">{% if vimg != blank %}<img src="{{ vimg }}" width="300" height="533" loading="lazy" alt="">{% endif %}<span class="lyxh-vid-src">{% if vs == 'tt' %}TikTok{% elsif vs == 'ys' %}Shorts{% else %}YouTube{% endif %}</span><span class="lyxh-vid-play" aria-hidden="true"></span></button>
+      <p class="lyxh-vid-t">{{ vt | escape }}</p>
+      {%- if vh != blank -%}{%- for it in lyx_vp_pool -%}{%- assign itp = it | split: '@@LYID@@' -%}{%- assign itid = itp[0] | strip -%}{%- if itid == vh -%}{{ itp[1] }}{%- endif -%}{%- endfor -%}{%- else -%}
+      <a class="ly-card lyxh-vp lyxh-vp-more" href="/collections/all"><span class="lyxh-vp-img" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M5 31.5h28.5M5 18.5h28.5M5 18.5v13"/><ellipse cx="34.5" cy="25" rx="5.5" ry="6.5"/><ellipse cx="34.5" cy="25" rx="2" ry="2.6"/></svg></span><span class="lyxh-vp-b"><span class="lyxh-vp-n">Khám phá thảm Louis Yoga</span><span class="lyxh-vp-p">Xem tất cả</span></span><span class="lyxh-vp-add" aria-hidden="true">→</span></a>
+      {%- endif -%}
+    </div>
+    {%- endif -%}{%- endfor -%}{%- endcapture -%}
+  {%- assign lyx_vid_n = lyx_vids | split: 'lyxh-vid-card' | size | minus: 1 -%}
+  {%- if lyx_vid_n > 0 -%}
+  <section class="lyx-sec lyxh-vids" aria-labelledby="lyxh-vid-t" data-lyxh-vids>
+    <div class="lyx-wrap">
+      <div class="lyx-sec-head lyx-sec-split"><div><p class="lyx-eyebrow">Video thảm Louis Yoga</p><h2 class="lyx-h2" id="lyxh-vid-t">Trải nghiệm thực tế và hình ảnh thật</h2></div><p class="lyxh-sec-note">Yogi, kiện tướng và Hoa hậu Yoga Việt Nam đồng hành cùng Louis Yoga</p></div>
+      <div class="lyxh-track" data-lyxh-track>
+        <div class="lyxh-row">{{ lyx_vids }}</div>
+        <div class="lyxh-track-nav"><div class="lyxh-bar" aria-hidden="true"><i></i></div><button type="button" class="lyxh-arr" data-dir="-1" aria-label="Video trước">‹</button><button type="button" class="lyxh-arr" data-dir="1" aria-label="Video tiếp theo">›</button></div>
+        <div class="lyxh-dots" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
+  {%- comment -%} 7. MÀU SẮC — 16/10: ô màu bo góc, tên màu ở giữa như bản thiết kế; danh sách + thứ tự ở lyx_colors (lyx-flags), lọc theo tag màu thật {%- endcomment -%}
+  <section class="lyx-sec lyxh-col-sec" aria-labelledby="lyxh-col-t">
+    <div class="lyx-wrap">
+      <div class="lyx-sec-head lyx-sec-center"><p class="lyx-eyebrow">Chọn theo màu sắc</p><h2 class="lyx-h2" id="lyxh-col-t">Tìm màu sắc của bạn</h2></div>
+      {%- assign lyx_cols = lyx_colors | split: '|' -%}
+      <div class="lyxh-colors">
+        {%- for c in lyx_cols -%}{%- assign cp = c | split: '~' -%}{%- assign tags = cp[3] | split: ',' -%}{%- capture q -%}{%- for t in tags -%}({{ t | strip | url_encode | replace: '+', '%20' }}){%- unless forloop.last -%}%20OR%20{%- endunless -%}{%- endfor -%}{%- endcapture -%}
+        <a class="lyxh-color" href="/collections/all?q=tags:({{ q }})&amp;page=1&amp;view=grid" style="--c:{{ cp[1] | strip }};--t:{{ cp[2] | strip }}"><span class="lyxh-color-t">{{ cp[0] | strip }}</span></a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 8. CÂU CHUYỆN {%- endcomment -%}
+  {%- comment -%} Chưa có lyx-story.jpg: dùng ảnh lifestyle sẵn trên theme (img_video_6.jpg 1500×1500 — Yogi trên thảm Louis Yoga) thay ảnh sản phẩm chụp phẳng {%- endcomment -%}
+  {%- if lyx_has_story -%}{%- assign lyx_story_img = 'lyx-story.jpg' | asset_url -%}{%- else -%}{%- assign lyx_story_img = 'img_video_6.jpg' | asset_url -%}{%- endif -%}
+  <section class="lyxh-story" aria-labelledby="lyxh-story-t">
+    <a class="lyxh-story-img" href="/gioi-thieu" tabindex="-1" aria-hidden="true"><img src="{{ lyx_story_img }}" width="900" height="760" loading="lazy" alt=""></a>
+    <div class="lyxh-story-txt">
+      <p class="lyx-eyebrow">Câu chuyện của chúng tôi</p>
+      <h2 class="lyx-h2" id="lyxh-story-t">Sự chân thành</h2>
+      <p class="lyxh-story-p">Sinh ra từ tình yêu dành cho yoga và mong muốn mang đến một cuộc sống khỏe mạnh, cân bằng cho mọi người.</p>
+      <a class="lyx-btn lyx-btn-out" href="/gioi-thieu">Câu chuyện của chúng tôi</a>
+    </div>
+  </section>
+
+  {%- comment -%} 9. LOUIS NEWS — Hoa hậu Yoga Việt Nam Nguyễn Thị Huyền (ảnh img_bantab1.jpg có sẵn trên theme) + 3 bài báo {%- endcomment -%}
+  {%- if lyx_hh_vid == blank -%}{%- assign lyx_hh_vid = settings.url_video_2 | strip -%}{%- endif -%}
+  <section class="lyx-sec lyxh-news" aria-labelledby="lyxh-news-t">
+    <div class="lyx-wrap">
+      <div class="lyx-sec-head lyx-sec-split"><div><p class="lyx-eyebrow">Báo chí nói về chúng tôi</p><h2 class="lyx-h2" id="lyxh-news-t">Louis News</h2></div><a class="lyx-link" href="/{{ settings.section_baochi_blog | default: 'bao-chi-noi-ve-louis-yoga' }}">Xem tất cả {{ lyx_arrow }}</a></div>
+      <div class="lyxh-news-grid">
+        <figure class="lyxh-news-feat">
+          <button type="button" class="lyxh-news-video" data-video="{{ lyx_hh_vid }}" aria-label="Xem video Louis Yoga x Hoa hậu Nguyễn Thị Huyền"><img src="{{ 'img_bantab1.jpg' | asset_url }}" width="800" height="530" loading="lazy" alt="Hoa hậu Yoga Việt Nam Nguyễn Thị Huyền cùng thảm Louis Yoga"><span class="lyxh-vid-play" aria-hidden="true"></span></button>
+          <figcaption><b>Louis Yoga × Hoa hậu Nguyễn Thị Huyền</b><blockquote>“Tôi chọn Louis Yoga để cân bằng cảm xúc, an yên trong từng động tác Yoga”</blockquote></figcaption>
+        </figure>
+        <div class="lyxh-press">
+          {%- assign ly_blog = settings.section_baochi_blog | default: 'bao-chi-noi-ve-louis-yoga' -%}
+          {%- for article in blogs[ly_blog].articles limit: 3 -%}
+            {%- assign ly_raw = article.summary | default: article.content | strip_html | strip_newlines | replace: '&nbsp;', '' | replace: '&amp;', '&' | strip -%}
+            {%- assign ly_nosp = ly_raw | remove: ' ' -%}
+            {%- assign ly_ext = '' -%}
+            {%- if ly_raw contains '://' and ly_nosp == ly_raw -%}{%- assign ly_ext = ly_raw | split: '?fbclid=' | first | split: '&fbclid=' | first | replace: 'https://thuonghieuvacuocsong.vn/tham-tap-louis-yoga-hot-nhat-tai-giai-vo-dich-cac-cau-lac-bo-yoga-quoc-gia-nam-2023-5265.html', 'https://thuonghieuvacuocsong.info/tham-tap-louis-yoga-hot-nhat-tai-giai-vo-dich-cac-cau-lac-bo-yoga-quoc-gia-nam-2023-a5265.html' -%}{%- endif -%}
+            {%- if ly_ext != '' -%}{%- assign ly_href = ly_ext -%}{%- assign ly_tgt = ' target="_blank" rel="noopener"' -%}{%- else -%}{%- assign ly_href = article.url -%}{%- assign ly_tgt = '' -%}{%- endif -%}
+            <a href="{{ ly_href }}"{{ ly_tgt }}><span class="lyxh-press-logo">{% if article.image.src != blank %}<img src="{{ article.image.src | img_url: 'medium' }}" width="240" height="140" loading="lazy" alt="">{% else %}<b>Báo chí</b>{% endif %}</span><span class="lyxh-press-body"><span class="lyxh-press-t">{{ article.title | escape }}</span><span class="lyxh-press-btn">Đọc bài viết {{ lyx_arrow }}</span></span></a>
+          {%- else -%}
+            <a href="/bao-chi-noi-ve-louis-yoga"><span class="lyxh-press-logo"><b>Báo chí</b></span><span class="lyxh-press-body"><span class="lyxh-press-t">Báo chí nói về Louis Yoga</span><span class="lyxh-press-btn">Xem tất cả {{ lyx_arrow }}</span></span></a>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<dialog class="lyxh-modal" data-lyxh-modal aria-label="Video câu chuyện Louis Yoga"><button type="button" class="lyxh-modal-x" aria-label="Đóng video">✕</button><div class="lyxh-modal-frame"></div></dialog>
+<nav class="lyx-sticky" aria-label="Liên hệ nhanh">
+  {%- if settings.social_zl != blank -%}<a class="lyx-st-zalo" href="{{ settings.social_zl }}" target="_blank" rel="noopener"><b>Zalo</b><span>Hỗ trợ và tư vấn</span></a>{%- else -%}<a class="lyx-st-zalo" href="tel:{{ settings.store_phone | split: '-' | first | strip | remove: '.' | remove: ' ' }}"><b>Gọi</b><span>Hỗ trợ và tư vấn</span></a>{%- endif -%}
+  <a class="lyx-st-main" href="/tham-tap-yoga"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7H6"/><circle cx="9.5" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></svg>Thảm tập yoga</a>
+</nav>
+<script>document.body.classList.add('lyx-has-sticky');</script>
+<script src="{{ 'lyx-home.js' | asset_url }}" defer></script>

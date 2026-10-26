@@ -1,0 +1,193 @@
+{%- comment -%} 22/10/2026 — Nội dung "Câu hỏi thường gặp" (một nguồn cho trang FAQ templates/page.faq.bwt và khối cuối trang chủ snippets/lyx-home-faq.bwt).
+  Gọi với lyx_faq_home = true: chỉ in các câu đánh dấu cho trang chủ (không bọc unless), bỏ tiêu đề nhóm.
+  Nguồn câu trả lời: /chinh-sach-bao-hanh-doi-tra-san-pham, /chinh-sach-kiem-hang, /chinh-sach-ctv, /chinh-sach-dai-ly, /huong-dan-su-dung-bao-quan-tham-cao-su,
+  /so-sanh-cac-dong-tham-yoga-louis-yoga, cài đặt giao diện (free_shipping_price, store_phone, store_phone1, social_zl). Chính sách đổi thì sửa tại đây.
+  Mỗi câu: <details class="lyxq-q" id="..."> — id dùng làm link thẳng (/pages/...#id). {%- endcomment -%}
+{%- assign lyf_tel = settings.store_phone | replace: '–', '-' | split: '-' | first | strip -%}
+{%- assign lyf_tel_n = lyf_tel | remove: '.' | remove: ' ' -%}
+{%- assign lyf_bh = settings.store_phone1 | replace: '–', '-' | split: '-' | first | strip -%}
+{%- assign lyf_bh_n = lyf_bh | remove: '.' | remove: ' ' -%}
+{%- assign lyf_ship = settings.free_shipping_price | default: 600000 | times: 1 -%}
+{%- comment -%} Định dạng 600.000 bằng tay (bộ lọc money của shop đang lỗi định dạng "$") {%- endcomment -%}
+{%- assign lyf_sm = lyf_ship | divided_by: 1000000 | floor -%}
+{%- assign lyf_sk = lyf_ship | divided_by: 1000 | floor | modulo: 1000 -%}
+{%- assign lyf_ship_t = '' -%}
+{%- if lyf_sm > 0 -%}
+  {%- assign lyf_ship_t = lyf_sm | append: '.' -%}
+  {%- if lyf_sk < 10 -%}{%- assign lyf_ship_t = lyf_ship_t | append: '00' -%}{%- elsif lyf_sk < 100 -%}{%- assign lyf_ship_t = lyf_ship_t | append: '0' -%}{%- endif -%}
+{%- endif -%}
+{%- assign lyf_ship_t = lyf_ship_t | append: lyf_sk | append: '.000' -%}
+
+{%- unless lyx_faq_home -%}
+<section class="lyxq-grp" id="chon-tham" data-lyxq-grp>
+  <div class="lyxq-gh"><span class="lyxq-gn">01</span><h2>Chọn thảm &amp; sản phẩm</h2></div>
+{%- endunless -%}
+  <details class="lyxq-q" id="nguoi-moi-chon-tham-nao">
+    <summary><span>Mới tập yoga, tôi nên chọn thảm nào?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a">
+      <p>Louis Yoga chia thảm theo hành trình tập của bạn:</p>
+      <ul>
+        <li><b>Harmony – người mới bắt đầu:</b> MOON, ASANA, AURA, SUNFLOWER. Êm, chống trơn, mức đầu tư nhẹ.</li>
+        <li><b>Balance – tập thường xuyên:</b> BASIC, BASIC ZEN, ASANA 25, QUEEN. Mặt PU sinh thái + đế cao su tự nhiên dày 5mm, có đường định tuyến.</li>
+        <li><b>Mastery – giáo viên, tập chuyên sâu:</b> F23, DIAMOND, NATURE, LILIUM. Cao su tự nhiên mật độ cao, độ bám tốt cả khi ra nhiều mồ hôi.</li>
+      </ul>
+      <p>Hay đi công tác, du lịch thì chọn thảm du lịch gấp gọn (OCEAN, Du lịch); cần thảm nhẹ, êm để tập tại nhà thì có TPE9 dày 9mm.</p>
+      <p><a href="/so-sanh-cac-dong-tham-yoga-louis-yoga">Xem bảng so sánh chi tiết các dòng thảm →</a></p>
+    </div>
+  </details>
+{%- unless lyx_faq_home %}
+  <details class="lyxq-q" id="tham-day-hay-mong">
+    <summary><span>Nên chọn thảm dày hay mỏng?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a">
+      <p>Thảm dày êm khớp gối, cổ tay hơn — hợp khi tập trên sàn cứng hoặc cần bảo vệ khớp (ví dụ LILIUM dày 6.5mm, TPE9 dày 9mm). Thảm mỏng hơn (5mm) cho cảm giác bám sàn chắc, dễ giữ thăng bằng khi đứng một chân. Thảm du lịch mỏng nhẹ, gấp gọn, hợp trải lên thảm phòng tập hoặc mang theo.</p>
+      <p>Độ dày, chất liệu và cân nặng của từng mẫu ghi trong bảng thông số ở trang sản phẩm.</p>
+    </div>
+  </details>
+  <details class="lyxq-q" id="moi-tap-can-dung-cu-gi">
+    <summary><span>Mới bắt đầu tập, tôi cần những dụng cụ gì?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a">
+      <p>Quan trọng nhất là một tấm thảm phù hợp. Khi cơ thể còn cứng, gạch tập yoga giúp “nâng sàn” để vào tư thế đúng; khăn lau mồ hôi giữ tay chân khô ráo. Sau này có thể thêm vòng, bóng, đệm kê gối tuỳ bài tập.</p>
+      <p>Louis Yoga có sẵn <a href="/search?q=combo">combo cho người mới</a> (thảm + khăn + gạch hoặc dây tập) và đầy đủ <a href="/phu-kien-yoga">phụ kiện &amp; dụng cụ</a>.</p>
+    </div>
+  </details>
+  <details class="lyxq-q" id="qua-tang-kem-tham">
+    <summary><span>Mua thảm có kèm quà tặng không?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a"><p>Tuỳ mẫu thảm. Quà đi kèm (ví dụ túi đựng thảm, khăn lau, nước vệ sinh thảm) được ghi ở dòng <b>“Quà tặng”</b> trong bảng thông số của từng sản phẩm.</p></div>
+  </details>
+{%- endunless %}
+  <details class="lyxq-q" id="san-pham-chinh-hang">
+    <summary><span>Làm sao để chắc chắn mua đúng hàng chính hãng Louis Yoga?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a">
+      <p>Louis Yoga là thương hiệu của Công ty TNHH Phúc Thái Global, đồng hành cùng người tập yoga Việt Nam từ 2015. Chính sách bảo hành – đổi trả áp dụng cho sản phẩm mua tại các <b>kênh bán hàng chính thức</b>, trong đó có website louisyoga.vn.</p>
+      <p>Bạn nên giữ hoá đơn hoặc mã đơn hàng để được hỗ trợ nhanh khi cần.</p>
+    </div>
+  </details>
+{%- unless lyx_faq_home %}
+</section>
+
+<section class="lyxq-grp" id="dat-hang" data-lyxq-grp>
+  <div class="lyxq-gh"><span class="lyxq-gn">02</span><h2>Đặt hàng &amp; thanh toán</h2></div>
+  <details class="lyxq-q" id="cach-dat-hang">
+    <summary><span>Tôi có thể đặt hàng bằng cách nào?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a">
+      <p>Chọn sản phẩm và màu bạn thích → <b>Thêm vào giỏ</b> hoặc <b>Mua ngay</b> → điền thông tin nhận hàng ở bước thanh toán.</p>
+      <p>Bạn cũng có thể đặt qua {% if lyf_tel != blank %}hotline <a href="tel:{{ lyf_tel_n }}">{{ lyf_tel }}</a>{% endif %}{% if settings.social_zl != blank %} hoặc nhắn <a href="{{ settings.social_zl }}" target="_blank" rel="noopener">Zalo</a>{% endif %} để được tư vấn chọn thảm.</p>
+    </div>
+  </details>
+  <details class="lyxq-q" id="con-hang-khong">
+    <summary><span>Làm sao biết sản phẩm còn hàng?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a"><p>Ở trang sản phẩm, chọn màu bạn muốn — dòng <b>“Tình trạng”</b> sẽ báo còn hàng hay hết hàng. Ô màu gạch chéo, mờ là màu đang tạm hết.</p></div>
+  </details>
+  <details class="lyxq-q" id="hinh-thuc-thanh-toan">
+    <summary><span>Có những hình thức thanh toán nào?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a"><p>Bạn có thể <b>trả tiền mặt khi nhận hàng (COD)</b>, <b>chuyển khoản ngân hàng</b> hoặc thanh toán trực tuyến ngay trên web. Hình thức cụ thể bạn chọn ở bước <b>Thanh toán</b>. Cần hỗ trợ, hãy gọi hotline{% if lyf_tel != blank %} <a href="tel:{{ lyf_tel_n }}">{{ lyf_tel }}</a>{% endif %}.</p></div>
+  </details>
+  <details class="lyxq-q" id="xuat-hoa-don">
+    <summary><span>Tôi mua cho công ty, có xuất hoá đơn được không?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a"><p>Được. Ở <a href="/cart">trang giỏ hàng</a>, chọn <b>“Xuất hóa đơn”</b> và điền tên công ty, mã số thuế, địa chỉ công ty, email nhận hoá đơn trước khi thanh toán.</p></div>
+  </details>
+  <details class="lyxq-q" id="uu-dai">
+    <summary><span>Làm sao để biết Louis Yoga đang có ưu đãi gì?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a"><p>Các sản phẩm đang giảm giá nằm ở mục <a href="/san-pham-khuyen-mai">Ưu đãi</a>. Bạn có thể đăng ký email ở ô <b>“Nhận ưu đãi”</b> trên đầu trang để nhận tin khi có chương trình mới.</p></div>
+  </details>
+</section>
+
+<section class="lyxq-grp" id="van-chuyen" data-lyxq-grp>
+  <div class="lyxq-gh"><span class="lyxq-gn">03</span><h2>Vận chuyển &amp; nhận hàng</h2></div>
+{%- endunless %}
+  <details class="lyxq-q" id="phi-van-chuyen">
+    <summary><span>Phí vận chuyển được tính thế nào?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a"><p><b>Miễn phí vận chuyển cho đơn từ {{ lyf_ship_t }}đ.</b> Đơn dưới mức này, phí vận chuyển được tính và hiển thị ở bước thanh toán trước khi bạn đặt hàng.</p></div>
+  </details>
+{%- unless lyx_faq_home %}
+  <details class="lyxq-q" id="bao-lau-nhan-hang">
+    <summary><span>Bao lâu tôi nhận được hàng?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a"><p>Louis Yoga giao nhanh trong 24h. Thời gian nhận hàng thực tế có thể khác nhau tuỳ khu vực và đơn vị vận chuyển. Khi đặt hàng, bạn có thể ghi chú <b>thời gian giao hàng</b> mong muốn ở trang giỏ hàng.</p></div>
+  </details>
+{%- endunless %}
+  <details class="lyxq-q" id="kiem-tra-khi-nhan">
+    <summary><span>Tôi có được kiểm tra hàng trước khi nhận không?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a">
+      <p>Có. Bạn được kiểm tra mẫu mã, màu sắc, số lượng ngay khi nhận và có quyền <b>từ chối nhận</b> nếu sản phẩm sai đơn hoặc hư hỏng do vận chuyển.</p>
+      <p>Louis Yoga khuyến khích bạn <b>quay video lúc mở hộp</b> — đây là bằng chứng giúp xử lý nhanh nếu có sự cố. <a href="/chinh-sach-kiem-hang">Xem chính sách kiểm hàng →</a></p>
+    </div>
+  </details>
+{%- unless lyx_faq_home %}
+</section>
+
+<section class="lyxq-grp" id="doi-tra" data-lyxq-grp>
+  <div class="lyxq-gh"><span class="lyxq-gn">04</span><h2>Đổi trả &amp; bảo hành</h2></div>
+{%- endunless %}
+  <details class="lyxq-q" id="chinh-sach-doi-tra">
+    <summary><span>Chính sách đổi trả của Louis Yoga thế nào?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a">
+      <ul>
+        <li><b>Lỗi sản xuất hoặc hư hỏng khi vận chuyển:</b> đổi mới trong <b>10 ngày</b> kể từ ngày nhận hàng, Louis Yoga chịu 100% phí vận chuyển.</li>
+        <li><b>Đổi theo nhu cầu:</b> trong <b>3 ngày</b> kể từ ngày nhận, sản phẩm chưa sử dụng, còn nguyên tem mác, bao bì; bạn chịu phí vận chuyển 2 chiều.</li>
+      </ul>
+      <p>Mỗi đơn hàng được hỗ trợ đổi 01 lần. <a href="/chinh-sach-bao-hanh-doi-tra-san-pham">Xem đầy đủ chính sách →</a></p>
+    </div>
+  </details>
+{%- unless lyx_faq_home %}
+  <details class="lyxq-q" id="khong-ho-tro-doi-tra">
+    <summary><span>Trường hợp nào không được đổi trả?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a"><p>Sản phẩm đã qua sử dụng hoặc hư hỏng do bảo quản, sử dụng sai cách; quá thời hạn đổi trả; thiếu tem mác, mất hộp, bong tróc hoặc trầy xước nghiêm trọng.</p></div>
+  </details>
+  <details class="lyxq-q" id="cach-doi-tra">
+    <summary><span>Các bước đổi trả, bảo hành như thế nào?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a">
+      <ol>
+        <li>Gửi hình ảnh/video sản phẩm kèm thông tin đơn hàng cho bộ phận chăm sóc khách hàng{% if lyf_bh != blank %} (bảo hành – khiếu nại: <a href="tel:{{ lyf_bh_n }}">{{ lyf_bh }}</a>){% endif %}.</li>
+        <li>Sau khi được xác nhận, gửi sản phẩm về Louis Yoga theo địa chỉ được hướng dẫn.</li>
+        <li>Louis Yoga kiểm tra và đổi mới hoặc hỗ trợ theo mong muốn của bạn; sản phẩm không đủ điều kiện được gửi trả lại kèm lý do cụ thể.</li>
+      </ol>
+    </div>
+  </details>
+</section>
+
+<section class="lyxq-grp" id="bao-quan" data-lyxq-grp>
+  <div class="lyxq-gh"><span class="lyxq-gn">05</span><h2>Sử dụng &amp; bảo quản thảm</h2></div>
+{%- endunless %}
+  <details class="lyxq-q" id="ve-sinh-tham">
+    <summary><span>Vệ sinh thảm yoga như thế nào cho đúng?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a">
+      <ol>
+        <li>Xịt đều dung dịch vệ sinh thảm lên toàn bộ bề mặt.</li>
+        <li>Lau bằng khăn ẩm, sợi vải mềm.</li>
+        <li>Để thảm khô tự nhiên trong phòng điều hoà hoặc nơi thoáng mát.</li>
+      </ol>
+      <p><b>Không</b> phơi nắng, <b>không</b> sấy, <b>không</b> giặt thảm như giặt quần áo. <a href="/huong-dan-su-dung-bao-quan-tham-cao-su">Xem hướng dẫn đầy đủ →</a></p>
+    </div>
+  </details>
+{%- unless lyx_faq_home %}
+  <details class="lyxq-q" id="cuon-bao-quan-tham">
+    <summary><span>Cuộn và cất thảm thế nào để thảm bền đẹp?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a">
+      <p>Gập 1/4 đầu thảm vào trong cho hai mép dài song song, đặt hai tay lên đầu thảm rồi cuộn tròn về phía người, dựng đứng chỉnh lại và cho vào túi.</p>
+      <p>Lưu ý: <b>không</b> cuộn mặt trên của thảm vào trong, <b>không</b> gấp mặt trên vào nhau, <b>không</b> cuộn khi thảm còn ướt.</p>
+    </div>
+  </details>
+</section>
+
+<section class="lyxq-grp" id="tai-khoan" data-lyxq-grp>
+  <div class="lyxq-gh"><span class="lyxq-gn">06</span><h2>Tài khoản &amp; hợp tác</h2></div>
+  <details class="lyxq-q" id="tich-diem-thanh-vien">
+    <summary><span>Tích điểm và hạng thành viên hoạt động thế nào?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a">
+      <ul>
+        <li><b>Tích điểm:</b> mỗi 100.000đ thanh toán thành công = 1 điểm; <b>1 điểm = 1.000đ</b>, trừ thẳng vào đơn sau (dùng được toàn bộ điểm). Điểm có giá trị 6 tháng, không quy đổi tiền mặt, không chuyển cho người khác.</li>
+        <li><b>Hạng thành viên:</b> Member, Silver, Gold, Diamond — giảm 5% đến 15% mỗi đơn và ưu đãi sinh nhật 10% đến 20% tuỳ hạng.</li>
+      </ul>
+      <p>Đăng nhập <a href="/account">tài khoản</a> để theo dõi đơn hàng và điểm của bạn. <a href="/chinh-sach-khach-hang-than-thiet">Xem chính sách khách hàng thân thiết →</a></p>
+    </div>
+  </details>
+  <details class="lyxq-q" id="dang-ky-ctv">
+    <summary><span>Tôi muốn làm cộng tác viên bán hàng cho Louis Yoga?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a"><p>Cộng tác viên không cần vốn, không nhập hàng — hàng gửi từ kho Louis Yoga, hoa hồng từ 10% đến 15% theo doanh thu đơn giao thành công. Louis Yoga cung cấp ảnh, video, kiến thức sản phẩm và xử lý bảo hành, đổi trả cho khách. <a href="/chinh-sach-ctv">Xem chính sách CTV →</a></p></div>
+  </details>
+  <details class="lyxq-q" id="dai-ly-phong-tap">
+    <summary><span>Tôi là chủ phòng tập / muốn làm đại lý?</span><i aria-hidden="true"></i></summary>
+    <div class="lyxq-a"><p>Louis Yoga chào đón đại lý, chủ phòng tập và huấn luyện viên hợp tác, kèm hỗ trợ marketing, tư liệu ảnh/video và chăm sóc khách hàng sau bán. <a href="/chinh-sach-dai-ly">Để lại thông tin tại trang Chính sách đại lý →</a></p></div>
+  </details>
+</section>
+{%- endunless -%}

@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "remotion-studio",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "05_VIDEO_PROJECTS/louis-yoga-remotion",
+        "run",
+        "dev",
+        "--",
+        "--no-open",
+        "--port=3000"
+      ],
+      "port": 3000
+    }
+  ]
+}

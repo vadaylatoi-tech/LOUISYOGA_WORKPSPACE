@@ -1,0 +1,36 @@
+# Quy trình edit nhanh — DÙNG HỒ SƠ, KHÔNG NGHE LẠI VIDEO
+
+## Video đã có hồ sơ thì KHÔNG chạy Whisper, KHÔNG xem lại toàn bộ video
+
+Cạnh mỗi video đã cắt trong `11_COMPLETED_PROJECTS/2026-10_reels-chon-tham-dot1/cuts/` có 2 file hồ sơ, làm sẵn một lần:
+
+| File | Nội dung | Dùng để |
+|---|---|---|
+| `NN - tên.brief.md` | Tóm tắt: hook / thân / kết theo giây, toàn văn lời thoại đã sửa tên riêng, từ khóa nên nhấn | **Đọc file này đầu tiên** — đủ để hiểu video, không cần xem/nghe lại |
+| `NN - tên.hoso.words.json` | Transcript word-level (faster-whisper large-v3) của **chính video ngắn**, mốc tính từ 0 | Sub karaoke, cắt từ đệm, đặt SFX/thẻ chữ/logo theo từ |
+
+Định dạng `hoso.words.json`: `segments[]` (mỗi câu có `start`, `end`, `text`, `text_fixed`, `words[]`) và `words[]` phẳng, mỗi từ `{w, start, end, p}`. Ngoài ra có `parts[]` (đoạn nào ghép từ giây nào của video gốc) và `video_mtime`.
+
+### Cách dùng theo từng skill
+
+- **nns-auto-sub / nns-full-pass**: cứ chạy bình thường. `transcribe.py` đã được sửa để tự tìm `<video>.hoso.words.json`; nếu video đã qua `nns-cut-silence` thì nó tự đổi mốc theo `<video>.cut.plan.timemap.json`. Log sẽ in `dung HO SO co san, KHONG chay Whisper`. Muốn ép nghe lại: `--no-hoso`.
+- **edit-nns-v1 / louis-yoga-remotion (Remotion)**: KHÔNG chạy đoạn faster-whisper trong skill. Ghi `segments` của hồ sơ ra làm `transcript_raw.json` (cùng định dạng `[{..., "words": [{w,start,end}]}]`), rồi đi tiếp các bước cắt từ đệm / remap / timeline như bình thường. Nếu tự cắt thêm khoảng lặng thì remap mốc theo timemap, không nhận dạng lại.
+- Chỉ đo thêm thứ hồ sơ không có (ví dụ vị trí mặt, khung hình để đặt chữ) — trích vài frame, không xem hết video.
+
+### Khi nào hồ sơ KHÔNG còn dùng được
+- Video `.mp4` bị sửa/render lại sau khi làm hồ sơ (`video_mtime` không khớp) → script tự bỏ qua hồ sơ. Tạo lại hồ sơ cho riêng video đó.
+- Video mới chưa có hồ sơ → chạy Whisper như thường (đã bật GPU, xem dưới).
+
+## Whisper trên máy này
+- GPU GTX 1660 Super chạy được sau khi cài `nvidia-cublas-cu12` + `nvidia-cudnn-cu12` (pip). Trên Windows phải thêm `site-packages/nvidia/{cublas,cudnn,cuda_nvrtc}/bin` vào đường tìm DLL (`os.add_dll_directory`) trước khi nạp model — `transcribe.py` đã tự làm.
+- Dùng `device="cuda", compute_type="int8_float16"` (nhanh hơn `float16` ~2 lần trên card này). ~30 giây cho 1 video 60–90 giây.
+
+## Quy tắc nội dung video ngắn (người dùng đã duyệt)
+- Mở bằng **hook**, kết bằng **câu chốt trọn vấn đề**; không để mất chữ đầu/cuối câu.
+- Không chỉnh màu nếu không được yêu cầu.
+- Tên riêng hay bị nhận sai: Asana (Asena/Ascena), Moon (mút), Queen (Quin), Basic Gen (Basic Den/Gem/Gel), TPE (TP/tê bê), Mastery, thảm (thạm/tạm/hạm), bong tróc (bong chóc), giỏ hàng (dọa hàng), thương hiệu Louis Yoga (Lushoga/Louis Soga/Richoga).
+
+## Đường dẫn trong LOUGA WORKSPACE (thêm khi chuyển máy, 2026-10-26)
+- Thư viện dùng chung: `03_MEDIA_LIBRARY/shared-sources/`. Skill `nns-*` không còn tự tìm thấy thư mục này (nó không còn là thư mục cha) → luôn truyền `--resources "<workspace>/03_MEDIA_LIBRARY/shared-sources"`.
+- Media (mp4, ảnh, work/) ở Google Drive `LOUGA_WORKSPACE_MEDIA/`, chép về đúng vị trí bằng `00_SYSTEM/sync/restore_media.ps1`.
+- Đường dẫn cũ còn trong memory/báo cáo cũ: tra `00_SYSTEM/claude-memory/PATH_MAP.md`.

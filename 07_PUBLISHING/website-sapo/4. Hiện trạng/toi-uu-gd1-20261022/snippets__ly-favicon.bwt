@@ -1,0 +1,22 @@
+{% comment %}10/2026 — Favicon theo icon hoa sen anh Công gửi (nền trắng). ly-favicon-32.png cho tab trình duyệt; favicon.png 180×180 cho Safari / icon màn hình chính iPhone. Tải lên qua API bằng trường "base64". Snippet này được include trong cả 2 nhánh <head> của layouts/theme.bwt nên nạp luôn font (ly-fonts) ở đây để không phải sửa layout.
+17/10/2026: nạp thêm assets/lyx-pages.css (editorial cho trang phụ: blog, báo chí, bài viết…) ở mọi trang trừ trang chủ. Bản trước: snippets/zz-backup-ly-favicon-20261017.bwt
+17/10/2026 (2): nạp assets/lyx-account.css cho các trang tài khoản (templates/customers/*). Bản trước: snippets/zz-backup-ly-favicon-v2-20261017.bwt
+18/10/2026: nạp assets/lyx-tab.css + lyx-tab.js ở mọi trang (sửa khổ tablet, nút nổi Gọi/Zalo, thanh đáy vuông góc, hero, dòng Chất liệu trang SP). Bản trước: snippets/zz-backup-ly-favicon-20261018.bwt{% endcomment %}
+<link rel="icon" type="image/png" sizes="32x32" href="{{ 'ly-favicon-32.png' | asset_url }}">
+<link rel="icon" type="image/png" sizes="180x180" href="{{ 'favicon.png' | asset_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ 'favicon.png' | asset_url }}">
+{% include 'ly-fonts' %}
+{% unless template contains 'index' %}<link rel="stylesheet" href="{{ 'lyx-pages.css' | asset_url }}">{% endunless %}
+{% if template contains 'customers' %}<link rel="stylesheet" href="{{ 'lyx-account.css' | asset_url }}">{% endif %}
+<link rel="stylesheet" href="{{ 'lyx-tab.css' | asset_url }}">
+<script src="{{ 'lyx-tab.js' | asset_url }}" defer></script>
+{%- comment -%} 22/10/2026 tối ưu: iOS < 15.4 chưa có <dialog>.showModal() (hộp chọn phân loại, yêu thích, video) → giả lập tối thiểu: mở/đóng bằng thuộc tính open, Esc/bấm nền để đóng, phát sự kiện close. Máy mới bỏ qua đoạn này. {%- endcomment -%}
+<script>(function(){var D=window.HTMLDialogElement;if(D&&D.prototype.showModal)return;var P=(D||HTMLElement).prototype;
+if(!('open' in document.createElement('dialog')))Object.defineProperty(P,'open',{configurable:true,get:function(){return this.hasAttribute('open')},set:function(v){v?this.setAttribute('open',''):this.removeAttribute('open')}});
+var top=[];P.show=function(){this.setAttribute('open','')};
+P.showModal=function(){if(this.hasAttribute('open'))return;this.setAttribute('open','');this.setAttribute('data-lyd-modal','');top.push(this);document.documentElement.classList.add('lyd-lock')};
+P.close=function(v){if(!this.hasAttribute('open'))return;if(v!==undefined)this.returnValue=v;this.removeAttribute('open');this.removeAttribute('data-lyd-modal');top=top.filter(function(x){return x!==this},this);if(!top.length)document.documentElement.classList.remove('lyd-lock');var e;try{e=new Event('close')}catch(_){e=document.createEvent('Event');e.initEvent('close',false,false)}this.dispatchEvent(e)};
+document.addEventListener('keydown',function(e){if((e.key==='Escape'||e.keyCode===27)&&top.length){var d=top[top.length-1],c;try{c=new Event('cancel',{cancelable:true})}catch(_){c=document.createEvent('Event');c.initEvent('cancel',false,true)}if(d.dispatchEvent(c))d.close()}});
+var st=document.createElement('style');st.textContent='dialog:not([open]){display:none!important}dialog[data-lyd-modal]{position:fixed!important;left:50%!important;top:50%!important;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);z-index:2147483000;max-height:92vh;overflow:auto;margin:0;box-shadow:0 0 0 100vmax rgba(20,10,14,.5)}html.lyd-lock,html.lyd-lock body{overflow:hidden}';document.head.appendChild(st)})();</script>
+{%- comment -%} 22/10/2026 tối ưu: trang SP điện thoại — bật sẵn lớp lyp-on trên <html> trước khi vẽ (ly-pdp.js gắn lên <body> sau khi tải → trang hiện kiểu PC rồi nhảy sang kiểu điện thoại). Theo dõi đổi khổ để gỡ khi ≥768px. {%- endcomment -%}
+{%- if template contains 'product' -%}<script>(function(){var m=window.matchMedia&&matchMedia('(max-width:767px)');if(!m)return;var h=document.documentElement;function s(){h.classList.toggle('lyp-on',m.matches)}s();if(m.addEventListener)m.addEventListener('change',s);else if(m.addListener)m.addListener(s)})();</script>{%- endif -%}

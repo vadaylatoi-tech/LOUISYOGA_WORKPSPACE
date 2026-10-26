@@ -1,0 +1,103 @@
+/* Louis Yoga — 20/10/2026: thẻ sản phẩm theo bản thiết kế "khối sản phẩm – khối sản phẩm tương tự" (anh Công).
+   Ghi đè lên phần thẻ trong assets/lyx-home.css; nạp 1 lần từ snippets/ly-home-card.bwt (kèm assets/lyx-card.js).
+   - PC + máy tính bảng (>=768px): ảnh bo góc, hàng ô màu (6 ô, +N), "Màu ...", tên, sao | giá (giá gốc gạch phía trên), nút giỏ + MUA NGAY.
+   - Điện thoại (<=767px) và khối "Sản phẩm tương tự" (mọi khổ): bản gọn — nút giỏ có dấu + ở góc phải dưới ảnh, không có MUA NGAY,
+     4 ô màu, tên, "Màu ..." | sao, giá to + giá gốc gạch bên cạnh.
+   - Khối Sản phẩm tương tự: 8 thẻ — PC/máy tính bảng 4 cột x 2 hàng, điện thoại 2 cột x 3 hàng (ẩn thẻ 7-8); chữ "Xem thêm sản phẩm" gạch chân ở giữa. */
+:root{--lyxc-cart:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7H6'/%3E%3Ccircle cx='9.5' cy='20' r='1.4'/%3E%3Ccircle cx='17' cy='20' r='1.4'/%3E%3C/svg%3E");--lyxc-plus:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='white' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M5 2v6M2 5h6'/%3E%3C/svg%3E")}
+
+/* ---------- Chung mọi khổ ---------- */
+html body .ly-card.lyx-card .lyx-card-img{border:1px solid var(--lyx-line,#e7e2dc);border-radius:16px;background:#f6f4f1}
+html body .ly-card.lyx-card .lyx-card-img img{transition:transform .6s cubic-bezier(.2,.7,.2,1),opacity .25s}
+html body .ly-card.lyx-card .lyx-card-img img.is-swap{opacity:.35}
+html body .ly-card.lyx-card .lyx-card-sale{top:10px;left:10px;padding:6px 11px;font-size:10px;font-weight:700;letter-spacing:.06em}
+html body .ly-card.lyx-card .lyx-card-sale[hidden]{display:none!important}
+html body .ly-card.lyx-card .lyx-card-wish{top:8px;right:8px;width:34px;height:34px;background:transparent;color:var(--lyx-cta,#5a2333)!important}
+html body .ly-card.lyx-card .lyx-card-wish[aria-pressed="true"],html body .ly-card.lyx-card .lyx-card-wish.active{color:var(--lyx-brand,#d82183)!important}
+html body .ly-card.lyx-card .lyx-card-wish:hover{background:rgba(255,255,255,.75)}
+html body .ly-card.lyx-card .lyx-card-wish svg{width:22px;height:22px;stroke-width:1.4}
+
+html body .ly-card.lyx-card .lyx-card-info{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"sw sw" "cl cl" "nm nm" "rt pr" "ac ac";grid-template-rows:auto auto auto 1fr auto;column-gap:8px;row-gap:0;padding:12px 2px 0}
+html body .ly-card.lyx-card .lyx-card-row{display:contents}
+html body .ly-card.lyx-card .lyx-sws{grid-area:sw;display:flex;align-items:center;gap:8px;min-height:30px;margin:0 -3px 6px;padding:3px;overflow:hidden}
+html body .ly-card.lyx-card .lyx-sw{flex:none;display:block;width:22px!important;height:22px!important;min-width:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:50%!important;background:var(--c,#d8d2ca)!important;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);cursor:pointer;transition:box-shadow .2s}
+html body .ly-card.lyx-card .lyx-sw:nth-of-type(n+7){display:none!important}
+html body .ly-card.lyx-card .lyx-sw:hover{box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 0 0 2px #fff,0 0 0 3px #bdb5ad}
+html body .ly-card.lyx-card .lyx-sw.is-on{box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 0 0 2px #fff,0 0 0 3px #141414}
+html body .ly-card.lyx-card .lyx-sw:focus-visible{outline:2px solid var(--lyx-brand,#d82183);outline-offset:3px}
+html body .ly-card.lyx-card .lyx-sw-more{flex:none;font:500 11px/1 var(--lyx-font,Montserrat,sans-serif)!important;color:#8a837c!important;text-decoration:none!important}
+html body .ly-card.lyx-card .lyx-sw-more.is-m{display:none}
+html body .ly-card.lyx-card .lyx-card-color{grid-area:cl;min-height:1.3em;margin:0 0 4px;font:400 10.5px/1.3 var(--lyx-font,Montserrat,sans-serif)!important;letter-spacing:.02em;color:#8a837c!important;text-align:left!important;text-transform:none}
+html body .ly-card.lyx-card .lyx-card-name{grid-area:nm;margin:0 0 10px}
+html body .ly-card.lyx-card .lyx-card-rate{grid-area:rt;align-self:end;margin:0 0 3px}
+html body .ly-card.lyx-card .lyx-card-price{grid-area:pr;align-self:end}
+html body .ly-card.lyx-card .lyx-card-actions{grid-area:ac;margin-top:12px}
+@media (min-width:768px){
+  .lyx-card-name{font-size:14px!important}
+  .lyx-card-price strong{font-size:17px}
+  .lyx-card-price del{font-size:11px}
+}
+
+/* ---------- Bản gọn: điện thoại ---------- */
+@media (max-width:767px){
+  html body .ly-card.lyx-card .lyx-card-img{border-radius:12px}
+  html body .ly-card.lyx-card .lyx-card-info{position:static;grid-template-areas:"sw sw" "nm nm" "cl rt" "pr pr";grid-template-rows:auto auto auto 1fr;padding-top:9px}
+  html body .ly-card.lyx-card .lyx-sws{gap:6px;min-height:25px;margin-bottom:4px}
+  html body .ly-card.lyx-card .lyx-sw{width:18px!important;height:18px!important}
+  html body .ly-card.lyx-card .lyx-sw:nth-of-type(n+5){display:none!important}
+  html body .ly-card.lyx-card .lyx-sw-more.is-m{display:inline}
+  html body .ly-card.lyx-card .lyx-sw-more.is-d{display:none}
+  html body .ly-card.lyx-card .lyx-card-name{margin:0 0 5px}
+  html body .ly-card.lyx-card .lyx-card-color{align-self:center;margin:0;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  html body .ly-card.lyx-card .lyx-card-rate{align-self:center;justify-self:end;margin:0}
+  html body .ly-card.lyx-card .lyx-card-price{flex-direction:row-reverse;flex-wrap:wrap;justify-content:flex-end;align-items:baseline;gap:2px 8px;margin-top:9px;text-align:left}
+  html body .ly-card.lyx-card .lyx-card-actions{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;align-items:flex-end;justify-content:flex-end;aspect-ratio:1/1;margin:0;padding:10px;pointer-events:none}
+  html body .ly-card.lyx-card .lyx-card-actions>*{pointer-events:auto}
+  html body .ly-card.lyx-card .lyx-card-buy,html body .ly-card.lyx-card .lyx-card-cart[aria-label="Hết hàng"]{display:none!important}
+  html body .ly-card.lyx-card .lyx-card-cart{flex:none;width:40px;height:40px;border-color:#d9d2ca;background:rgba(255,255,255,.94);overflow:visible;box-shadow:0 2px 8px rgba(40,20,25,.08)}
+  html body .ly-card.lyx-card .lyx-card-cart::before{width:19px;height:19px;-webkit-mask-image:var(--lyxc-cart);mask-image:var(--lyxc-cart)}
+  html body .ly-card.lyx-card .lyx-card-cart::after{content:'';position:absolute;right:3px;bottom:3px;width:11px;height:11px;border-radius:50%;background:#141414 var(--lyxc-plus) center/7px no-repeat}
+  html body .ly-card.lyx-card .lyx-card-cart:hover::after{background-color:var(--lyx-cta,#5a2333)}
+  .lyx-card-price strong{font-size:15.5px}
+}
+@media (max-width:359px){
+  html body .ly-card.lyx-card .lyx-sw{width:15px!important;height:15px!important}
+  html body .ly-card.lyx-card .lyx-sws{gap:5px}
+  html body .ly-card.lyx-card .lyx-card-info{grid-template-areas:"sw sw" "nm nm" "cl cl" "rt rt" "pr pr";grid-template-rows:auto auto auto auto 1fr}
+  html body .ly-card.lyx-card .lyx-card-rate{justify-self:start;margin-top:4px}
+}
+
+/* ---------- Bản gọn: khối Sản phẩm tương tự (mọi khổ) ---------- */
+html body .ly-pd-related .ly-card.lyx-card .lyx-card-img{border-radius:12px}
+html body .ly-pd-related .ly-card.lyx-card .lyx-card-info{position:static;grid-template-areas:"sw sw" "nm nm" "cl rt" "pr pr";grid-template-rows:auto auto auto 1fr;padding-top:9px}
+html body .ly-pd-related .ly-card.lyx-card .lyx-sws{gap:6px;min-height:25px;margin-bottom:4px}
+html body .ly-pd-related .ly-card.lyx-card .lyx-sw{width:18px!important;height:18px!important}
+html body .ly-pd-related .ly-card.lyx-card .lyx-sw:nth-of-type(n+5){display:none!important}
+html body .ly-pd-related .ly-card.lyx-card .lyx-sw-more.is-m{display:inline}
+html body .ly-pd-related .ly-card.lyx-card .lyx-sw-more.is-d{display:none}
+html body .ly-pd-related .ly-card.lyx-card .lyx-card-name{margin:0 0 5px}
+html body .ly-pd-related .ly-card.lyx-card .lyx-card-color{align-self:center;margin:0;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+html body .ly-pd-related .ly-card.lyx-card .lyx-card-rate{align-self:center;justify-self:end;margin:0}
+html body .ly-pd-related .ly-card.lyx-card .lyx-card-price{flex-direction:row-reverse;flex-wrap:wrap;justify-content:flex-end;align-items:baseline;gap:2px 8px;margin-top:9px;text-align:left}
+html body .ly-pd-related .ly-card.lyx-card .lyx-card-actions{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;align-items:flex-end;justify-content:flex-end;aspect-ratio:1/1;margin:0;padding:10px;pointer-events:none}
+html body .ly-pd-related .ly-card.lyx-card .lyx-card-actions>*{pointer-events:auto}
+html body .ly-pd-related .ly-card.lyx-card .lyx-card-buy,html body .ly-pd-related .ly-card.lyx-card .lyx-card-cart[aria-label="Hết hàng"]{display:none!important}
+html body .ly-pd-related .ly-card.lyx-card .lyx-card-cart{flex:none;width:40px;height:40px;border-color:#d9d2ca;background:rgba(255,255,255,.94);overflow:visible;box-shadow:0 2px 8px rgba(40,20,25,.08)}
+html body .ly-pd-related .ly-card.lyx-card .lyx-card-cart::before{width:19px;height:19px;-webkit-mask-image:var(--lyxc-cart);mask-image:var(--lyxc-cart)}
+html body .ly-pd-related .ly-card.lyx-card .lyx-card-cart::after{content:'';position:absolute;right:3px;bottom:3px;width:11px;height:11px;border-radius:50%;background:#141414 var(--lyxc-plus) center/7px no-repeat}
+html body .ly-pd-related .ly-card.lyx-card .lyx-card-cart:hover::after{background-color:var(--lyx-cta,#5a2333)}
+@media (min-width:768px){
+  html body .ly-pd-related .ly-card.lyx-card .lyx-card-name{font-size:13.5px!important}
+  html body .ly-pd-related .ly-card.lyx-card .lyx-card-cart{width:44px;height:44px}
+}
+html body.ly-template-product .ly-pd-related .ly-section-title{margin:0!important}
+html body.ly-template-product .ly-pd-related .ly-section-title span,html body.ly-template-product .ly-pd-related .ly-section-subtitle{display:none!important}
+html body.ly-template-product .ly-pd-related .ly-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:28px 20px!important;margin:20px 0 0!important}
+html body.ly-template-product .ly-pd-related .ly-grid>*{width:auto!important;max-width:none!important;margin:0!important}
+html body.ly-template-product .ly-pd-related .ly-text-link{display:block!important;width:max-content;min-height:0!important;margin:30px auto 0!important;padding:0 0 3px!important;border:0!important;border-bottom:1px solid currentColor!important;border-radius:0!important;background:none!important;color:var(--lyx-ink,#141414)!important;font:500 13px/1.3 var(--lyx-font,Montserrat,sans-serif)!important;letter-spacing:.08em!important;text-transform:uppercase!important;text-decoration:none!important}
+html body.ly-template-product .ly-pd-related .ly-text-link:hover{color:var(--lyx-cta,#5a2333)!important}
+@media (max-width:767px){
+  html body.ly-template-product .ly-pd-related .ly-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:22px 12px!important;margin-top:16px!important}
+  html body.ly-template-product .ly-pd-related .ly-grid>.lyx-card:nth-of-type(n+7){display:none!important}
+  html body.ly-template-product .ly-pd-related .ly-text-link{margin-top:24px!important;font-size:12px!important}
+}

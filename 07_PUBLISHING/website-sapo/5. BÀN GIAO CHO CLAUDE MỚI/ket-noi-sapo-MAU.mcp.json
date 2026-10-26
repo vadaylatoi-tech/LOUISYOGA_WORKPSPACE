@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "sapo-louisyoga-claude": {
+      "type": "http",
+      "url": "https://louisyoga-claude-mcp.vadaylatoi.workers.dev/mcp/<MCP_PATH_TOKEN>"
+    }
+  }
+}

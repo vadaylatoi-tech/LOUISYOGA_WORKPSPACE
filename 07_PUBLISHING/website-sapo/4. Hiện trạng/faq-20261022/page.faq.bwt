@@ -1,0 +1,68 @@
+{%- comment -%} 22/10/2026 — Trang "Câu hỏi thường gặp". Tạo trang trong admin (Website → Trang nội dung), chọn giao diện "page.faq"; đường dẫn đề xuất /cau-hoi-thuong-gap
+  (khối cuối trang chủ snippets/lyx-home-faq.bwt trỏ về đường dẫn này). Nội dung hỏi–đáp: snippets/lyx-faq-items.bwt (không lấy page.content).
+  CSS/JS: assets/lyx-faq.css, assets/lyx-faq.js. Khung breadcrumb .lyxc-crumb dùng chung với các trang khác (lyx-col.css). {%- endcomment -%}
+{{ 'lyx-faq.css' | asset_url | stylesheet_tag }}
+{%- assign lyf_tel = settings.store_phone | replace: '–', '-' | split: '-' | first | strip -%}
+{%- assign lyf_tel_n = lyf_tel | remove: '.' | remove: ' ' -%}
+{%- assign lyx_faq_home = false -%}
+<div class="lyxc lyxq lyxq-page">
+  <nav class="lyxc-crumb" aria-label="Breadcrumb"><div class="lyx-wrap"><ol><li><a href="/">Trang chủ</a></li><li aria-current="page">Câu hỏi thường gặp</li></ol></div></nav>
+
+  <section class="lyxq-hero" aria-labelledby="lyxq-t">
+    <div class="lyx-wrap">
+      <p class="lyx-eyebrow">Trung tâm hỗ trợ</p>
+      <h1 id="lyxq-t">Câu hỏi thường gặp</h1>
+      <p class="lyxq-lead">Mọi điều bạn cần biết về chọn thảm, đặt hàng, giao nhận và đổi trả — gói gọn trong một trang.</p>
+      <div class="lyxq-search" role="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" placeholder="Tìm câu hỏi, ví dụ: đổi trả, vệ sinh thảm…" aria-label="Tìm câu hỏi" autocomplete="off">
+        <button type="button" class="lyxq-clear" aria-label="Xoá tìm kiếm" hidden>✕</button>
+      </div>
+      <p class="lyxq-count" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="lyxq-body">
+    <div class="lyx-wrap lyxq-grid">
+      <aside class="lyxq-nav" aria-label="Nhóm câu hỏi">
+        <p class="lyxq-nav-h">Chủ đề</p>
+        <ul>
+          <li><a href="#chon-tham">Chọn thảm &amp; sản phẩm <small>05</small></a></li>
+          <li><a href="#dat-hang">Đặt hàng &amp; thanh toán <small>05</small></a></li>
+          <li><a href="#van-chuyen">Vận chuyển &amp; nhận hàng <small>03</small></a></li>
+          <li><a href="#doi-tra">Đổi trả &amp; bảo hành <small>03</small></a></li>
+          <li><a href="#bao-quan">Sử dụng &amp; bảo quản <small>02</small></a></li>
+          <li><a href="#tai-khoan">Tài khoản &amp; hợp tác <small>03</small></a></li>
+        </ul>
+        <div class="lyxq-nav-help">
+          <p>Cần tư vấn chọn thảm ngay?</p>
+          {%- if lyf_tel != blank -%}<a href="tel:{{ lyf_tel_n }}">{{ lyf_tel }}</a>{%- endif -%}
+          {%- if settings.social_zl != blank -%}<a href="{{ settings.social_zl }}" target="_blank" rel="noopener">Chat Zalo →</a>{%- endif -%}
+        </div>
+      </aside>
+      <div class="lyxq-main">
+        {%- include 'lyx-faq-items' -%}
+        <div class="lyxq-empty" hidden>
+          <p>Chưa có câu hỏi phù hợp. Bạn hãy thử từ khoá khác, hoặc hỏi trực tiếp Louis Yoga nhé.</p>
+          {%- if settings.social_zl != blank -%}<a class="lyx-btn lyx-btn-cta" href="{{ settings.social_zl }}" target="_blank" rel="noopener">Hỏi qua Zalo</a>{%- else -%}<a class="lyx-btn lyx-btn-cta" href="/lien-he">Gửi câu hỏi</a>{%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lyxq-cta" aria-labelledby="lyxq-cta-t">
+    <div class="lyx-wrap"><div class="lyxq-cta-card">
+      <div>
+        <p class="lyx-eyebrow">Vẫn còn thắc mắc?</p>
+        <h2 id="lyxq-cta-t">Louis Yoga luôn sẵn sàng lắng nghe</h2>
+        <p>Đội ngũ tư vấn giúp bạn chọn tấm thảm phù hợp và hỗ trợ mọi vấn đề về đơn hàng.</p>
+      </div>
+      <div class="lyxq-cta-btns">
+        {%- if lyf_tel != blank -%}<a class="lyx-btn" href="tel:{{ lyf_tel_n }}">Gọi {{ lyf_tel }}</a>{%- endif -%}
+        {%- if settings.social_zl != blank -%}<a class="lyx-btn lyxq-ghost" href="{{ settings.social_zl }}" target="_blank" rel="noopener">Chat Zalo</a>{%- endif -%}
+        <a class="lyx-btn lyxq-ghost" href="/lien-he">Gửi liên hệ</a>
+      </div>
+    </div></div>
+  </section>
+</div>
+<script src="{{ 'lyx-faq.js' | asset_url }}" defer></script>

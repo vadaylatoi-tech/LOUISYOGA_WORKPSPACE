@@ -1,0 +1,23 @@
+{%- comment -%} 22/10/2026 — Khối "Câu hỏi thường gặp" cuối trang chủ (gọi từ snippets/lyx-home.bwt, sau Louis News). Câu hỏi lấy từ snippets/lyx-faq-items.bwt (lyx_faq_home = true → 6 câu).
+  Nút "Xem tất cả" trỏ /cau-hoi-thuong-gap (trang tạo trong admin với giao diện page.faq). CSS/JS: assets/lyx-faq.css/.js. {%- endcomment -%}
+{%- assign lyf_tel = settings.store_phone | replace: '–', '-' | split: '-' | first | strip -%}
+{%- assign lyf_tel_n = lyf_tel | remove: '.' | remove: ' ' -%}
+<link rel="stylesheet" href="{{ 'lyx-faq.css' | asset_url }}">
+<section class="lyx-sec lyxq lyxq-home" aria-labelledby="lyxq-home-t">
+  <div class="lyx-wrap lyxq-home-grid">
+    <div class="lyxq-home-intro">
+      <span class="lyxq-home-big" aria-hidden="true">Q&amp;A</span>
+      <p class="lyx-eyebrow">Hỏi &amp; đáp</p>
+      <h2 class="lyx-h2" id="lyxq-home-t">Câu hỏi thường gặp</h2>
+      <p class="lyxq-home-p">Những điều khách hàng hay hỏi Louis Yoga trước khi chọn tấm thảm đầu tiên — từ cách chọn, giao nhận đến đổi trả.</p>
+      <a class="lyx-btn lyx-btn-cta" href="/cau-hoi-thuong-gap">Xem tất cả câu hỏi</a>
+      <p class="lyxq-home-contact">Cần tư vấn ngay?{% if lyf_tel != blank %} Gọi <a href="tel:{{ lyf_tel_n }}">{{ lyf_tel }}</a>{% endif %}{% if settings.social_zl != blank %} · <a href="{{ settings.social_zl }}" target="_blank" rel="noopener">Chat Zalo</a>{% endif %}</p>
+    </div>
+    <div class="lyxq-list">
+      {%- assign lyx_faq_home = true -%}
+      {%- include 'lyx-faq-items' -%}
+      {%- assign lyx_faq_home = false -%}
+    </div>
+  </div>
+</section>
+<script src="{{ 'lyx-faq.js' | asset_url }}" defer></script>

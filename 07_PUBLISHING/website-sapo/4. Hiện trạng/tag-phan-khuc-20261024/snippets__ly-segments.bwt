@@ -1,0 +1,50 @@
+{%- comment -%}
+  24/10/2026 — PHÂN KHÚC THEO TAG (anh Công): sản phẩm có tag "Harmony" / "Balance" / "Mastery" (không phân biệt hoa thường) thuộc phân khúc đó.
+  Thêm sản phẩm (thảm, combo…) vào phân khúc = thêm tag trong admin, KHÔNG cần sửa theme. Bộ lọc, menu, link "Xem toàn bộ" lọc theo tag (?q=tags:((Harmony))).
+  12 thảm cũ đã được gắn tag 24/10; dãy mã ly_seg_ids bên dưới GIỮ LẠI làm dự phòng + quyết định THỨ TỰ hiện ở tab trang chủ / SP tương tự (mã đứng trước, SP có tag xếp sau).
+  Bản trước: snippets/zz-backup-ly-segments-20261024-tag.bwt
+
+  (Ghi chú cũ, 10/10) NGUỒN PHÂN KHÚC DUY NHẤT — Harmony / Balance / Mastery (anh Công chốt 10/10/2026).
+  Mọi nơi (menu desktop + mobile, chip danh mục, bộ lọc "Phân khúc", tab trang chủ, trang sản phẩm, sản phẩm liên quan)
+  đều {% include 'ly-segments' %} rồi đọc các biến dưới đây — KHÔNG khai báo lại ở nơi khác.
+
+  Gán theo MÃ SẢN PHẨM (product.id), không khớp theo tên → ASANA ≠ ASANA 25, BASIC ≠ BASIC ZEN, SUN ≠ SUNFLOWER.
+  Biến thể màu/độ dày thuộc cùng sản phẩm nên tự kế thừa phân khúc.
+    Harmony : AURA 62337590 · MOON 36960227 · SUNFLOWER 60686622 · ASANA 36960064
+    Balance : ASANA 25 60763661 · BASIC 36960232 · BASIC ZEN 62353814 · QUEEN 36960230
+    Mastery : LILIUM 44128440 · NATURE 37606937 · DIAMOND 36960218 · F23 39620233
+  Chưa gán (chưa có quyết định): SUN, MINI và phụ kiện.
+
+  Vì sao không dùng danh mục (collection) của Sapo: API của connector bị chặn (403) với collections/products/menu,
+  nên chưa tạo được 3 danh mục. Trang danh sách phân khúc = /collections/all + bộ lọc Sapo "id:(...)" (khớp đúng mã),
+  dùng chung bộ lọc, sắp xếp, phân trang hiện có.
+  Thêm/bớt sản phẩm: sửa dãy mã trong ly_seg_ids (cách nhau 1 dấu cách, nhóm cách nhau bằng |) — đúng thứ tự Harmony|Balance|Mastery.
+  10/10/2026: thêm ly_seg_descs (mô tả ngắn từng phân khúc, dùng cho tab YOGA MAT trang chủ + chữ thay thế của banner).
+
+  11/10/2026 — DÒNG THẢM riêng (anh Công chốt): tách khỏi 3 phân khúc chất lượng ở trên, KHÔNG có tab/banner trang chủ,
+  KHÔNG hiện nhãn "Phân khúc" trên trang sản phẩm. Hiện ở menu Cửa hàng, chip danh mục và nhóm lọc "Dòng thảm".
+    Thảm Du lịch : Du lịch 36960223 · OCEAN 50892151
+    Thảm TPE     : TPE9 36960236
+  Cách dùng giống ly_seg_*: ly_line_handles / names / models / ids / values / urls / all_ids.
+{%- endcomment -%}
+{%- assign ly_seg_handles = 'harmony|balance|mastery' | split: '|' -%}
+{%- assign ly_seg_names = 'Harmony|Balance|Mastery' | split: '|' -%}
+{%- assign ly_seg_descs = 'dành cho người mới tập|dành cho người tập đều|dành cho người tập chuyên nghiệp' | split: '|' -%}
+{%- assign ly_seg_models = 'AURA · MOON · SUNFLOWER · ASANA|ASANA 25 · BASIC · BASIC ZEN · QUEEN|LILIUM · NATURE · DIAMOND · F23' | split: '|' -%}
+{%- assign ly_seg_tags = 'Harmony|Balance|Mastery' | split: '|' -%}
+{%- assign ly_seg_ids = '62337590 36960227 60686622 36960064|60763661 36960232 62353814 36960230|44128440 37606937 36960218 39620233' | split: '|' -%}
+{%- comment -%} Giá trị ô lọc (trường "tags") + link danh sách phân khúc — theo tag {%- endcomment -%}
+{%- capture ly_seg_tmp -%}{%- for t in ly_seg_tags -%}({{ t }}){%- unless forloop.last -%}|{%- endunless -%}{%- endfor -%}{%- endcapture -%}
+{%- assign ly_seg_values = ly_seg_tmp | split: '|' -%}
+{%- capture ly_seg_tmp -%}{%- for t in ly_seg_tags -%}/collections/all?q=tags:(({{ t }}))&amp;page=1&amp;view=grid{%- unless forloop.last -%}|{%- endunless -%}{%- endfor -%}{%- endcapture -%}
+{%- assign ly_seg_urls = ly_seg_tmp | split: '|' -%}
+{%- assign ly_seg_all_ids = ly_seg_ids | join: ' ' | split: ' ' -%}
+{%- assign ly_line_handles = 'tham-du-lich|tham-tpe' | split: '|' -%}
+{%- assign ly_line_names = 'Thảm Du lịch|Thảm TPE' | split: '|' -%}
+{%- assign ly_line_models = 'Du lịch · OCEAN|TPE9' | split: '|' -%}
+{%- assign ly_line_ids = '36960223 50892151|36960236' | split: '|' -%}
+{%- capture ly_seg_tmp -%}{%- for ids in ly_line_ids -%}({{ ids | strip | split: ' ' | join: ' OR ' }}){%- unless forloop.last -%}|{%- endunless -%}{%- endfor -%}{%- endcapture -%}
+{%- assign ly_line_values = ly_seg_tmp | split: '|' -%}
+{%- capture ly_seg_tmp -%}{%- for ids in ly_line_ids -%}/collections/all?q=id:(({{ ids | strip | split: ' ' | join: '%20OR%20' }}))&amp;page=1&amp;view=grid{%- unless forloop.last -%}|{%- endunless -%}{%- endfor -%}{%- endcapture -%}
+{%- assign ly_line_urls = ly_seg_tmp | split: '|' -%}
+{%- assign ly_line_all_ids = ly_line_ids | join: ' ' | split: ' ' -%}

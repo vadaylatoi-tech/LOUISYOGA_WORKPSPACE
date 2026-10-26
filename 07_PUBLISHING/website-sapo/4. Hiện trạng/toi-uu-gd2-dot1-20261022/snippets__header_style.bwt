@@ -1,0 +1,33 @@
+<style>
+	:root {
+		--mainColor: {{ settings.main-color }};
+		--subColor: {{settings.sup-color}};
+		--textColor: {{ settings.color_body_text }};
+		--topHeader:{{ settings.tophea-color }};
+		--bgHeader:{{ settings.header-color }};
+		--topHeader2:{{ settings.tophea-color-2 }};
+		--bgFlash:{{ settings.background_flash_bg }};
+		--gutter:30px;
+	}
+</style>
+<link rel="preload" as='style' type="text/css" href="{{ 'main.scss.css' | asset_url }}">
+{%if template contains 'index'%}<link rel="preload" as='style'  type="text/css" href="{{ 'index.scss.css' | asset_url }}">{%endif%}
+{%if template contains '404'%}<link rel="preload" as='style'  type="text/css" href="{{ '404page.scss.css' | asset_url }}">{%endif%}
+<link rel="preload" as='style'  type="text/css" href="{{ 'bootstrap-4-3-min.css' | asset_url }}">
+<link rel="preload" as='style'  type="text/css" href="{{ 'quickviews_popup_cart.scss.css' | asset_url }}">
+<link rel="stylesheet" href="{{'bootstrap-4-3-min.css' | asset_url}}">
+{{ 'main.scss.css' | asset_url | stylesheet_tag }}	
+{%if template != 'index'%}{{ 'breadcrumb_style.scss.css' | asset_url | stylesheet_tag }}{%endif%}
+{%if template contains 'index'%}{{ 'index.scss.css' | asset_url | stylesheet_tag }}{%endif%}
+{%if template contains '404'%}{{ '404page.scss.css' | asset_url | stylesheet_tag }}{%endif%}
+{%- comment -%} 22/10/2026 tối ưu GĐ2: 2 dòng cũ (if page / unless page.khuyen-mai) gộp lại = mọi trang, trước đây trang nội dung nạp 2 lần {%- endcomment -%}
+{{ 'style_page.scss.css' | asset_url | stylesheet_tag }}
+{%if template contains 'cart'%}{{ 'cartpage.scss.css' | asset_url | stylesheet_tag }}	{%endif%}
+{%if template contains 'blog' or template contains 'article'%}{{ 'blog_article_style.scss.css' | asset_url | stylesheet_tag }}{%endif%}
+{%if template contains 'collection' or template contains 'blog'  or template contains 'article'%}{{ 'sidebar_style.scss.css' | asset_url | stylesheet_tag }}{%endif%}
+{%if template contains 'product'%}{{ 'product_style.scss.css' | asset_url | stylesheet_tag }}{%endif%}
+{%if template contains 'contact'%}{{ 'contact_style.scss.css' | asset_url | stylesheet_tag }}{%endif%}
+{%if template contains 'customers'%}{{ 'account_oder_style.scss.css' | asset_url | stylesheet_tag }}{%endif%}
+{%if template contains 'collection' or template contains 'search' or template contains 'page.favorite'%}{{ 'collection_style.scss.css' | asset_url | stylesheet_tag }}{%endif%}
+{%if template contains 'search' %}{{ 'search_style.scss.css' | asset_url | stylesheet_tag }}{%endif%}
+{%if template contains 'product' or template contains 'index' or template contains 'search' or template contains 'collection'  or template contains 'page'%}{{ 'quickviews_popup_cart.scss.css' | asset_url | stylesheet_tag }}{%endif%}

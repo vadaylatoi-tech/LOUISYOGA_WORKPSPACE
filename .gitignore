@@ -1,0 +1,80 @@
+# .gitignore đề xuất cho repo louga-workspace (bản v2 — đã kiểm bằng git thật, xem GITIGNORE_CHECK.txt)
+# Nguyên tắc: media ở Google Drive, git chỉ giữ mã/tài liệu + asset nhỏ mà skill cần khi chạy.
+
+# --- thư viện / cache tái tạo được
+node_modules/
+__pycache__/
+*.pyc
+
+# --- thư mục media / sản phẩm render (lấy từ Drive theo 00_SYSTEM/sync/media_manifest.csv)
+**/public/
+**/renders/
+**/work/
+**/out/
+00_SYSTEM/claude-history/
+# thư mục để NGUYÊN KHỐI trên Drive (media + file đi kèm phải nằm cùng chỗ, ví dụ mp4 + brief + hoso)
+**/cuts/
+03_MEDIA_LIBRARY/raw-footage/
+02_PRODUCTS/website-images/
+
+# --- định dạng media (lưu Drive)
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.webm
+*.m4v
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.flac
+*.ogg
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.psd
+*.ai
+*.heic
+*.bmp
+*.tif
+*.tiff
+*.ico
+*.svg
+*.pdf
+*.docx
+*.xlsx
+*.pptx
+*.zip
+*.rar
+*.7z
+*.gz
+*.tar
+*.bundle
+*.skill
+*.onnx
+*.bin
+*.pt
+*.ttf
+*.otf
+*.woff
+*.woff2
+*.map
+
+# --- bí mật (không bao giờ commit)
+.env
+.env.*
+!.env.example
+.codex/config.toml
+**/.codex/config.toml
+.mcp.json
+**/.mcp.json
+*.jsonl
+.credentials.json
+
+# --- NGOẠI LỆ: asset nhỏ skill cần khi chạy (font Be Vietnam Pro, SFX mặc định, ảnh tham chiếu)
+#     Sửa lỗi v1: bản v1 chặn *.ttf/*.mp3/*.wav nên 6 font + 18 SFX trong danh sách GitHub bị bỏ sót.
+!.claude/skills/**/assets/**
+!.agents/skills/**/assets/**

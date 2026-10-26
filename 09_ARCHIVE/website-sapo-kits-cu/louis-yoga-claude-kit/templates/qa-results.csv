@@ -1,0 +1,10 @@
+case_id,page_or_flow,theme_id,commit,viewport,browser,status,evidence,notes,checked_at
+API-READ,themes-and-assets,,,,,NOT_TESTED,,,
+VISUAL-HOME,home-desktop-mobile,,,,,NOT_TESTED,,,
+MENU,mobile-open-close-focus,,,,,NOT_TESTED,,,
+FILTER,filter-sort-pagination,,,,,NOT_TESTED,,,
+VARIANT,variant-price-stock,,,,,NOT_TESTED,,,
+CART,add-update-remove-empty,,,,,NOT_TESTED,,,
+CHECKOUT,checkout-entry-no-order,,,,,NOT_TESTED,,,
+RESTORE,snapshot-readback-and-draft-rehearsal,,,,,NOT_TESTED,,,
+LIVE,public-session-without-preview,,,,,NOT_TESTED,,,

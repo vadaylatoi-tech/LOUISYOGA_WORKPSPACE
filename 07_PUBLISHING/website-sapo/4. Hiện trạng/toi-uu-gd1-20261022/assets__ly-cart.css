@@ -1,0 +1,243 @@
+/* Louis Yoga — Giỏ hàng: trang /cart + giỏ trượt bên phải. Làm lại 09/10/2026; phần riêng trang /cart chuyển sang editorial 17/10/2026 (cuối file). */
+.ly-cartpage *,.ly-drawer *{box-sizing:border-box}
+.ly-cp-skeleton{height:110px;margin:16px 0;border-radius:10px;background:linear-gradient(90deg,#f6eef2 25%,#fbf6f8 50%,#f6eef2 75%);background-size:200% 100%;animation:ly-sk 1.2s infinite}
+@keyframes ly-sk{to{background-position:-200% 0}}
+
+/* Một dòng sản phẩm (dùng chung trang + giỏ trượt) */
+.ly-line{display:grid;grid-template-columns:96px minmax(0,1fr) auto 128px 36px;grid-template-areas:"img info qty total rm";align-items:center;gap:18px;padding:20px 0;border-bottom:1px solid var(--line,#f1e4ea);transition:opacity .2s,transform .25s}
+.ly-line:last-child{border-bottom:0}
+.ly-line.is-busy{opacity:.55;pointer-events:none}
+.ly-line.is-leaving{opacity:0;transform:translateX(24px)}
+.ly-line-img{grid-area:img;display:block;aspect-ratio:1;border-radius:10px;overflow:hidden;background:#f2f2f2}
+.ly-line-img img{width:100%;height:100%;object-fit:cover;display:block}
+.ly-line-info{grid-area:info;display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0}
+.ly-line-name{font-size:15px;font-weight:700;line-height:1.35;color:#171516!important;text-decoration:none;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ly-line-name:hover{color:#d72182!important}
+.ly-line-var{font-size:10.5px;font-weight:600;letter-spacing:.4px;color:#4a202c;background:#fcefef;border-radius:20px;padding:3px 10px;text-transform:uppercase}
+.ly-line-unit{font-size:13px;color:#6d5a62}
+.ly-line-unit del{color:#d72182;margin-left:6px;font-size:12px}
+.ly-qty{grid-area:qty;display:inline-flex;align-items:center;justify-self:start;border:1px solid #e3cfd8;border-radius:30px;height:38px;background:#fff;transition:border-color .2s,box-shadow .2s}
+.ly-qty button{width:36px;height:100%;padding:0;border:0;background:none;font-size:18px;line-height:1;color:#4a202c;cursor:pointer;border-radius:30px}
+.ly-qty button:hover:not(:disabled){color:#d72182;background:#fff1f7}
+.ly-qty button:disabled{color:#d8c9cf;cursor:not-allowed}
+.ly-qty input{width:34px;height:100%;border:0;padding:0;text-align:center;font:inherit;font-size:14px;font-weight:700;color:#171516;background:none;-moz-appearance:textfield;appearance:textfield}
+.ly-qty input::-webkit-inner-spin-button,.ly-qty input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.ly-qty input:focus{outline:none}
+.ly-qty:focus-within{border-color:#d72182;box-shadow:0 0 0 3px #d7218222}
+.ly-line-total{grid-area:total;text-align:right;font-size:16px;font-weight:700;color:#d72182;white-space:nowrap}
+.ly-line-remove{grid-area:rm;justify-self:end;width:36px;height:36px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:none;color:#a8949c;cursor:pointer;transition:background .2s,color .2s}
+.ly-line-remove:hover{background:#fcefef;color:#ed1c24}
+.ly-line-remove svg{width:18px;height:18px}
+
+/* Khối tóm tắt */
+.ly-freeship{background:#fcefef;border-radius:10px;padding:12px 14px;margin:0 0 16px}
+.ly-freeship[hidden]{display:none}
+.ly-freeship p{margin:0 0 8px;font-size:12.5px;line-height:1.45;color:#4a202c}
+.ly-freeship b{color:#d72182;font-weight:700}
+.ly-freeship-bar{height:6px;border-radius:6px;background:#f3d3e2;overflow:hidden}
+.ly-freeship-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ee6aa7,#d72182);border-radius:inherit;transition:width .5s ease}
+.ly-freeship.is-done p:before{content:'✓';display:inline-grid;place-items:center;width:18px;height:18px;margin-right:6px;border-radius:50%;background:#d72182;color:#fff;font-size:11px;font-weight:700}
+.ly-drawer-actions a:focus-visible,.ly-qty button:focus-visible,.ly-line-remove:focus-visible{outline:2px solid #4a202c;outline-offset:2px}
+
+/* Giỏ trống */
+.ly-cp-empty{text-align:center;padding:56px 20px}
+.ly-cp-empty>svg{width:60px;height:60px;padding:18px;box-sizing:content-box;border-radius:50%;background:#fcefef;color:#d72182;stroke-width:1.3}
+.ly-cp-empty h2,.ly-cp-empty h3{font-size:20px;font-weight:800;color:#4a202c;margin:18px 0 6px;letter-spacing:0}
+.ly-cp-empty p{color:#6d5a62;font-size:14px;margin:0 0 22px}
+.ly-cp-empty a{display:inline-flex;height:46px;align-items:center;padding:0 30px;border-radius:30px;background:#d72182;color:#fff!important;font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;text-decoration:none}
+.ly-cp-empty a:hover{background:#b9166d}
+.ly-template-cart .sapo-buyxgety-module-cart-v2:empty{display:none}
+
+/* Thông báo có nút Hoàn tác */
+.ly-snack{position:fixed;left:50%;bottom:24px;z-index:2147483000;display:flex;align-items:center;gap:16px;max-width:calc(100vw - 32px);padding:12px 14px 12px 18px;border-radius:12px;background:#171516;color:#fff;font:500 13px/1.4 Montserrat,Inter,system-ui,sans-serif;box-shadow:0 10px 30px #0004;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:.25s}
+.ly-snack.is-visible{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.ly-snack button{flex:0 0 auto;padding:4px 6px;border:0;background:none;color:#ff8fc5;font:inherit;font-size:12px;font-weight:700;text-transform:uppercase;cursor:pointer}
+
+/* ---------- GIỎ TRƯỢT ---------- */
+dialog.ly-dialog.ly-drawer{position:fixed;inset:0 0 0 auto;margin:0;width:min(440px,100vw);max-width:100vw;height:100vh;height:100vh;height:100dvh;max-height:none;padding:0;border:0;border-radius:0;background:#fff;box-shadow:-10px 0 40px #4a202c2e;font-family:Montserrat,Inter,system-ui,sans-serif;color:#171516;overflow:hidden}
+dialog.ly-drawer[open]{display:flex;flex-direction:column;animation:ly-drawer-in .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes ly-drawer-in{from{transform:translateX(100%)}}
+dialog.ly-drawer::backdrop{background:#17151670;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.ly-drawer .ly-dialog-head{display:flex;justify-content:space-between;align-items:center;margin:0;padding:18px 22px;border-bottom:1px solid #f1e4ea}
+.ly-drawer .ly-dialog-head h2{margin:0;font-size:19px;font-weight:800;color:#4a202c;letter-spacing:0}
+.ly-drawer .ly-dialog-head .ly-icon{width:38px;height:38px;border-radius:50%;border:0;background:#fcefef;color:#4a202c;font-size:15px;cursor:pointer}
+.ly-drawer .ly-dialog-head .ly-icon:hover{background:#d72182;color:#fff}
+.ly-drawer .ly-freeship{margin:14px 22px 0}
+.ly-drawer-items{flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain;padding:2px 22px}
+.ly-drawer .ly-line{grid-template-columns:76px auto minmax(0,1fr) 30px;grid-template-areas:"img info info rm" "img qty total total";gap:10px 14px;padding:16px 0;align-items:start}
+.ly-drawer .ly-line-name{font-size:13.5px}
+.ly-drawer .ly-line-unit{font-size:12px}
+.ly-drawer .ly-qty{height:32px}
+.ly-drawer .ly-qty button{width:30px;font-size:16px}
+.ly-drawer .ly-qty input{width:28px;font-size:13px}
+.ly-drawer .ly-line-total{align-self:center;font-size:14.5px}
+.ly-drawer .ly-line-remove{width:30px;height:30px;margin-top:-4px}
+.ly-drawer .ly-line-remove svg{width:16px;height:16px}
+.ly-drawer .ly-cp-empty{padding:60px 10px}
+.ly-drawer-foot{padding:16px 22px calc(18px + env(safe-area-inset-bottom));border-top:1px solid #f1e4ea;background:#fff;box-shadow:0 -8px 20px #4a202c0d}
+.ly-drawer-foot[hidden]{display:none}
+.ly-drawer .ly-cart-total{display:flex;justify-content:space-between;align-items:baseline;margin:0;font-size:14px;font-weight:600;color:#171516}
+.ly-drawer .ly-cart-total strong{font-size:22px;font-weight:800;color:#d72182}
+.ly-drawer .ly-cart-note{margin:4px 0 14px;font-size:11.5px;color:#8f7d85}
+.ly-drawer-actions{display:grid;grid-template-columns:1fr 1.35fr;gap:10px}
+.ly-drawer-actions a{display:flex;align-items:center;justify-content:center;height:48px;border-radius:30px;font-size:13px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;text-decoration:none;transition:background .2s}
+.ly-drawer-view{border:1.5px solid #d72182;color:#d72182!important;background:#fff}
+.ly-drawer-view:hover{background:#fff1f7}
+.ly-drawer-checkout{background:#d72182;color:#fff!important;box-shadow:0 8px 18px #d7218235}
+.ly-drawer-checkout:hover{background:#b9166d}
+
+/* ---------- Khối gợi ý, icon xóa, chữ nút ---------- */
+.ly-line-remove,.ly-line-remove svg{color:#a8949c!important}
+.ly-line-remove svg path{stroke:currentColor!important;fill:none!important}
+.ly-line-remove:hover,.ly-line-remove:hover svg{color:#ed1c24!important}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:640px){
+  .ly-line{grid-template-columns:80px auto minmax(0,1fr) 32px;grid-template-areas:"img info info rm" "img qty total total";gap:10px 12px;padding:16px 0;align-items:start}
+  .ly-line-name{font-size:14px}
+  .ly-line-total{align-self:center;font-size:15px}
+  .ly-line-remove{width:32px;height:32px;margin-top:-4px}
+  .ly-qty{height:34px}
+  .ly-snack{bottom:84px}
+  .ly-drawer-items,.ly-drawer .ly-dialog-head,.ly-drawer-foot{padding-left:16px;padding-right:16px}
+  .ly-drawer .ly-freeship{margin:12px 16px 0}
+}
+@media (prefers-reduced-motion:reduce){dialog.ly-drawer[open]{animation:none}.ly-line,.ly-freeship-bar span{transition:none}}
+
+/* ===== TRANG /cart — "Editorial sang trọng" 17/10/2026, đồng bộ trang chủ: nền trắng + khối đầu kem, tiêu đề in hoa giãn chữ,
+   đỏ rượu (--lyx-cta) cho hành động, nút viên thuốc. Chỉ áp trong .ly-cartpage — giỏ trượt (#ly-cart, assets/lyx-cart.css) không đổi.
+   Bản trước khi sửa: assets/zz-backup-ly-cart-20261017.css + snippets/zz-backup-cart-20261017.bwt ===== */
+.ly-cartpage{--p:var(--lyx-cta,#5a2333);--pd:var(--lyx-cta-dark,#3f1824);--w:var(--lyx-ink,#141414);--ink:var(--lyx-ink,#141414);--txt:var(--lyx-text,#2b2b2b);--mut:var(--lyx-muted,#7a7470);--line:var(--lyx-line,#e7e2dc);--soft:var(--lyx-soft,#f4f1ed);--f:var(--lyx-font,Montserrat,Arial,sans-serif);background:#fff;padding:0 0 clamp(56px,6vw,96px);font-family:var(--f);color:var(--txt)}
+.ly-cp-hero{background:var(--lyx-cream,#f8f5f0);border-bottom:1px solid var(--line);margin-bottom:clamp(28px,3.4vw,48px)}
+.ly-cp-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;padding-top:clamp(34px,4.4vw,64px);padding-bottom:clamp(28px,3.6vw,52px)}
+.ly-cp-head .lyx-eyebrow{margin:0 0 12px}
+.ly-cp-head h1{margin:0;font:500 clamp(28px,3.6vw,48px)/1.12 var(--f)!important;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)!important}
+.ly-cp-count{display:inline-block;margin-left:8px;font:500 11.5px/1 var(--f);letter-spacing:.18em;color:var(--mut);vertical-align:middle}
+.ly-cp-back{display:inline-flex;align-items:center;gap:10px;margin:0 0 20px;padding:4px 0;border-bottom:1px solid currentColor;font:600 11px/1.2 var(--f);letter-spacing:.2em;text-transform:uppercase;color:var(--ink)!important;text-decoration:none!important;transition:color .2s,gap .2s}
+.ly-cp-back svg{width:14px;height:14px;transform:scaleX(-1)}
+.ly-cp-back:hover{color:var(--p)!important;gap:14px}
+.ly-cp-steps{display:flex;align-items:center;gap:10px;list-style:none;margin:0;padding:0;font:500 10.5px/1.3 var(--f);letter-spacing:.18em;text-transform:uppercase;color:var(--mut)}
+.ly-cp-steps li{display:flex;align-items:center;gap:10px}
+.ly-cp-steps li+li:before{content:'';width:28px;height:1px;background:#cfc7bf}
+.ly-cp-steps b{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;border:1px solid #cfc7bf;font-weight:500;font-size:10.5px;letter-spacing:0}
+.ly-cp-steps .is-active{color:var(--ink)}
+.ly-cp-steps .is-active b{background:var(--p);border-color:var(--p);color:#fff}
+.ly-cp-grid{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:clamp(28px,4vw,56px);align-items:start}
+.ly-cp-list{background:#fff;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);padding:0}
+.ly-cartpage .ly-cp-skeleton{border-radius:2px;background:linear-gradient(90deg,#f4f1ed 25%,#faf8f5 50%,#f4f1ed 75%);background-size:200% 100%}
+
+/* Dòng sản phẩm trên trang */
+.ly-cartpage .ly-line{grid-template-columns:110px minmax(0,1fr) auto 140px 36px;gap:22px;padding:24px 0;border-bottom:1px solid var(--line)}
+.ly-cartpage .ly-line-img{border-radius:2px;background:var(--soft)}
+.ly-cartpage .ly-line-info{gap:7px}
+.ly-cartpage .ly-line-name{font:500 14px/1.45 var(--f);letter-spacing:.06em;text-transform:uppercase;color:var(--ink)!important}
+.ly-cartpage .ly-line-name:hover{color:var(--p)!important}
+.ly-cartpage .ly-line-var{padding:0;border-radius:0;background:none;font:400 12px/1.4 var(--f);letter-spacing:.02em;text-transform:none;color:var(--mut)}
+.ly-cartpage .ly-line-unit{font:400 13px/1.4 var(--f);color:var(--txt)}
+.ly-cartpage .ly-line-unit del{margin-left:8px;font-size:12px;color:var(--mut)}
+.ly-cartpage .ly-qty{height:40px;border:1px solid var(--line);border-radius:999px}
+.ly-cartpage .ly-qty button{width:38px;border-radius:999px;color:var(--ink);font:300 18px/1 var(--f)!important}
+.ly-cartpage .ly-qty button:hover:not(:disabled){color:var(--p);background:var(--soft)}
+.ly-cartpage .ly-qty button:disabled{color:#cfc7bf}
+.ly-cartpage .ly-qty input{color:var(--ink);font:500 14px/1 var(--f)!important}
+.ly-cartpage .ly-qty:focus-within{border-color:var(--ink);box-shadow:none}
+.ly-cartpage .ly-line-total{font:600 15px/1.3 var(--f);letter-spacing:.02em;color:var(--ink)}
+.ly-cartpage .ly-line-total del{display:block;margin-top:4px;font-size:11.5px!important;font-weight:400!important;color:var(--mut)!important}
+.ly-cartpage .ly-line-remove:hover,.ly-cartpage .ly-line-remove:hover svg{color:var(--p)!important}
+.ly-cartpage .ly-line-remove:hover{background:var(--soft)}
+.ly-cp-checkout:focus-visible,.ly-cartpage .ly-qty button:focus-visible,.ly-cartpage .ly-line-remove:focus-visible{outline:2px solid var(--lyx-brand,#d82183);outline-offset:3px}
+
+/* Khối tóm tắt */
+.ly-cp-side{position:sticky;top:96px;display:flex;flex-direction:column;gap:18px}
+.ly-cp-card{background:var(--lyx-cream,#f8f5f0);border:0;border-radius:2px;padding:clamp(22px,2.4vw,32px)}
+.ly-cp-card h2{margin:0 0 20px;font:500 13px/1.3 var(--f)!important;letter-spacing:.24em;text-transform:uppercase;color:var(--ink)!important}
+.ly-cartpage .ly-freeship{margin:0 0 16px;padding:0 0 16px;border-bottom:1px solid var(--line);border-radius:0;background:none}
+.ly-cartpage .ly-freeship p{font:400 12.5px/1.55 var(--f);color:var(--txt)}
+.ly-cartpage .ly-freeship b{font-weight:600;color:var(--p)}
+.ly-cartpage .ly-freeship-bar{height:3px;border-radius:0;background:var(--line)}
+.ly-cartpage .ly-freeship-bar span{background:var(--p)}
+.ly-cartpage .ly-freeship.is-done p:before{background:var(--p)}
+.ly-cp-sum{margin:0}
+.ly-cp-sum>div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:8px 0;font:400 13.5px/1.4 var(--f)}
+.ly-cp-sum>div[hidden]{display:none}
+.ly-cp-sum dt{font-weight:400;color:var(--txt)}
+.ly-cp-sum dd{margin:0;font-weight:500;color:var(--ink);text-align:right;white-space:nowrap}
+.ly-cp-sum .is-muted{font-weight:400;font-size:12.5px;color:var(--mut)}
+.ly-cp-sum .is-discount{color:var(--p)}
+.ly-cp-sum .is-total{border-top:1px solid var(--ink);margin-top:12px;padding-top:16px}
+.ly-cp-sum .is-total dt{font:600 11.5px/1.3 var(--f);letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
+.ly-cp-sum .is-total dd{font:600 22px/1.2 var(--f);color:var(--p)}
+.ly-cp-opt{border-top:1px solid var(--line);margin-top:16px}
+.ly-cp-opt summary{list-style:none;cursor:pointer;display:flex;align-items:center;padding:16px 0 4px;font:600 11px/1.4 var(--f);letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+.ly-cp-opt summary small{margin-left:6px;font-weight:400;letter-spacing:.04em;text-transform:none;color:var(--mut)}
+.ly-cp-opt summary::-webkit-details-marker{display:none}
+.ly-cp-opt summary:after{content:'';width:7px;height:7px;margin-left:auto;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .2s}
+.ly-cp-opt[open] summary:after{transform:rotate(-135deg) translateY(-2px)}
+.ly-cp-fields{display:grid;gap:12px;padding:12px 0 4px}
+.ly-cp-fields[hidden]{display:none}
+.ly-cp-fields.two{grid-template-columns:1fr 1fr}
+.ly-cp-fields label{display:flex;flex-direction:column;gap:6px;margin:0;font:500 11.5px/1.3 var(--f);letter-spacing:.04em;color:var(--txt)}
+.ly-cp-fields input,.ly-cp-fields select,.ly-cp-fields textarea{width:100%;height:44px;border:1px solid var(--line);border-radius:2px;padding:0 14px;font:400 13px/1.4 var(--f);color:var(--ink);background:#fff;box-shadow:none}
+.ly-cp-fields textarea{height:auto;padding:12px 14px;resize:vertical;line-height:1.5}
+.ly-cp-fields input:focus,.ly-cp-fields select:focus,.ly-cp-fields textarea:focus{outline:none;border-color:var(--ink);box-shadow:none}
+.ly-cp-fields .is-invalid{border-color:#c0392b!important}
+.ly-field-err{color:#c0392b;font-size:11.5px;font-weight:500}
+.ly-check{display:flex;align-items:center;gap:10px;margin:12px 0 2px;font:500 13px/1.4 var(--f);color:var(--ink);cursor:pointer}
+.ly-check input{width:18px;height:18px;margin:0;accent-color:var(--p)}
+.ly-cp-checkout{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:52px;margin-top:22px;padding:0 24px;border:1px solid var(--p);border-radius:999px;background:var(--p);color:#fff!important;font:600 12px/1.1 var(--f)!important;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;box-shadow:none;transition:background .25s,border-color .25s}
+.ly-cp-checkout:hover{background:var(--pd);border-color:var(--pd)}
+.ly-cp-checkout:disabled{opacity:.6;cursor:wait}
+.ly-cp-secure{display:flex;align-items:center;justify-content:center;gap:6px;margin:14px 0 0;font:400 11.5px/1.4 var(--f);color:var(--mut)}
+.ly-cp-secure svg{width:14px;height:14px}
+.ly-cp-trust{list-style:none;margin:0;padding:0 4px;display:grid}
+.ly-cp-trust li{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);font:400 12.5px/1.5 var(--f);color:var(--txt)}
+.ly-cp-trust li:last-child{border-bottom:0}
+.ly-cp-trust svg{flex:0 0 auto;width:24px;height:24px;color:var(--p)}
+.ly-cp-trust b{font-weight:600;color:var(--ink)}
+
+/* Giỏ trống (trên trang) */
+.ly-cartpage .ly-cp-empty{padding:clamp(48px,6vw,88px) 20px}
+.ly-cartpage .ly-cp-empty>svg{background:var(--lyx-cream,#f8f5f0);color:var(--p);stroke-width:1.1}
+.ly-cartpage .ly-cp-empty h2{margin:22px 0 10px;font:500 clamp(20px,2vw,26px)/1.25 var(--f);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.ly-cartpage .ly-cp-empty p{margin:0 0 26px;font:400 14px/1.7 var(--f);color:var(--mut)}
+.ly-cartpage .ly-cp-empty a{height:auto;min-height:46px;padding:0 30px;border:1px solid var(--p);border-radius:999px;background:var(--p);font:600 11.5px/1.1 var(--f);letter-spacing:.2em}
+.ly-cartpage .ly-cp-empty a:hover{background:var(--pd);border-color:var(--pd)}
+.ly-cartpage.is-empty .ly-cp-list{border-bottom:0}
+.ly-cartpage.is-empty .ly-cp-grid{grid-template-columns:1fr}
+.ly-cartpage.is-empty .ly-cp-side,.ly-cartpage.is-empty .ly-cp-steps{display:none}
+.ly-cp-bar{display:none}
+
+/* Gợi ý mua kèm */
+.ly-cp-upsell{margin-top:clamp(44px,5vw,72px)}
+.ly-cp-upsell-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:clamp(20px,2.4vw,32px)}
+.ly-cp-upsell-head .lyx-eyebrow{margin:0 0 8px}
+.ly-cp-upsell-head h2{margin:0;font:500 clamp(20px,2vw,28px)/1.2 var(--f)!important;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)!important}
+.ly-cp-upsell .ly-grid-four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.6vw,24px)}
+
+@media (max-width:1100px){.ly-cp-grid{grid-template-columns:minmax(0,1fr) 340px}.ly-cartpage .ly-line{grid-template-columns:88px minmax(0,1fr) auto 112px 36px;gap:14px}.ly-cp-upsell .ly-grid-four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:1023px){.ly-cp-grid{grid-template-columns:1fr}.ly-cp-side{position:static}.ly-cp-upsell .ly-grid-four{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:767px){
+  .ly-cartpage{padding-bottom:104px}
+  .ly-cp-hero{margin-bottom:20px}
+  .ly-cp-head{gap:0;padding-top:26px;padding-bottom:22px}
+  .ly-cp-head h1{font-size:26px!important;letter-spacing:.1em}
+  .ly-cp-count{display:block;margin:10px 0 0}
+  .ly-cp-steps{display:none}
+  .ly-cartpage .ly-line{grid-template-columns:84px auto minmax(0,1fr) 32px;grid-template-areas:"img info info rm" "img qty total total";gap:10px 14px;padding:18px 0;align-items:start}
+  .ly-cartpage .ly-line-name{font-size:13px}
+  .ly-cartpage .ly-line-total{align-self:center;font-size:14px}
+  .ly-cartpage .ly-line-remove{width:32px;height:32px;margin-top:-6px}
+  .ly-cartpage .ly-qty{height:36px}
+  .ly-cartpage .ly-qty button{width:34px}
+  .ly-cp-card{padding:22px 18px}
+  .ly-cp-fields.two{grid-template-columns:1fr}
+  .ly-cp-card>.ly-cp-checkout,.ly-cp-card>.ly-cp-secure{display:none}
+  .ly-cp-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;align-items:center;gap:14px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(20,20,20,.06)}
+  .ly-cp-bar[hidden]{display:none}
+  .ly-cp-bar div{display:flex;flex-direction:column;gap:3px;line-height:1.2}
+  .ly-cp-bar small{font:500 10px/1.2 var(--f);letter-spacing:.18em;text-transform:uppercase;color:var(--mut)}
+  .ly-cp-bar strong{font:600 18px/1.2 var(--f);color:var(--p);white-space:nowrap}
+  .ly-cp-bar .ly-cp-checkout{flex:1;min-height:46px;margin:0;font-size:11px!important;letter-spacing:.16em}
+  .ly-cp-upsell .ly-grid-four{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .ly-cp-upsell-head h2{font-size:20px!important}
+}

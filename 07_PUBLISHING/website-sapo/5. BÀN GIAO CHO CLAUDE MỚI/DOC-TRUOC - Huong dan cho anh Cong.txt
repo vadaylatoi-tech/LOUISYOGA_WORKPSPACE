@@ -1,0 +1,33 @@
+HƯỚNG DẪN CHUYỂN SANG MÁY MỚI — dành cho anh Công
+====================================================
+
+Thư mục này chứa ĐỦ những gì Claude Code mới cần để làm tiếp. Anh chỉ cần mang thư mục này (hoặc file .zip cùng tên) sang máy mới.
+
+BƯỚC 1. Chép thư mục sang máy mới
+   - Chép cả thư mục "5. BÀN GIAO CHO CLAUDE MỚI" (hoặc giải nén file .zip) vào chỗ nào cũng được.
+
+BƯỚC 2. Nối Claude với Sapo (làm 1 lần)
+   - Trên MÁY CŨ, mở file:  C:\Users\ADMIN\Documents\louisyoga-mcp-token.txt  → chép mã token bên trong.
+     (Mã này là chìa khoá vào cửa hàng — không gửi cho ai, không dán vào chat công khai.)
+   - Trên MÁY MỚI, trong thư mục bàn giao:
+       + Đổi tên file  "ket-noi-sapo-MAU.mcp.json"  thành  ".mcp.json"
+       + Mở file bằng Notepad, thay chữ  <MCP_PATH_TOKEN>  bằng mã token vừa chép, lưu lại.
+
+BƯỚC 3. Mở Claude Code
+   - Mở Claude Code (desktop: chọn thư mục; hoặc mở terminal trong thư mục này rồi gõ: claude).
+   - Nếu Claude hỏi có dùng kết nối "sapo-louisyoga-claude" không → chọn đồng ý.
+   - Gõ câu đầu tiên:
+       Đọc CLAUDE.md và các file trong thư mục tai-lieu, rồi kiểm tra kết nối Sapo (list_themes) cho anh.
+
+TRONG THƯ MỤC CÓ GÌ
+   CLAUDE.md                         → Claude tự đọc khi mở thư mục (chỉ dẫn + quy tắc)
+   tai-lieu/1-BAN-GIAO.md            → tài liệu bàn giao chính
+   tai-lieu/2-TIEN-DO.md             → tiến độ từng trang, file sao lưu
+   tai-lieu/3-HIEN-TRANG-BAN-DAU.md  → rà soát ban đầu
+   ket-noi-sapo-MAU.mcp.json         → mẫu kết nối Sapo (điền token ở Bước 2)
+
+KHÔNG cần mang theo: thư mục "2. Skill thiết kế" (bộ kit cũ — đã bỏ). File thiết kế (thư mục 1, 3) chỉ mang theo nếu muốn Claude so với bản vẽ.
+
+TÌNH TRẠNG ĐẾN 17/10/2026
+   - Tất cả các trang trên theme nháp 1170160 đã làm xong, anh đã duyệt. CHƯA xuất bản.
+   - Anh còn sửa 2 chỗ chính sách trong admin + quyết vài mục (xem 1-BAN-GIAO.md mục 7), sau đó anh tự xuất bản trong Sapo admin.

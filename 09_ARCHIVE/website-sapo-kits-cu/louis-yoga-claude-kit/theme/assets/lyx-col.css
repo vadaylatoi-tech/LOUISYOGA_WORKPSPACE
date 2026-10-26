@@ -1,0 +1,163 @@
+/* Louis Yoga — trang danh mục / tìm kiếm theo bản thiết kế 15/10/2026 (tiền tố .lyxc). Giữ khung .dqdt-sidebar, .category-products,
+   #open-filters, .ly-filters cho col.js + ly-filter.js (lọc toàn catalog qua bộ lọc Sapo).
+   Cỡ chữ bộ lọc nâng lên 12–13px (bản vẽ ~8–9px quá nhỏ để đọc/bấm) — sai khác có chủ đích, ghi trong reports/design-diff.md. */
+.lyxc{font-family:var(--lyx-font);color:var(--lyx-ink);background:#fff}
+.lyxc-crumb{border-bottom:1px solid #e5e5e5}
+.lyxc-crumb ol{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:22px 0;list-style:none;font:400 17px/1.3 var(--lyx-font);color:#999}
+.lyxc-crumb a{color:#aaa!important;text-decoration:none!important}
+.lyxc-crumb a:hover{color:var(--lyx-brand)!important}
+.lyxc-crumb li+li::before{content:'>';margin-right:6px;color:#aaa}
+.lyxc-crumb li:last-child{color:#111}
+.lyxc .lyxc-hero{display:flex;align-items:center;justify-content:center;min-height:240px;padding:20px;background:#efefef;border-bottom:1px solid #e3e3e3}
+.lyxc .lyxc-hero h1{margin:0;font:800 clamp(34px,5.2vw,68px)/1.05 var(--lyx-font)!important;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:#111!important}
+.lyxc-intro{padding:20px 0 22px;border-bottom:1px solid #e5e5e5}
+.lyxc .lyxc-intro h2{margin:0 0 10px;font:600 clamp(22px,2.6vw,32px)/1.2 var(--lyx-font);text-transform:uppercase;color:#111}
+.lyxc-intro .lyxc-desc{font:400 15.5px/1.65 var(--lyx-font);color:#666}
+.lyxc-intro .lyxc-desc p{margin:0}
+.lyxc-sale-m,.lyxc-shop-h,.lyxc-bar-m{display:none}
+
+/* Bố cục 2 cột trong khung 1080px */
+.lyxc .lyxc-body{display:grid;grid-template-columns:210px minmax(0,1fr);max-width:var(--lyx-w);margin:0 auto;border-bottom:1px solid #e5e5e5}
+@media (min-width:768px){
+  .lyxc .lyxc-side.dqdt-sidebar{position:static!important;width:auto!important;max-width:none!important;flex:none!important;padding:0!important;margin:0!important;transform:none!important;visibility:visible!important;border-right:1px solid #e5e5e5;background:#fff}
+  .lyxc .lyxc-main.block-collection{width:auto!important;max-width:none!important;flex:none!important;padding:0!important;margin:0!important}
+  .lyxc .lyxc-side .section-box-bg,.lyxc .lyxc-main .section-box-bg{padding:0!important;margin:0!important;background:none!important;box-shadow:none!important;border:0!important}
+}
+.lyxc-side-h{display:flex;align-items:center;gap:8px;height:46px;margin:0;padding:0 16px;border-bottom:1px solid #e5e5e5;font:500 14px/1 var(--lyx-font);color:#111}
+.lyxc-side-h svg{width:22px;height:22px;fill:none;stroke:#111;stroke-width:1.4}
+.lyxc-main{min-width:0}
+.lyxc-toolbar{display:flex;align-items:center;justify-content:flex-end;gap:14px;min-height:46px;padding:0 12px 0 16px;border-bottom:1px solid #e5e5e5}
+.lyxc .ly-af-wrap{padding:0 16px;border-bottom:1px solid #e5e5e5}
+.lyxc .ly-af-wrap:not(.is-open){display:none}
+.lyxc .ly-active-filters{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:9px 0}
+.lyxc .ly-af-label{font:500 12px/1 var(--lyx-font);color:#111}
+.lyxc .ly-af-chip{display:inline-flex;align-items:center;gap:10px;height:24px;padding:0 12px;border:0;border-radius:999px;background:#111;color:#fff;font:600 11px/1 var(--lyx-font);cursor:pointer}
+.lyxc .ly-af-chip i{font-style:normal;font-size:10px;opacity:.8}
+.lyxc .ly-af-clear{border:0;background:none;color:#e21b2a;font:600 13px/1 var(--lyx-font);text-decoration:underline;cursor:pointer}
+.lyxc #sort-by{position:relative;flex:none;display:flex;align-items:center;gap:6px;font:500 13px/1 var(--lyx-font)}
+.lyxc #sort-by label{margin:0;color:#777;font-weight:400}
+.lyxc #sortBy{margin:0;padding:0;list-style:none}
+.lyxc #sortBy>li{position:relative;cursor:pointer}
+.lyxc #sortBy>li>span{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border:1px solid #ddd;border-radius:4px}
+.lyxc #sortBy>li>ul{position:absolute;right:0;top:100%;z-index:20;min-width:170px;margin:4px 0 0;padding:6px;list-style:none;border:1px solid #e5e5e5;border-radius:6px;background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.1);opacity:0;visibility:hidden;transition:opacity .15s}
+.lyxc #sortBy>li:hover>ul,.lyxc #sortBy>li:focus-within>ul,.lyxc #sortBy>li.is-open>ul{opacity:1;visibility:visible}
+.lyxc #sortBy a{display:block;padding:8px 10px;border-radius:4px;color:#222!important;text-decoration:none!important;white-space:nowrap}
+.lyxc #sortBy a:hover{background:#f6f6f6}
+.lyxc .open-filters{display:none!important}
+.lyxc .category-products{padding:20px 12px 26px}
+.lyxc .ly-grid.ly-collection-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 14px;margin:0}
+.lyxc .products-view{margin:0}
+.lyxc .alert{margin:20px 0;padding:16px;border-radius:6px;background:#f7f7f7;color:#555;border:0}
+
+/* Bộ lọc (sidebar) */
+.lyxc .ly-filters .aside-item{margin:0;padding:14px 16px 6px;border:0}
+.lyxc .ly-filters .aside-title{margin:0 0 10px;padding:0 0 5px;border-bottom:1.5px solid #111}
+.lyxc .ly-filters .title-head{margin:0;font:700 13px/1.3 var(--lyx-font)!important;text-transform:none;color:#111}
+.lyxc .ly-filters .title-head::before,.lyxc .ly-filters .title-head::after{display:none!important}
+.lyxc .ly-filters .aside-content ul{margin:0;padding:0 0 0 8px;list-style:none}
+.lyxc .ly-filters .filter-item{margin:0 0 8px;padding:0}
+.lyxc .ly-filters .filter-item label{display:flex!important;align-items:center;gap:9px;margin:0;font:400 12px/1.35 var(--lyx-font)!important;color:#333;cursor:pointer}
+.lyxc .ly-filters input[type=checkbox]{flex:none;width:14px;height:14px;margin:0;accent-color:#111}
+.lyxc .ly-filters .ly-filter-line{padding-top:0}
+.lyxc .ly-filters .ly-filter-line .aside-title{display:none}
+.lyxc .ly-filters .filter-item-toggle{padding:2px 0 6px;font:600 12px/1 var(--lyx-font);color:var(--lyx-brand);cursor:pointer}
+.lyxc .ly-filters .overflow-item{display:none}
+.lyxc .ly-filters .is-expand .overflow-item{display:flex}
+/* Giá */
+.lyxc .ly-range{padding:4px 0 6px}
+.lyxc .ly-range-track{position:relative;height:18px;margin:6px 4px 8px}
+.lyxc .ly-range-track::before{content:'';position:absolute;left:0;right:0;top:8px;height:2px;background:#ccc}
+.lyxc .ly-range-fill{position:absolute;top:8px;height:2px;background:#111}
+.lyxc .ly-range-track input{position:absolute;left:0;top:0;width:100%;height:18px;margin:0;background:none;pointer-events:none;-webkit-appearance:none;appearance:none}
+.lyxc .ly-range-track input::-webkit-slider-thumb{width:14px;height:14px;border-radius:50%;background:#111;pointer-events:auto;-webkit-appearance:none;cursor:pointer}
+.lyxc .ly-range-track input::-moz-range-thumb{width:14px;height:14px;border:0;border-radius:50%;background:#111;pointer-events:auto;cursor:pointer}
+.lyxc .ly-range-labels{position:relative;display:flex;justify-content:space-between;gap:6px;font:600 10.5px/1 var(--lyx-font)}
+.lyxc .ly-range-labels span{position:static!important;transform:none!important;padding:5px 7px;border-radius:2px;background:#eee}
+/* Đánh giá */
+.lyxc .ly-filter-rating ul{padding-left:8px}
+.lyxc .ly-rate-opt{display:flex!important;align-items:center;gap:7px;margin:0 0 7px;font:400 12px/1 var(--lyx-font);color:#555;cursor:pointer}
+.lyxc .ly-rate-opt input{width:14px;height:14px;margin:0;accent-color:#111}
+.lyxc .ly-rate-stars i{font-style:normal;font-size:14px;color:#ccc}
+.lyxc .ly-rate-stars i.on{color:var(--lyx-star)}
+/* Ô màu: 2 cột, ô vuông màu */
+.lyxc .lyx-swatch-list ul{display:grid;grid-template-columns:1fr 1fr;gap:8px 8px;padding-left:4px}
+.lyxc .lyx-swatch-list .filter-item{margin:0}
+.lyxc .lyx-swatch-list .filter-item label{gap:7px;font-size:11.5px!important}
+.lyxc .lyx-swatch-list input[type=checkbox]{position:absolute;opacity:0;width:1px;height:1px}
+.lyxc .lyx-sw{flex:none;width:18px;height:18px;border-radius:2px;background:var(--sw,#ccc);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.lyxc .lyx-swatch-list input:checked+.lyx-sw{box-shadow:0 0 0 2px #fff,0 0 0 3px #111}
+.lyxc .lyx-swatch-list input:focus-visible+.lyx-sw{outline:2px solid var(--lyx-brand);outline-offset:2px}
+
+/* Phân trang */
+.lyxc .pagenav{margin-top:22px}
+.lyxc .pagination{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0;list-style:none}
+.lyxc .pagination .page-link{display:flex;align-items:center;justify-content:center;width:32px;height:32px;padding:0;border:1px solid #ddd!important;border-radius:4px;background:#efefef;color:#888!important;font:500 13px/1 var(--lyx-font);text-decoration:none!important}
+.lyxc .pagination .active .page-link{background:#fff;border-color:#bbb!important;color:#111!important}
+.lyxc .pagination .disabled:not(.active) .page-link{opacity:.6}
+
+/* CTV / Bảo hành + đoạn cuối */
+.lyxc-cta{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:24px 0}
+.lyxc-cta a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:150px;padding:18px;border-radius:4px;background:#efefef;color:#111!important;text-align:center;text-decoration:none!important;transition:background .2s}
+.lyxc-cta a:hover{background:#e7e7e7}
+.lyxc-cta b{font:600 clamp(20px,2.2vw,26px)/1.1 var(--lyx-font);text-transform:uppercase}
+.lyxc-cta small{font:600 10px/1.4 var(--lyx-font);letter-spacing:.06em;text-transform:uppercase}
+.lyxc-cta em{font:600 11px/1.4 var(--lyx-font);font-style:normal;letter-spacing:.06em;text-transform:uppercase}
+.lyxc-cta span.lyxc-pill{display:inline-flex;align-items:center;justify-content:center;min-width:180px;height:26px;margin-top:8px;padding:0 14px;border:1px solid #999;border-radius:999px;background:#fff;font:500 10px/1 var(--lyx-font);letter-spacing:.14em;text-transform:uppercase}
+.lyxc-outro{padding:4px 0 34px;text-align:center}
+.lyxc-outro h2{margin:0 0 8px;font:700 15px/1.3 var(--lyx-font);text-transform:uppercase}
+.lyxc-outro p{max-width:770px;margin:0 auto;font:400 13.5px/1.7 var(--lyx-font);color:#666}
+
+/* Ngăn bộ lọc trên điện thoại */
+.lyxc-side-head{display:none}
+@media (max-width:1023px){
+  .lyxc .lyxc-body{grid-template-columns:190px minmax(0,1fr)}
+  .lyxc .ly-grid.ly-collection-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:767px){
+  .lyxc-crumb{border:0}
+  .lyxc-crumb ol{padding:16px 0 4px;font-size:15px}
+  .lyxc .lyxc-hero{display:none}
+  .lyxc-intro{padding:8px 0 16px;border:0}
+  .lyxc .lyxc-intro h2{font-size:24px;font-weight:600}
+  .lyxc-intro .lyxc-desc{font-size:12.5px;line-height:1.6;color:#666}
+  .lyxc-sale-m{display:block;padding-bottom:16px}
+  .lyxc-shop-h{display:block;padding:24px 16px 8px;background:#efefef;text-align:center}
+  .lyxc-shop-h h2{margin:0;font:700 34px/1.05 var(--lyx-font);text-transform:uppercase}
+  .lyxc-shop-h p{margin:4px 0 0;font:500 12px/1 var(--lyx-font);letter-spacing:.12em;text-transform:uppercase}
+  .lyxc .lyxc-body{display:block;max-width:none;background:#efefef;border:0}
+  .lyxc-bar-m{display:flex;align-items:center;justify-content:space-between;margin:0 16px;padding:12px 0 8px;border-bottom:1px solid #999}
+  .lyxc-bar-m button{display:inline-flex;align-items:center;gap:10px;padding:0;border:0;background:none;color:#111;font:400 17px/1 var(--lyx-font);cursor:pointer}
+  .lyxc-bar-m svg{width:26px;height:26px;fill:none;stroke:#111;stroke-width:1.4}
+  .lyxc-toolbar{border:0;min-height:0;padding:0 16px}
+  .lyxc .ly-af-wrap{border:0}
+  .lyxc #sort-by{position:absolute;left:-9999px}
+  .lyxc #sort-by.is-open{position:fixed;left:16px;right:16px;bottom:16px;z-index:1300;display:block;padding:12px;border-radius:12px;background:#fff;box-shadow:0 -6px 30px rgba(0,0,0,.25)}
+  .lyxc #sort-by.is-open label{display:block;margin-bottom:8px;font-weight:600;color:#111}
+  .lyxc #sort-by.is-open #sortBy>li>span{display:none}
+  .lyxc #sort-by.is-open #sortBy>li>ul{position:static;opacity:1;visibility:visible;box-shadow:none;border:0;padding:0}
+  .lyxc #sort-by.is-open #sortBy a{padding:12px 8px;font-size:14px;border-bottom:1px solid #f0f0f0}
+  .lyxc .lyxc-main.block-collection{width:auto!important;max-width:none!important;flex:none!important;padding:0!important}
+  .lyxc .category-products{padding:14px 16px 24px}
+  .lyxc .ly-grid.ly-collection-grid{grid-template-columns:1fr 1fr;gap:12px 12px}
+  .lyxc .pagination{justify-content:center}
+  /* Sidebar thành ngăn trượt phải */
+  .lyxc .lyxc-side.dqdt-sidebar{position:fixed!important;top:0;right:0;bottom:0;left:auto!important;z-index:1250;display:flex!important;flex-direction:column;width:min(86vw,400px)!important;max-width:none!important;flex:none!important;padding:0!important;margin:0!important;background:#fff;border:0;transform:translateX(100%);transition:transform .28s ease;visibility:hidden}
+  .lyxc .lyxc-side.dqdt-sidebar.openf{transform:none;visibility:visible}
+  .opacity_sidebar{position:fixed;inset:0;z-index:1240;background:rgba(0,0,0,.42);opacity:0;visibility:hidden;transition:opacity .25s}
+  .opacity_sidebar.openf{opacity:1;visibility:visible}
+  .lyxc-side-head{display:flex;align-items:center;justify-content:space-between;min-height:56px;padding:6px 14px 6px 22px;background:#efefef}
+  .lyxc-side-head .lyx-logo{width:150px;margin:0}
+  .lyxc-side-h{height:44px;padding:0 22px;font-size:13px}
+  .lyxc .dqdt-sidebar .section-box-bg{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:0 0 30px!important}
+  .lyxc .ly-filters .aside-item{padding:16px 22px 6px}
+  .lyxc .ly-filters .title-head{font-size:17px!important}
+  .lyxc .ly-filters .filter-item{margin-bottom:12px}
+  .lyxc .ly-filters .filter-item label,.lyxc .ly-rate-opt{font-size:13.5px!important}
+  .lyxc .ly-filters input[type=checkbox],.lyxc .ly-rate-opt input{width:17px;height:17px}
+  .lyxc .ly-rate-stars i{font-size:19px}
+  .lyxc .lyx-sw{width:30px;height:30px}
+  .lyxc .ly-range-labels{font-size:11px}
+  .lyxc-cta{grid-template-columns:1fr;padding:20px 0}
+  .lyxc-outro p{font-size:12.5px}
+}
+@media (prefers-reduced-motion:reduce){.lyxc .dqdt-sidebar,.opacity_sidebar{transition:none}}

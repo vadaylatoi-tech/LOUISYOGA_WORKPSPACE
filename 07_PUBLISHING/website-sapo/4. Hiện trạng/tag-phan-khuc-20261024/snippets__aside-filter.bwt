@@ -1,0 +1,183 @@
+<div class="filter-content">
+	<div class="filter-container ly-filters">
+		{%- comment -%} Khối "Bạn chọn" gốc vẫn giữ để col.js hoạt động; giao diện mới hiển thị dải "Đang lọc theo" phía trên lưới sản phẩm. {%- endcomment -%}
+		<div class="filter-container__selected-filter" style="display: none;">
+			<div class="filter-container__selected-filter-header clearfix">
+				<span class="filter-container__selected-filter-header-title">Bạn chọn</span>
+				<a href="javascript:void(0)" class="filter-container__clear-all" data-ly-clear-filters>Bỏ hết</a>
+			</div>
+			<div class="filter-container__selected-filter-list"><ul></ul></div>
+		</div>
+
+		{%- comment -%} 24/10/2026 — nhóm Phân khúc lọc theo TAG (trường "tags", giá trị "(Harmony)"…), hiện khi danh mục có SP mang tag phân khúc hoặc nằm trong dãy mã cũ. Bản trước: snippets/zz-backup-aside-filter-20261024-tag.bwt
+		10/2026 — Phân khúc thảm Harmony / Balance / Mastery. Nguồn duy nhất: snippets/ly-segments.bwt (lọc theo mã sản phẩm, trường "id" của bộ lọc Sapo).
+		Chỉ hiện khi danh mục đang xem có ít nhất 1 sản phẩm thuộc phân khúc. Tách riêng với "Loại sản phẩm" (thảm / dụng cụ / phụ kiện).
+		11/10/2026 — thêm nhóm "Dòng thảm" (Thảm Du lịch, Thảm TPE) từ ly_line_*, cùng cơ chế, chỉ hiện khi danh mục có sản phẩm thuộc dòng.
+		15/10/2026 — nhãn theo bản thiết kế mới: nhóm "Sản phẩm & Phân khúc" (phân khúc + dòng thảm liền nhau). data-text giữ tên ngắn cho dải "Đang lọc theo". {%- endcomment -%}
+		{%- include 'ly-segments' -%}
+		{%- assign ly_seg_flabels = 'Thảm bắt đầu | Harmony~Thảm tập đều đặn | Balance~Thảm chuyên nghiệp | Mastery' | split: '~' -%}
+		{%- assign ly_line_flabels = 'Thảm đi du lịch~Thảm TPE' | split: '~' -%}
+		{%- assign ly_seg_show = false -%}
+		{%- assign ly_line_show = false -%}
+		{%- assign ly_types_seen = '|' -%}
+		{%- for ly_p in collection.products limit: 250 -%}
+			{%- capture ly_seg_pid -%}{{ ly_p.id }}{%- endcapture -%}
+			{%- if ly_seg_all_ids contains ly_seg_pid -%}{%- assign ly_seg_show = true -%}{%- endif -%}
+			{%- assign ly_seg_ptags = ly_p.tags | join: '|' | downcase | prepend: '|' | append: '|' -%}
+			{%- if ly_seg_ptags contains '|harmony|' or ly_seg_ptags contains '|balance|' or ly_seg_ptags contains '|mastery|' -%}{%- assign ly_seg_show = true -%}{%- endif -%}
+			{%- if ly_line_all_ids contains ly_seg_pid -%}{%- assign ly_line_show = true -%}{%- endif -%}
+			{%- assign ly_t = ly_p.type | strip | downcase -%}
+			{%- assign ly_types_seen = ly_types_seen | append: ly_t | append: '|' -%}
+		{%- endfor -%}
+		{%- if ly_seg_show -%}
+		<aside class="aside-item filter-type ly-filter-seg">
+			<div class="aside-title"><h2 class="title-head"><span>Sản phẩm &amp; Phân khúc</span></h2></div>
+			<div class="aside-content filter-group">
+				<ul>
+					{%- for ly_h in ly_seg_handles -%}
+					<li class="filter-item filter-item--check-box">
+						<label for="filter-seg-{{ ly_h }}">
+							<input type="checkbox" id="filter-seg-{{ ly_h }}" data-ly-seg-box data-group="Phân khúc" data-field="tags" data-text="{{ ly_seg_names[forloop.index0] }}" value="{{ ly_seg_values[forloop.index0] }}" data-operator="OR">
+							<span>{{ ly_seg_flabels[forloop.index0] | default: ly_seg_names[forloop.index0] }}</span>
+						</label>
+					</li>
+					{%- endfor -%}
+				</ul>
+			</div>
+		</aside>
+		{%- endif -%}
+		{%- if ly_line_show -%}
+		<aside class="aside-item filter-type ly-filter-seg ly-filter-line">
+			<div class="aside-title"><h2 class="title-head"><span>Dòng thảm</span></h2></div>
+			<div class="aside-content filter-group">
+				<ul>
+					{%- for ly_h in ly_line_handles -%}
+					<li class="filter-item filter-item--check-box">
+						<label for="filter-line-{{ ly_h }}">
+							<input type="checkbox" id="filter-line-{{ ly_h }}" data-ly-seg-box data-group="Dòng thảm" data-field="id" data-text="{{ ly_line_names[forloop.index0] }}" value="{{ ly_line_values[forloop.index0] }}" data-operator="OR">
+							<span>{{ ly_line_flabels[forloop.index0] | default: ly_line_names[forloop.index0] }}</span>
+						</label>
+					</li>
+					{%- endfor -%}
+				</ul>
+			</div>
+		</aside>
+		{%- endif -%}
+
+		<!-- Loại sản phẩm (thảm / dụng cụ / phụ kiện) — chỉ hiện loại có sản phẩm đang bán trong danh mục này -->
+		{%- if settings.filter_type -%}
+		{%- assign typers = collection.all_types.size -%}
+		{%- if typers > 0 -%}
+		<aside class="aside-item filter-type">
+			<div class="aside-title"><h2 class="title-head"><span>{{ settings.filter_type_title | default: 'Loại sản phẩm' }}</span></h2></div>
+			<div class="aside-content filter-group">
+				<ul>
+					{%- assign ly_ti = 0 -%}
+					{%- for type in collection.all_types -%}{%- if type != '' -%}
+					{%- assign ly_t = type | strip | downcase -%}{%- capture ly_tk -%}|{{ ly_t }}|{%- endcapture -%}
+					{%- if ly_types_seen contains ly_tk -%}{%- assign ly_ti = ly_ti | plus: 1 -%}
+					<li class="filter-item filter-item--check-box {% if ly_ti > 6 %}overflow-item{% endif %}">
+						<label for="filter-{{ type | handleize }}">
+							<input type="checkbox" id="filter-{{ type | handleize }}" data-group="PRODUCT_TYPE" data-field="product_type.filter_key" data-text="{{ type }}" value="(&#34;{{ type }}&#34;)" data-operator="OR">
+							<span>{{ type }}</span>
+						</label>
+					</li>
+					{%- endif -%}
+					{%- endif -%}{%- endfor -%}
+					{% if ly_ti > 6 %}<li class="filter-item-toggle cursor-pointer">Xem thêm</li>{% endif %}
+				</ul>
+			</div>
+		</aside>
+		{%- endif -%}
+		{%- endif -%}
+
+		<!-- Chọn mức giá: thanh kéo 2 đầu -->
+		<aside class="aside-item ly-filter-price">
+			<div class="aside-title"><h2 class="title-head"><span>Chọn mức giá</span></h2></div>
+			<div class="aside-content ly-range" data-max="6000000" data-step="50000">
+				<div class="ly-range-track">
+					<div class="ly-range-fill"></div>
+					<input type="range" class="ly-range-min" min="0" max="6000000" step="50000" value="0" aria-label="Giá thấp nhất">
+					<input type="range" class="ly-range-max" min="0" max="6000000" step="50000" value="6000000" aria-label="Giá cao nhất">
+				</div>
+				<div class="ly-range-labels" aria-hidden="true"><span data-range-label="min">0 đ</span><span data-range-label="max">6.000.000 đ</span></div>
+			</div>
+		</aside>
+
+		<!-- Đánh giá (điểm gộp web + Shopee trên thẻ sản phẩm) -->
+		<aside class="aside-item ly-filter-rating">
+			<div class="aside-title"><h2 class="title-head"><span>Đánh giá</span></h2></div>
+			<div class="aside-content">
+				<ul>
+					{%- for s in (1..5) -%}{%- assign n = 6 | minus: s -%}
+					<li><label class="ly-rate-opt"><input type="checkbox" class="ly-rate-input" value="{{ n }}" data-text="{{ n }} sao"><span class="ly-rate-stars" aria-hidden="true">{% for i in (1..5) %}<i{% if i <= n %} class="on"{% endif %}>★</i>{% endfor %}</span><span class="ly-rate-text">{{ n }} sao</span></label></li>
+					{%- endfor -%}
+				</ul>
+			</div>
+		</aside>
+
+		<!-- Màu sắc (tag 1) -->
+		{% if settings.filter_tag1 %}
+		<aside class="aside-item filter-tag">
+			<div class="aside-title"><h2 class="title-head"><span>Màu sắc</span></h2></div>
+			<div class="aside-content filter-group">
+				<ul>
+					{% assign tags = settings.filter_tag1_list | split: ';' %}
+					{% for t in tags %}{% assign tag = t | strip %}
+					<li class="filter-item filter-item--check-box">
+						<label for="filter-{{ tag | handleize }}">
+							<input type="checkbox" id="filter-{{ tag | handleize }}" data-group="tag2" data-field="tags" data-text="{{ tag }}" value="({{ tag }})" data-operator="OR">
+							<span>{{ tag }}</span>
+						</label>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</aside>
+		{% endif %}
+
+		<!-- Độ dày (tag 2) -->
+		{% if settings.filter_tag2 %}
+		<aside class="aside-item filter-tag">
+			<div class="aside-title"><h2 class="title-head"><span>{{ settings.filter_tag2_title }}</span></h2></div>
+			<div class="aside-content filter-group">
+				<ul>
+					{% assign tags = settings.filter_tag2_list | split: ';' %}
+					{% for t in tags %}{% assign tag = t | strip %}
+					<li class="filter-item filter-item--check-box {% if forloop.index > 5 %}overflow-item{% endif %}">
+						<label for="filter-{{ tag | handleize }}">
+							<input type="checkbox" id="filter-{{ tag | handleize }}" data-group="tag2" data-field="tags" data-text="{{ tag }}" value="({{ tag }})" data-operator="OR">
+							<span>{{ tag }}</span>
+						</label>
+					</li>
+					{% if forloop.last and tags.size > 5 %}<li class="filter-item-toggle cursor-pointer">Xem thêm</li>{% endif %}
+					{% endfor %}
+				</ul>
+			</div>
+		</aside>
+		{% endif %}
+
+		<!-- Thương hiệu (nếu bật trong cài đặt) -->
+		{% if settings.filter_vendor %}
+		{% assign vendor_size = collection.all_vendors.size %}
+		{% if vendor_size > 0 %}
+		<aside class="aside-item filter-vendor">
+			<div class="aside-title"><h2 class="title-head"><span>{{ settings.filter_vendor_title }}</span></h2></div>
+			<div class="aside-content filter-group">
+				<ul>{% for vendor in collection.all_vendors %}{% if vendor != '' %}
+					<li class="filter-item filter-item--check-box {% if forloop.index > 5 %}overflow-item{% endif %}">
+						<label for="filter-{{ vendor | handleize }}">
+							<input type="checkbox" id="filter-{{ vendor | handleize }}" data-group="Hãng" data-field="vendor" data-text="{{ vendor }}" value="({{ vendor }})" data-operator="OR">
+							<span>{{ vendor }}</span>
+						</label>
+					</li>
+					{% endif %}{% endfor %}
+				</ul>
+			</div>
+		</aside>
+		{% endif %}
+		{% endif %}
+		{%- include 'filter-cate-col' -%}
+	</div>
+</div>
+<script src="{{ 'ly-filter.js' | asset_url }}" defer></script>

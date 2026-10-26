@@ -1,0 +1,35 @@
+{%include 'ajaxcart'%}
+{%if template contains 'product'%}{%if settings.product_tab3_enable%}{%include 'bpr-products-module'%}{%endif%}{%endif%}
+{%if template contains 'index' or template contains 'collection' or template contains 'product' or template contains 'search' or template contains 'page.favorite' or template contains 'page.khuyen-mai'%}
+{%if settings.quickview_enable%}{%include 'quickview-template'%} 
+<link rel="preload" as="script" href="{{ 'quickview.js' | asset_url }}" />
+<script type="text/javascript" defer src="{{ 'quickview.js' | asset_url }}"></script>{%endif%}{%endif%}
+<link rel="preload" as="script" href="{{ 'main.js' | asset_url }}" />
+<script type="text/javascript" defer src="{{ 'main.js' | asset_url }}"></script>
+{%if settings.use_search_auto%}<link rel="preload" as="script" href="{{ 'placeholdertypewriter.js' | asset_url }}" />
+{{ 'placeholdertypewriter.js' | asset_url | script_tag }}{%endif%}
+{%if template contains 'index'%}<link rel="preload" as="script" href="{{ 'index.js' | asset_url }}" />
+<script type="text/javascript" defer src="{{ 'index.js' | asset_url }}"></script>{%endif%}
+{%if template contains 'collection'%}{%- comment -%} 22/10/2026 tối ưu GĐ2: bỏ jquery-ui-min.scss.css (0 khác biệt khi gỡ; JS jquery-ui giữ nguyên) {%- endcomment -%}
+<link rel="preload" as="script" href="{{ 'jquery-ui-min.js' | asset_url }}" />
+{{ 'jquery-ui-min.js' | asset_url | script_tag }}
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+{{ 'search_filter.js'  | asset_url | script_tag }}
+<script>
+	var filter = new Bizweb.SearchFilter()
+	{%if collection.id > 0%}filter.addValue("collection", "collections", "{{ collection.id }}", "AND");{%endif%}
+					function clearAllFiltered() {
+		filter = new Bizweb.SearchFilter();
+		{%if collection.id > 0%}filter.addValue("collection", "collections", "{{ collection.id }}", "AND");{%endif%}
+		$(".filter-container__selected-filter-list ul").html("");
+		$(".filter-container input[type=checkbox]").attr('checked', false);
+		$(".filter-container__selected-filter").hide();
+		doSearch(1);
+	}
+</script>
+<link rel="preload" as="script" href="{{ 'col.js' | asset_url }}" />
+{{ 'col.js' | asset_url | script_tag }}{%endif%}
+{%if template contains 'product'%}<link rel="preload" as="script" href="{{ 'picbox.js' | asset_url }}" />
+<link rel="preload" as='style'  type="text/css" href="{{ 'picbox.scss.css' | asset_url }}">
+{{ 'picbox.scss.css' | asset_url | stylesheet_tag }}
+{{ 'picbox.js' | asset_url | script_tag }}{%endif%}

@@ -1,0 +1,20 @@
+  video: D:/LOUGA_WORKSPACE/03_MEDIA_LIBRARY/raw-footage/San-sale-cung-louis-yoga_2026-10.mp4  (77.8 phut, 720x1280)
+  nhan dang bang large-v3 tren cuda/int8_float16 ... (GPU ~1/3 thoi luong, CPU ~1-1.5x thoi luong)
+    ... da toi 00:05:02.160
+    ... da toi 00:10:05.750
+    ... da toi 00:15:14.480
+    ... da toi 00:20:16.310
+    ... da toi 00:25:18.540
+    ... da toi 00:30:19.080
+    ... da toi 00:35:21.120
+    ... da toi 00:40:23.200
+    ... da toi 00:45:24.820
+    ... da toi 00:50:25.780
+    ... da toi 00:55:26.800
+    ... da toi 01:00:33.190
+    ... da toi 01:05:38.590
+    ... da toi 01:10:38.860
+    ... da toi 01:15:44.470
+  xong sau 1015s — 1326 cau, 14355 tu
+  -> D:/LOUGA_WORKSPACE/05_VIDEO_PROJECTS/2026-10_san-sale/plan/source.words.json
+  -> D:/LOUGA_WORKSPACE/05_VIDEO_PROJECTS/2026-10_san-sale/plan/source.timeline.txt

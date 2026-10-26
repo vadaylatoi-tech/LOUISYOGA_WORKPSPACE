@@ -1,0 +1,93 @@
+{
+  "videos": [
+    {"id": "01", "title": "Lau thảm bằng cồn có sao không",
+     "topic": "Cồn và chất tẩy có thể làm mủn bề mặt thảm cao su; nên dùng nước vệ sinh chuyên dụng, làm theo khuyến nghị nhà sản xuất.",
+     "keywords": ["cồn", "cao su", "mủn", "nước vệ sinh thảm", "nhà sản xuất"],
+     "segments": [
+       {"role": "hook", "start": "00:12:54.660", "end": "00:13:04.000", "first": "Cũng còn rất là nhiều", "last": "cồn để lau thảm"},
+       {"role": "body", "start": "00:15:35.160", "end": "00:16:32.970", "first": "lỗi đầu tiên là em thấy", "last": "thì nó sẽ tốt hơn"},
+       {"role": "body", "start": "00:16:33.370", "end": "00:16:48.370", "first": "Còn cồn thì nó không phải", "last": "nó sẽ dễ hơn ý"},
+       {"role": "end", "start": "00:16:56.110", "end": "00:17:07.660", "first": "nên là thay vì là mình có gì dùng đấy", "last": "đúng hơn nhé mọi người nhé"}]},
+    {"id": "02", "title": "Tập xong cuộn thảm luôn - lỗi khiến thảm nhanh mủn",
+     "topic": "Cuộn thảm khi còn ẩm mồ hôi làm hơi ẩm đọng lại, sinh mùi, giảm độ bền; để khô rồi mới cuộn, ở lớp thì cuộn lỏng tay.",
+     "keywords": ["cuộn thảm", "hơi ẩm", "mủn", "cuộn lỏng tay", "để thoáng"],
+     "segments": [
+       {"role": "hook", "start": "00:18:05.000", "end": "00:18:15.340", "first": "Còn lỗi thứ 2", "last": "Bởi vì sao"},
+       {"role": "body", "start": "00:18:17.900", "end": "00:19:03.400", "first": "Là khi mà mọi người cuộn thảm", "last": "lưu ý giúp em nhá"},
+       {"role": "body", "start": "00:19:24.240", "end": "00:20:00.110", "first": "Đó và không cuộn thảm khi ướt", "last": "thoáng ra giúp em nhé"},
+       {"role": "end", "start": "00:21:41.600", "end": "00:21:52.820", "first": "sau khi mình tập thì mình nên lau", "last": "bên ngoài đâu mọi người"}]},
+    {"id": "03", "title": "Phơi thảm ngoài nắng cho nhanh khô - sai lầm",
+     "topic": "Thảm cao su không phơi nắng gắt (giảm độ bền bề mặt); phơi trong bóng mát.",
+     "keywords": ["phơi nắng", "bóng mát", "cao su", "độ bền"],
+     "segments": [
+       {"role": "hook", "start": "00:19:12.880", "end": "00:19:23.960", "first": "Đó nhiều chị là mình cứ nghĩ", "last": "ánh nắng mặt trời nhá"},
+       {"role": "body", "start": "00:22:40.600", "end": "00:23:03.570", "first": "đấy là mình phơi cái thảm", "last": "nắng mặt trời"},
+       {"role": "body", "start": "00:23:38.300", "end": "00:23:55.900", "first": "khi là cái việc là mình phơi thảm", "last": "lưu ý giúp em nhé"},
+       {"role": "end", "start": "00:19:03.740", "end": "00:19:12.620", "first": "Khi mà mọi người tập xong", "last": "ánh nắng mặt trời"}]},
+    {"id": "04", "title": "Giặt thảm và chà xát mạnh - lỗi làm thảm mất độ bám",
+     "topic": "Chà xát mạnh khi làm sạch vết bẩn làm bong, mủn, mất độ bám; thảm cao su nhạy cảm hơn TPE; ưu tiên cách làm sạch nhẹ nhàng.",
+     "keywords": ["chà xát", "giặt", "mất độ bám", "TPE", "cao su"],
+     "segments": [
+       {"role": "hook", "start": "00:23:55.950", "end": "00:24:25.570", "first": "Và cái lỗi thứ tư", "last": "vết bẩn ấy"},
+       {"role": "body", "start": "00:24:25.980", "end": "00:24:35.780", "first": "Thì thực chất là đối với cái việc", "last": "xong ấy mọi người"},
+       {"role": "body", "start": "00:24:55.530", "end": "00:25:09.760", "first": "trà sát mạnh và thường xuyên", "last": "bề mặt thảm nhé"},
+       {"role": "body", "start": "00:25:59.880", "end": "00:26:28.740", "first": "Chứ không phải là lúc mình", "last": "khác nhau luôn"},
+       {"role": "end", "start": "00:25:09.760", "end": "00:25:21.600", "first": "Không sử dụng các cái chất tẩy rửa mạnh", "last": "cái bề mặt thảm"}]},
+    {"id": "05", "title": "Tập xong có cần lau thảm mỗi ngày",
+     "topic": "Nên lau bằng khăn mềm ẩm sau mỗi buổi, để thoáng cho khô rồi mới cất; mồ hôi để lâu sinh mùi, giảm độ bền.",
+     "keywords": ["lau thảm", "khăn mềm ẩm", "mồ hôi", "mùi", "nóng ẩm"],
+     "segments": [
+       {"role": "hook", "start": "00:20:42.290", "end": "00:20:46.750", "first": "Tại vì cũng rất là nhiều anh chị", "last": "phải vệ sinh không"},
+       {"role": "body", "start": "00:20:46.790", "end": "00:21:13.330", "first": "Thì thực chất là cái này", "last": "nó tốt hơn"},
+       {"role": "body", "start": "00:21:17.520", "end": "00:21:26.240", "first": "mọi người thấy là cái mồ hôi", "last": "mùi ở trên thảm"},
+       {"role": "body", "start": "00:20:19.670", "end": "00:20:40.810", "first": "Đối với tần suất tập", "last": "thì nó sẽ sạch hơn"},
+       {"role": "end", "start": "00:21:59.220", "end": "00:22:22.140", "first": "Nhất là trong điều kiện thời tiết", "last": "lưu ý giúp em nhé"}]},
+    {"id": "06", "title": "Vệ sinh thảm thường xuyên có làm giảm độ bám",
+     "topic": "Vệ sinh đúng cách không làm giảm độ bám; lau bằng khăn xịt nước vệ sinh, để khô trong bóng mát rồi mới cuộn.",
+     "keywords": ["độ bám", "vệ sinh đúng cách", "khăn mềm", "bóng mát"],
+     "segments": [
+       {"role": "hook", "start": "00:38:36.820", "end": "00:38:53.740", "first": "Vệ sinh thảm thường xuyên có làm giảm", "last": "độ bám của thảm nhé"},
+       {"role": "body", "start": "00:38:53.800", "end": "00:39:09.180", "first": "Sau mỗi buổi tập mà mọi người", "last": "bóng mát giúp em nha"},
+       {"role": "body", "start": "00:28:26.560", "end": "00:28:37.640", "first": "Nếu như mọi người muốn vệ sinh thảm", "last": "chuyên dụng như thế này"},
+       {"role": "body", "start": "00:28:53.200", "end": "00:29:12.300", "first": "Mọi người có thể là xịt ra cái khăn", "last": "khô chút em nha"},
+       {"role": "end", "start": "00:39:11.000", "end": "00:39:21.660", "first": "nếu mà vệ sinh thảm đúng cách", "last": "chất lượng của thảm nha"}]},
+    {"id": "07", "title": "Thảm mới dùng đã mủn - do chất lượng hay do cách dùng",
+     "topic": "Độ bền thảm không chỉ do chất lượng mà còn do thời tiết, cách vệ sinh, bảo quản; mỗi loại thảm có cách vệ sinh riêng.",
+     "keywords": ["mủn", "độ bền", "chất lượng", "vệ sinh", "bảo quản"],
+     "segments": [
+       {"role": "hook", "start": "00:10:46.560", "end": "00:11:31.600", "first": "Khi mà mọi người mà dùng một thời gian", "last": "độ bền của thảm"},
+       {"role": "body", "start": "00:12:06.550", "end": "00:12:40.850", "first": "Nhiều khi chị bảo là mình vệ sinh", "last": "lâu dài hơn"},
+       {"role": "end", "start": "00:27:57.540", "end": "00:28:24.940", "first": "Như là đầu lai em cũng có chia sẻ", "last": "thoải mái hơn"}]},
+    {"id": "08", "title": "Khi nào nên thay thảm mới",
+     "topic": "Thảm mủn, mất độ bám không hẳn do vệ sinh mà có thể đã đến lúc thay; thay để đảm bảo sức khỏe và hiệu quả tập.",
+     "keywords": ["thay thảm mới", "mất độ bám", "mủn", "bong tróc"],
+     "segments": [
+       {"role": "hook", "start": "00:26:49.500", "end": "00:27:57.130", "first": "Và ngoài ra là khi mà mọi người", "last": "nên thay thảm mới rồi"}]},
+    {"id": "09", "title": "Ưu tiên độ êm hay độ bám - chọn thảm nào",
+     "topic": "Ưu tiên êm, giá thấp: TPE 9 ly; vừa êm vừa bám: cao su 5 ly; đầu tư cao: Lilium 6,5 ly.",
+     "keywords": ["độ êm", "độ bám", "TPE", "9 ly", "5 ly", "Lilium"],
+     "segments": [
+       {"role": "hook", "start": "00:03:12.460", "end": "00:04:24.000", "first": "Nếu mà bị tê thất", "last": "cũng thừa chị ạ"}]},
+    {"id": "10", "title": "Thảm tập thường xuyên và Mastery khác nhau ở bề mặt",
+     "topic": "Mastery bề mặt PU sinh thái nhám lì, bám và chống trượt vượt trội; dòng thường xuyên bề mặt nhẵn hơn, tập thông thường là đủ.",
+     "keywords": ["Mastery", "PU", "nhám lì", "độ bám", "thường xuyên"],
+     "segments": [
+       {"role": "hook", "start": "00:05:00.850", "end": "00:06:14.380", "first": "Dòng mastery thì cái bề mặt", "last": "cho mọi người đấy"}]},
+    {"id": "11", "title": "Asana hay Asana 25 - chọn mẫu nào",
+     "topic": "Asana 4,5 ly in 1 màu cho tập cơ bản; Asana 25 dày 5 ly in đa màu, êm và bám hơn cho tập nâng cao; cả hai đủ đường định tuyến.",
+     "keywords": ["Asana", "Asana 25", "4 ly rưỡi", "5 ly", "in đa màu", "đường định tuyến"],
+     "segments": [
+       {"role": "hook", "start": "00:42:04.900", "end": "00:42:14.400", "first": "Mọi người lưu ý nhất đây là Asana", "last": "in 1 màu nhé mọi người nhé"},
+       {"role": "body", "start": "00:40:23.400", "end": "00:40:49.900", "first": "Đây là Asana thường", "last": "hoàn toàn yên tâm nhé"},
+       {"role": "body", "start": "00:40:58.360", "end": "00:41:55.600", "first": "Còn bên này thì nó sẽ là cái mẫu", "last": "thoải mái hơn nhá"},
+       {"role": "body", "start": "00:42:15.600", "end": "00:42:24.030", "first": "Và mọi người hãy", "last": "hoàn toàn yên tâm nha"},
+       {"role": "end", "start": "00:42:26.390", "end": "00:42:43.930", "first": "Nếu mà mọi người mà cái nhu cầu", "last": "định tuyến luôn mọi người"}]},
+    {"id": "12", "title": "Cuộn thảm ngược chiều - vì sao thảm bị hằn và gãy",
+     "topic": "Cuộn ngược để lại vết hằn, gãy, dính bề mặt; cuộn mặt chính ra ngoài, mặt đen vào trong, đúng chiều như khi nhận thảm.",
+     "keywords": ["cuộn ngược", "vết hằn", "gãy", "mặt chính", "mặt đen"],
+     "segments": [
+       {"role": "hook", "start": "01:10:10.900", "end": "01:10:34.200", "first": "ví dụ như là mọi người mà cuộn ngược", "last": "bề mặt thảm đấy"},
+       {"role": "body", "start": "01:09:36.850", "end": "01:10:10.600", "first": "Tức là khi mọi người cuộn thảm", "last": "gãy cái bề mặt thẳng"},
+       {"role": "end", "start": "01:10:34.400", "end": "01:10:44.190", "first": "lưu ý giúp em nhá cuộn", "last": "vào bên trong nhá"}]}
+  ]
+}

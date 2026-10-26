@@ -1,0 +1,198 @@
+{% comment %}
+  15/10/2026 — Header theo bản thiết kế mới (PC: logo chữ trái, menu giữa, tìm kiếm + yêu thích + giỏ + tài khoản phải;
+  điện thoại: menu + tìm kiếm trái, logo giữa, yêu thích + giỏ phải; menu trượt có ô tìm kiếm, "Xu hướng", nhóm mở/đóng).
+  Giữ móc JS dùng chung: data-cart-open, data-cart-count, data-favorites-open, data-favorite-count (ly-site.js, ly-cart.js, ly-home.js).
+  Phân khúc / dòng thảm đọc từ snippets/ly-segments.bwt. Bản trước: snippets/ly-home-header.bwt (vẫn còn trên theme).
+  16/10/2026 (góp ý anh Công): hiệu ứng như site live — dải thông báo chạy luân phiên, thanh ghim thu thành viên kính mờ, gạch chân menu; bỏ icon hoa sen.
+{% endcomment %}
+{%- include 'ly-segments' -%}
+<script src="{{ 'ly-segments.js' | asset_url }}" defer></script>
+{%- assign lyx_phone = settings.store_phone | split: '-' | first | strip -%}
+{%- assign lyx_tel = lyx_phone | remove: '.' | remove: ' ' -%}
+{%- assign lyx_fb = settings.social_fb -%}{%- if lyx_fb contains 'thamtapyogalouis' or lyx_fb contains 'sapoweb' -%}{%- assign lyx_fb = 'https://www.facebook.com/thamlouisyoga' -%}{%- endif -%}
+{%- capture lyx_chev -%}<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg>{%- endcapture -%}
+{%- capture lyx_i_search -%}<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.6-4.6"/></svg>{%- endcapture -%}
+<div class="lyx-util" role="region" aria-label="Thông tin nhanh">
+  <div class="lyx-wrap lyx-util-row">
+    {%- comment -%} 16/10: thông điệp luân phiên — đúng nội dung dải thông báo của site live (main 1170134) {%- endcomment -%}
+    <div class="lyx-ticker" data-lyx-ticker aria-live="off">
+      <p class="lyx-tick is-on"><i aria-hidden="true"></i>Luôn có 7 ngày đổi trả miễn phí</p>
+      <p class="lyx-tick"><i aria-hidden="true"></i>Nhận điểm tích lũy cho mỗi lần mua</p>
+      <p class="lyx-tick"><i aria-hidden="true"></i>Giao nhanh trong 24h</p>
+      <p class="lyx-tick"><i aria-hidden="true"></i>Chính sách 1 đổi 1 nếu không hài lòng</p>
+    </div>
+    <div class="lyx-util-links">
+      {%- if lyx_phone != blank -%}<a href="tel:{{ lyx_tel }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1Z"/></svg>Hotline {{ lyx_phone }}</a>{%- endif -%}
+      <span class="lyx-dot" aria-hidden="true"></span><a href="/apps/affiliate-v2">Đăng ký CTV</a>
+      <span class="lyx-dot" aria-hidden="true"></span><a href="/chinh-sach-bao-hanh-doi-tra-san-pham">Bảo hành</a>
+      <span class="lyx-dot" aria-hidden="true"></span><a href="#lyx-news">Nhận ưu đãi</a>
+      <span class="lyx-util-soc">
+        {%- if settings.social_zl != blank -%}<a href="{{ settings.social_zl }}" target="_blank" rel="noopener" aria-label="Chat Zalo với Louis Yoga">Zalo</a>{%- endif -%}
+        {%- if lyx_fb != blank -%}<a href="{{ lyx_fb }}" target="_blank" rel="noopener" aria-label="Facebook Louis Yoga"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5V6.8c0-.8.2-1.3 1.4-1.3H17V2.3c-.3 0-1.2-.1-2.4-.1-2.4 0-4 1.4-4 4.1v2.2H8v3.3h2.6V21H14v-9.2h2.7l.4-3.3H14Z"/></svg></a>{%- endif -%}
+        {%- if settings.social_you != blank -%}<a href="{{ settings.social_you }}" target="_blank" rel="noopener" aria-label="YouTube Louis Yoga"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.5 7.2a2.8 2.8 0 0 0-2-2C18.8 4.8 12 4.8 12 4.8s-6.8 0-8.5.4a2.8 2.8 0 0 0-2 2C1.1 8.9 1.1 12 1.1 12s0 3.1.4 4.8a2.8 2.8 0 0 0 2 2c1.7.4 8.5.4 8.5.4s6.8 0 8.5-.4a2.8 2.8 0 0 0 2-2c.4-1.7.4-4.8.4-4.8s0-3.1-.4-4.8ZM9.8 15.1V8.9l5.6 3.1-5.6 3.1Z"/></svg></a>{%- endif -%}
+      </span>
+    </div>
+  </div>
+</div>
+<span class="lyx-head-sentinel" aria-hidden="true"></span>
+<header class="lyx-head">
+  <div class="lyx-head-bar">
+  <div class="lyx-wrap lyx-head-row">
+    <div class="lyx-head-l">
+      <button type="button" class="lyx-ico lyx-burger lyx-only-m" aria-label="Mở menu" aria-expanded="false" aria-controls="lyx-menu" data-lyx-open="lyx-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <button type="button" class="lyx-ico lyx-only-m" aria-label="Tìm kiếm" data-lyx-open="lyx-menu" data-lyx-focus="#lyx-mq">{{ lyx_i_search }}</button>
+      <a href="/" class="lyx-logo lyx-only-d" aria-label="Louis Yoga — Trang chủ">{% include 'lyx-logo' %}</a>
+    </div>
+    <a href="/" class="lyx-logo lyx-only-m" aria-label="Louis Yoga — Trang chủ">{% include 'lyx-logo' %}</a>
+    <nav class="lyx-nav" aria-label="Điều hướng chính">
+      <a href="/"{% if template contains 'index' %} aria-current="page"{% endif %}>Trang chủ</a>
+      <div class="lyx-dd" data-lyx-dd>
+        <button type="button" class="{% if template contains 'collection' or template contains 'product' %}is-current{% endif %}" aria-expanded="false" aria-controls="lyx-dd-shop">Sản phẩm {{ lyx_chev }}</button>
+        <div class="lyx-dd-panel" id="lyx-dd-shop">
+          <a href="/collections/all">Tất cả sản phẩm</a>
+          <p>Phân khúc thảm</p>
+          {%- for ly_h in ly_seg_handles -%}<a class="lyh-seg" href="{{ ly_seg_urls[forloop.index0] }}" data-ly-seg-v="{{ ly_seg_values[forloop.index0] }}" data-ly-seg-name="{{ ly_seg_names[forloop.index0] }}">{{ ly_seg_names[forloop.index0] }}<small>{{ ly_seg_models[forloop.index0] }}</small></a>{%- endfor -%}
+          <p>Dòng thảm</p>
+          {%- for ly_h in ly_line_handles -%}<a class="lyh-seg" href="{{ ly_line_urls[forloop.index0] }}" data-ly-seg-v="{{ ly_line_values[forloop.index0] }}" data-ly-seg-name="{{ ly_line_names[forloop.index0] }}">{{ ly_line_names[forloop.index0] }}<small>{{ ly_line_models[forloop.index0] }}</small></a>{%- endfor -%}
+          <p>Phụ kiện</p>
+          <a href="/phu-kien-yoga">Phụ kiện Yoga</a>
+        </div>
+      </div>
+      <div class="lyx-dd" data-lyx-dd>
+        <button type="button" class="{% if template contains 'blog' or template contains 'article' %}is-current{% endif %}" aria-expanded="false" aria-controls="lyx-dd-blog">Blog {{ lyx_chev }}</button>
+        <div class="lyx-dd-panel" id="lyx-dd-blog">
+          <a href="/tin-tuc">Tin tức</a>
+          <a href="/bao-chi-noi-ve-louis-yoga">Báo chí nói về Louis Yoga</a>
+          <a href="/suc-khoe-moi-ngay">Sức khỏe mỗi ngày</a>
+          <a href="/truyen-thong-louis-yoga">Truyền thông Louis Yoga</a>
+        </div>
+      </div>
+      <a href="/gioi-thieu"{% if template contains 'page.about' %} aria-current="page"{% endif %}>Về chúng tôi</a>
+      <a href="/lien-he"{% if template contains 'contact' %} aria-current="page"{% endif %}>Liên hệ</a>
+    </nav>
+    <div class="lyx-tools">
+      <form class="lyx-search" action="/search" method="get" role="search">
+        <input type="hidden" name="type" value="product">
+        <label class="lyx-sr" for="lyx-q">Tìm sản phẩm</label>
+        <button type="submit" aria-label="Tìm kiếm">{{ lyx_i_search }}</button>
+        <input id="lyx-q" name="query" placeholder="Tìm kiếm" required maxlength="120" autocomplete="off">
+      </form>
+      <button type="button" class="lyx-ico" data-favorites-open aria-label="Sản phẩm yêu thích"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.7 7.9 3.8 4.5 7.2 4.5c2 0 3.6 1.1 4.8 2.8 1.2-1.7 2.8-2.8 4.8-2.8 3.4 0 5.5 3.4 4.4 6.6-1.7 4.8-9.2 9.4-9.2 9.4Z"/></svg><span class="lyx-count" data-favorite-count hidden>0</span></button>
+      <button type="button" class="lyx-ico" data-cart-open aria-label="Mở giỏ hàng"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M8.5 10V6.5a3.5 3.5 0 0 1 7 0V10"/></svg><span class="lyx-count" data-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span></button>
+      <a class="lyx-ico lyx-only-d" href="/account" aria-label="Tài khoản"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.4-6 8-6s6.8 2 8 6"/></svg></a>
+    </div>
+  </div>
+  </div>
+</header>
+
+<div class="lyx-drawer" id="lyx-menu" aria-hidden="true">
+  <div class="lyx-drawer-bg" data-lyx-close></div>
+  <div class="lyx-drawer-panel" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="lyx-drawer-head">
+      <a href="/" class="lyx-logo" aria-label="Louis Yoga — Trang chủ">{% include 'lyx-logo' %}</a>
+      <button type="button" class="lyx-ico lyx-drawer-x" aria-label="Đóng menu" data-lyx-close><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+    </div>
+    <div class="lyx-drawer-body">
+      <div class="lyx-msearch">
+        <form action="/search" method="get" role="search">
+          <input type="hidden" name="type" value="product">
+          <label class="lyx-sr" for="lyx-mq">Tìm sản phẩm</label>
+          {{ lyx_i_search }}<input id="lyx-mq" name="query" placeholder="Tìm kiếm" required maxlength="120" autocomplete="off">
+        </form>
+        <p class="lyx-trend">XU HƯỚNG</p>
+        <div class="lyx-chips">
+          <a href="{{ ly_seg_urls[0] }}">Thảm mới tập yoga</a>
+          <a href="{{ ly_seg_urls[2] }}">Thảm Yoga cao cấp</a>
+          <a href="/phu-kien-yoga">Phụ kiện yoga</a>
+          <a href="{{ ly_line_urls[1] }}">Thảm TPE</a>
+        </div>
+      </div>
+      <nav class="lyx-mnav" aria-label="Menu điện thoại">
+        <a href="/">Trang chủ</a>
+        <details{% if template contains 'collection' or template contains 'product' %} open{% endif %}>
+          <summary>Thảm yoga {{ lyx_chev }}</summary>
+          <div>
+            <a class="lyh-seg" href="{{ ly_seg_urls[0] }}" data-ly-seg-v="{{ ly_seg_values[0] }}" data-ly-seg-name="Harmony">Thảm mới tập yoga | Harmony</a>
+            <a class="lyh-seg" href="{{ ly_seg_urls[1] }}" data-ly-seg-v="{{ ly_seg_values[1] }}" data-ly-seg-name="Balance">Thảm tập yoga thường xuyên | Balance</a>
+            <a class="lyh-seg" href="{{ ly_seg_urls[2] }}" data-ly-seg-v="{{ ly_seg_values[2] }}" data-ly-seg-name="Mastery">Thảm tập yoga chuyên nghiệp | Mastery</a>
+            <a class="lyh-seg" href="{{ ly_line_urls[0] }}" data-ly-seg-v="{{ ly_line_values[0] }}" data-ly-seg-name="{{ ly_line_names[0] }}">Thảm du lịch năng động</a>
+            <a class="lyh-seg" href="{{ ly_line_urls[1] }}" data-ly-seg-v="{{ ly_line_values[1] }}" data-ly-seg-name="{{ ly_line_names[1] }}">Thảm TPE đa năng</a>
+            <a href="/collections/all">Tất cả sản phẩm</a>
+          </div>
+        </details>
+        <details>
+          <summary>Phụ kiện yoga {{ lyx_chev }}</summary>
+          <div>
+            <a href="/vong-tap-yoga">Vòng tập yoga</a>
+            <a href="/ghe-tap-yoga">Ghế tập yoga</a>
+            <a href="/dem-ke-goi-tap-yoga-yoga-pad">Đệm kê gối</a>
+            <a href="/gach-tap-yoga">Gạch tập yoga</a>
+            <a href="/bong-tap-yoga">Bóng tập yoga</a>
+            <a href="/phu-kien-yoga">Tất cả phụ kiện</a>
+          </div>
+        </details>
+        <a href="/gioi-thieu">Về chúng tôi</a>
+        <a href="/tin-tuc">Tin tức</a>
+        <a href="/lien-he">Liên hệ</a>
+        <details>
+          <summary>Tài khoản {{ lyx_chev }}</summary>
+          <div>
+            <a href="/apps/affiliate-v2">Tài khoản CTV</a>
+            <a href="/account">Tài khoản khách hàng</a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var d=document,reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* Ghim: khung giữ chiều cao, chỉ thanh bên trong thu thành viên kính mờ (như site live) */
+  var head=d.querySelector('.lyx-head'),sen=d.querySelector('.lyx-head-sentinel');
+  if(head){
+    if(sen&&'IntersectionObserver' in window){new IntersectionObserver(function(es){head.classList.toggle('is-stuck',!es[0].isIntersecting);}).observe(sen);}
+    else{var onS=function(){head.classList.toggle('is-stuck',(window.scrollY||0)>40);};window.addEventListener('scroll',onS,{passive:true});onS();}
+  }
+  /* Dải thông báo chạy luân phiên 4,2 giây; dừng khi rê chuột / tab ẩn / giảm chuyển động */
+  var tb=d.querySelector('[data-lyx-ticker]'),tk=tb?tb.querySelectorAll('.lyx-tick'):[];
+  if(tk.length>1&&!reduce){
+    var ti=0,tp=false;
+    tb.addEventListener('mouseenter',function(){tp=true;});tb.addEventListener('mouseleave',function(){tp=false;});
+    setInterval(function(){
+      if(tp||d.visibilityState==='hidden')return;
+      var a=tk[ti];a.classList.remove('is-on');a.classList.add('is-out');setTimeout(function(){a.classList.remove('is-out');},520);
+      ti=(ti+1)%tk.length;tk[ti].classList.add('is-on');
+    },4200);
+  }
+  /* Menu thả xuống PC: rê chuột, bấm, Esc, bấm ra ngoài */
+  d.querySelectorAll('[data-lyx-dd]').forEach(function(dd){
+    var btn=dd.querySelector('button'),t;
+    var set=function(v){dd.classList.toggle('is-open',v);btn.setAttribute('aria-expanded',String(v));};
+    btn.addEventListener('click',function(){set(!dd.classList.contains('is-open'));});
+    dd.addEventListener('mouseenter',function(){if(matchMedia('(hover:hover)').matches){clearTimeout(t);set(true);}});
+    dd.addEventListener('mouseleave',function(){if(matchMedia('(hover:hover)').matches){t=setTimeout(function(){set(false);},150);}});
+    dd.addEventListener('focusout',function(e){if(!dd.contains(e.relatedTarget))set(false);});
+    d.addEventListener('keydown',function(e){if(e.key==='Escape'&&dd.classList.contains('is-open')){set(false);btn.focus();}});
+    d.addEventListener('click',function(e){if(!dd.contains(e.target))set(false);});
+  });
+  /* Ngăn kéo (menu điện thoại, bộ lọc…): data-lyx-open="id", data-lyx-close; khóa cuộn, Esc, bẫy focus, trả focus */
+  var opener=null;
+  var focusables=function(p){return [].slice.call(p.querySelectorAll('a[href],button:not([disabled]),input:not([type=hidden]),select,textarea,summary')).filter(function(el){return el.offsetParent!==null;});};
+  var close=function(dr){if(!dr||!dr.classList.contains('is-open'))return;dr.classList.remove('is-open');dr.setAttribute('aria-hidden','true');d.documentElement.classList.remove('lyx-lock');d.querySelectorAll('[aria-controls="'+dr.id+'"]').forEach(function(b){b.setAttribute('aria-expanded','false');});if(opener){opener.focus();opener=null;}};
+  var open=function(dr,btn){opener=btn;dr.classList.add('is-open');dr.setAttribute('aria-hidden','false');d.documentElement.classList.add('lyx-lock');if(btn)btn.setAttribute('aria-expanded','true');var sel=btn&&btn.getAttribute('data-lyx-focus');setTimeout(function(){var f=sel?dr.querySelector(sel):focusables(dr)[0];if(f)f.focus();},60);};
+  window.LYXDrawer={open:open,close:close};
+  d.addEventListener('click',function(e){
+    var o=e.target.closest('[data-lyx-open]');if(o){var dr=d.getElementById(o.getAttribute('data-lyx-open'));if(dr){e.preventDefault();open(dr,o);}return;}
+    var c=e.target.closest('[data-lyx-close]');if(c){close(c.closest('.lyx-drawer'));}
+  });
+  d.addEventListener('keydown',function(e){
+    var dr=d.querySelector('.lyx-drawer.is-open');if(!dr)return;
+    if(e.key==='Escape'){close(dr);return;}
+    if(e.key==='Tab'){var f=focusables(dr);if(!f.length)return;var a=f[0],z=f[f.length-1];if(e.shiftKey&&d.activeElement===a){e.preventDefault();z.focus();}else if(!e.shiftKey&&d.activeElement===z){e.preventDefault();a.focus();}}
+  });
+  /* Đánh dấu mục menu đang xem */
+  var p=location.pathname.replace(/\/$/,'')||'/';
+  d.querySelectorAll('.lyx-mnav a,.lyx-dd-panel a').forEach(function(a){try{var u=new URL(a.href);if(u.pathname.replace(/\/$/,'')===p&&!u.search)a.classList.add('is-current');}catch(err){}});
+})();
+</script>

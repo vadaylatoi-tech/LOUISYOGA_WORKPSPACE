@@ -1,0 +1,106 @@
+{% assign ly_current_id = product.id %}
+{% include 'ly-pdp-mobile' %}
+{% comment %} 10/10/2026: phân khúc của sản phẩm (nguồn duy nhất snippets/ly-segments.bwt, gán theo mã sản phẩm → mọi biến thể dùng chung). Hiện nhãn "Phân khúc …" trên tên sản phẩm (desktop + mobile), dẫn về danh sách phân khúc; sản phẩm tương tự ưu tiên cùng phân khúc. {% endcomment %}
+{%- include 'ly-segments' -%}{%- include 'ly-seg-of' -%}{%- assign lyrel_seg = ly_seg_i -%}
+{% if lyrel_seg > -1 %}
+<a class="ly-seg-chip" href="{{ ly_seg_urls[lyrel_seg] }}" data-ly-seg-current="{{ ly_seg_values[lyrel_seg] }}" hidden>Phân khúc <b>{{ ly_seg_names[lyrel_seg] }}</b></a>
+<style>.ly-seg-chip{display:inline-flex;align-items:center;align-self:flex-start;gap:5px;margin:0 0 8px;padding:4px 12px;border:1px solid #f0c9da;border-radius:20px;background:#fff6fa;color:#4a202c!important;font:500 12px/1.3 Montserrat,sans-serif!important;letter-spacing:.3px;text-decoration:none!important;transition:border-color .2s}.ly-seg-chip b{color:#d72182;font-weight:700}.ly-seg-chip:hover{border-color:#d72182}.ly-seg-chip[hidden]{display:none}.lyp-on .layout-product .details-pro>.ly-seg-chip{order:1!important;margin:14px 16px 0!important}</style>
+<script>(function(){var c=document.querySelector('.ly-seg-chip'),t=document.querySelector('.details-pro .title-product')||document.querySelector('.title-product');if(c&&t){t.parentNode.insertBefore(c,t);c.hidden=false;}})();</script>
+{% endif %}
+{% comment %}
+  Chống lỗi dữ liệu mô tả: nếu mô tả có <style> mà thiếu </style> (vd. dán mã nhúng YouTube Shorts),
+  trình duyệt sẽ coi toàn bộ phần còn lại của trang là CSS → mất script chọn màu, nút mua, ảnh nhỏ.
+  Ở đây tự đóng các thẻ <style> bị hở. (10/2026)
+{% endcomment %}
+{% assign ly_content = product.content %}
+{% if ly_content contains '<style' %}
+	{% assign ly_open = ly_content | split: '<style' | size | minus: 1 %}
+	{% assign ly_close = ly_content | split: '</style>' | size | minus: 1 %}
+	{% assign ly_tail = ly_content | split: '</style>' | last %}
+	{% if ly_tail contains '<style' %}{% assign ly_close_end = false %}{% else %}{% assign ly_close_end = true %}{% endif %}
+	{% if ly_open > ly_close or ly_close_end == false %}{% assign ly_content = ly_content | append: '</style>' %}{% endif %}
+{% endif %}
+{% comment %} 10/2026 tối ưu: ảnh trong mô tả chỉ tải khi cuộn tới (mô tả nằm dưới màn hình đầu và bị thu gọn). {% endcomment %}
+{% assign ly_content = ly_content | replace: '<img ', '<img loading="lazy" decoding="async" ' %}
+{% comment %} 10/2026: khối thông tin dạng mở/đóng mới — CSS assets/ly-pd-info.css (tiền tố .lyi). Mô tả dài được thu gọn kèm nút "Xem thêm"; mục Vận chuyển và đổi trả dùng bản tóm tắt snippets/ly-pd-policy.bwt thay cho chép nguyên trang chính sách. {% endcomment %}
+<link rel="stylesheet" href="{{ 'ly-pd-info.css' | asset_url }}">
+<section class="ly-pd-info lyi" aria-label="Thông tin sản phẩm">
+	<details class="ly-acc lyi-acc" open>
+		<summary><span>Chi tiết sản phẩm</span><i aria-hidden="true"></i></summary>
+		<div class="lyi-body">
+			<div class="lyi-desc" data-lyi-clamp>
+				<div class="rte product_getcontent"><div id="content">{% if ly_content != null and ly_content != '' %}{{ ly_content }}{% else %}Thông tin sản phẩm đang được cập nhật{% endif %}</div></div>
+			</div>
+			<button type="button" class="lyi-more" data-lyi-more hidden aria-expanded="false"><span>Xem thêm</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+		</div>
+	</details>
+	{% assign ly_name = product.name | downcase %}{% if ly_name contains 'thảm' %}
+	<details class="ly-acc lyi-acc">
+		<summary><span>Bảo quản</span><i aria-hidden="true"></i></summary>
+		<div class="lyi-body">
+			<p class="lyi-lead">Vệ sinh và bảo quản đúng cách giúp thảm giữ độ bám, độ êm và màu sắc lâu hơn.</p>
+			<a class="lyi-link" href="/huong-dan-su-dung-bao-quan-tham-cao-su">Xem hướng dẫn sử dụng &amp; bảo quản thảm →</a>
+		</div>
+	</details>
+	{% endif %}
+	<details class="ly-acc lyi-acc">
+		<summary><span>Vận chuyển và đổi trả</span><i aria-hidden="true"></i></summary>
+		<div class="lyi-body">{% include 'ly-pd-policy' %}</div>
+	</details>
+</section>
+<script>
+(function(){
+	var box=document.querySelector('.lyi [data-lyi-clamp]'),btn=document.querySelector('.lyi [data-lyi-more]');
+	if(!box||!btn)return;
+	var label=btn.querySelector('span');
+	function limit(){return window.matchMedia('(max-width:767px)').matches?460:620;}
+	function check(){
+		if(box.classList.contains('is-open'))return;
+		var long=box.scrollHeight>limit()+180;
+		box.classList.toggle('is-clamped',long);btn.hidden=!long;
+	}
+	btn.addEventListener('click',function(){
+		var open=!box.classList.contains('is-open');
+		box.classList.toggle('is-open',open);box.classList.toggle('is-clamped',!open);
+		btn.setAttribute('aria-expanded',String(open));btn.classList.toggle('is-open',open);
+		label.textContent=open?'Thu gọn':'Xem thêm';
+		if(!open){var d=box.closest('details');if(d&&d.getBoundingClientRect().top<0)d.scrollIntoView({block:'start'});}
+	});
+	check();
+	box.querySelectorAll('img').forEach(function(i){if(!i.complete)i.addEventListener('load',check,{once:true});});
+	window.addEventListener('load',check);
+	var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(check,150);});
+})();
+/* 10/2026 tối ưu: ảnh slider sản phẩm từ ảnh thứ 3 tải khi cần → khi vuốt, tải trước 2 ảnh kế tiếp để không bị trống */
+window.addEventListener('DOMContentLoaded',function(){
+	var g=window.galleryTop;if(!g||!g.on)return;
+	function warm(){var s=g.slides||[],i=(g.activeIndex||0);for(var k=i;k<=i+2&&k<s.length;k++){var im=s[k]&&s[k].querySelector('img[loading="lazy"]');if(im)im.loading='eager';}}
+	g.on('slideChange',warm);g.on('touchStart',warm);
+});
+</script>
+{% comment %} 13/10/2026: app đánh giá Sapo hết hạn → thêm khối "Đánh giá từ Shopee" (snippets/ly-shopee-reviews.bwt) đặt trước đánh giá trên web. Khối hiện kể cả khi tắt tab đánh giá của app. {% endcomment %}
+{%- capture lysr_out -%}{% include 'ly-shopee-reviews' %}{%- endcapture -%}
+{% if settings.product_tab3_enable or lysr_out != blank %}
+<section class="ly-pd-reviews" aria-labelledby="ly-reviews-title">
+	<h2 id="ly-reviews-title" class="ly-pd-h">Đánh giá của khách hàng</h2>
+	{{ lysr_out }}
+	{% if settings.product_tab3_enable %}{% include 'product-reviews' %}{% endif %}
+</section>
+{% if settings.product_tab3_enable %}<script src="{{ 'ly-reviews.js' | asset_url }}" defer></script>{% endif %}
+{% endif %}
+{% assign ly_rel = product.collections.first %}
+{% comment %} 20/10/2026 (bản thiết kế "khối sản phẩm tương tự"): 8 thẻ — PC/máy tính bảng 4 cột × 2 hàng, điện thoại 2 cột × 3 hàng (CSS ẩn thẻ 7–8); tiêu đề 1 dòng, chữ "Xem thêm sản phẩm" gạch chân. CSS trong assets/lyx-card.css. Bản trước (5 thẻ): snippets/zz-backup-tab_product-20261020-card.bwt {% endcomment %}
+{% comment %} Thứ tự lấy thẻ: (1) cùng phân khúc (đúng thứ tự trong bảng) → (2) các danh mục của sản phẩm → (3) Tất cả sản phẩm, đến khi đủ 8; không lặp, không lấy chính sản phẩm đang xem. {% endcomment %}
+{% assign lyrel_cols = product.collections %}{% capture lyrel_seen %}|{{ ly_current_id }}|{% endcapture %}{% assign ly_shown = 0 %}{% assign lyrel_ids = '' | split: ' ' %}{% assign lyrel_url = ly_rel.url | default: '/collections/all' %}
+{% if lyrel_seg > -1 %}{% assign lyrel_ids = ly_seg_ids[lyrel_seg] | split: ' ' %}{% assign lyrel_url = ly_seg_urls[lyrel_seg] %}{% endif %}
+{% capture lyrel_cards %}{% for lyrel_id in lyrel_ids %}{% for product in collections['all'].products limit: 250 %}{% capture lyrel_pid %}{{ product.id }}{% endcapture %}{% capture lyrel_tok %}|{{ product.id }}|{% endcapture %}{% if lyrel_pid == lyrel_id and ly_shown < 8 %}{% unless lyrel_seen contains lyrel_tok %}{% include 'ly-home-card' %}{% assign ly_shown = ly_shown | plus: 1 %}{% assign lyrel_seen = lyrel_seen | append: lyrel_pid | append: '|' %}{% endunless %}{% endif %}{% endfor %}{% endfor %}{% for lyrel_c in lyrel_cols %}{% if ly_shown < 8 %}{% for product in lyrel_c.products limit: 24 %}{% capture lyrel_pid %}{{ product.id }}{% endcapture %}{% capture lyrel_tok %}|{{ product.id }}|{% endcapture %}{% if ly_shown < 8 %}{% unless lyrel_seen contains lyrel_tok %}{% include 'ly-home-card' %}{% assign ly_shown = ly_shown | plus: 1 %}{% assign lyrel_seen = lyrel_seen | append: lyrel_pid | append: '|' %}{% endunless %}{% endif %}{% endfor %}{% endif %}{% endfor %}{% if ly_shown < 8 %}{% for product in collections['all'].products limit: 40 %}{% capture lyrel_pid %}{{ product.id }}{% endcapture %}{% capture lyrel_tok %}|{{ product.id }}|{% endcapture %}{% if ly_shown < 8 %}{% unless lyrel_seen contains lyrel_tok %}{% include 'ly-home-card' %}{% assign ly_shown = ly_shown | plus: 1 %}{% assign lyrel_seen = lyrel_seen | append: lyrel_pid | append: '|' %}{% endunless %}{% endif %}{% endfor %}{% endif %}{% endcapture %}
+{% if ly_shown > 0 %}
+<section class="ly-pd-related ly-section">
+	<h2 class="ly-section-title">Sản phẩm tương tự</h2>
+	<div class="ly-grid ly-grid-four">{{ lyrel_cards }}</div>
+	<a class="ly-text-link" href="{{ lyrel_url }}">Xem thêm sản phẩm</a>
+</section>
+{% endif %}
+{% include 'ly-promos' %}
+{% comment %} 15/10/2026: giao diện trang sản phẩm theo bản thiết kế mới — assets/lyx-pdp.css (nạp ở layout) + lyx-pdp.js. {% endcomment %}
+<script src="{{ 'lyx-pdp.js' | asset_url }}" defer></script>

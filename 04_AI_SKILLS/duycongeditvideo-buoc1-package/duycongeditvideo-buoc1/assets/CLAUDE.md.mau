@@ -1,0 +1,12 @@
+# Dự án edit — DÙNG HỒ SƠ, KHÔNG NGHE LẠI VIDEO
+
+Các video ngắn trong `<THƯ MỤC VIDEO NGẮN>` đã được làm bằng skill Duycongeditvideo_Buoc1. Cạnh mỗi video có:
+- `NN - Tiêu đề.brief.md` — hook/thân/kết theo giây, lời thoại đã sửa tên riêng, từ khóa. **Đọc file này đầu tiên.**
+- `NN - Tiêu đề.hoso.words.json` — transcript từng chữ (faster-whisper large-v3) của chính video ngắn, mốc từ 0.
+
+Quy tắc cho mọi phiên edit:
+1. KHÔNG chạy Whisper, KHÔNG xem/nghe lại toàn bộ video. Chỉ trích vài frame khi cần đo bố cục.
+2. Transcript = `.hoso.words.json`. Remotion: `python "<skill>/scripts/hoso_tool.py" export --video <mp4> --to <transcript_raw.json>`. nns-auto-sub/nns-full-pass đã được vá để tự dùng hồ sơ (log: "dung HO SO co san").
+3. Sau khi cắt lặng: dời mốc theo timemap (`hoso_tool.py remap`), không nhận dạng lại.
+4. Video bị render lại sau khi làm hồ sơ → hồ sơ cũ không dùng được; tạo lại bằng `finalize.py --only <id>`.
+5. Không chỉnh màu nếu không được yêu cầu. Giữ nguyên hook ở đầu và câu kết.

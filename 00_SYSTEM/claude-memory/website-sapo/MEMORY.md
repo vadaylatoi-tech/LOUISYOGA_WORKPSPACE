@@ -1,0 +1,5 @@
+- [Sapo connector: đọc 1 file theme](sapo-connector-read-key.md) — get_theme_asset hỏng; dùng sapo_request query {"key":...}; render PDF bằng Windows.Data.Pdf
+- [Bộ kết nối Sapo riêng](sapo-claude-worker.md) — worker louisyoga-claude-mcp + app Sapo 14806; không đụng worker sapo-louisyoga cũ
+- [Tiến độ dự án](louis-progress-file.md) — xong toàn bộ trang; bàn giao ở "4. Hiện trạng/BAN-GIAO.md" + TIEN-DO.md
+- [Quy trình từ 17/10 (bỏ kit)](fast-mode-draft-writes.md) — cấm dùng 2 kit cũ; CLAUDE.md trong "4. Hiện trạng"; sao lưu bằng source_key trên Sapo; preview không cần đăng nhập
+- [Theme 1170160 đã là web thật](theme-1170160-is-live.md) — từ 19/10 1170160 là main; hero 2 lớp bg_hero.jpg + hero_yoga_mat.png; tên sao lưu thêm hậu tố việc để khỏi ghi đè

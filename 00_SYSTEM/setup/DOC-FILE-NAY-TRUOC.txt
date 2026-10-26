@@ -1,0 +1,175 @@
+﻿================================================================================
+   BỘ SKILL DỰNG VIDEO TALKING-HEAD TIẾNG VIỆT  —  TRỌN BỘ 12 SKILL
+================================================================================
+
+   12 skill cho Claude Code: cắt khoảng lặng, sub karaoke word-by-word, chèn
+   SFX, zoom bám mặt, video so sánh chia đôi, và các skill lên blueprint để
+   tự dựng CapCut.
+
+   Kèm thư mục shared-sources: font tiếng Việt, 126 logo thương hiệu,
+   khoảng 100 file SFX.
+
+
+--------------------------------------------------------------------------------
+   BƯỚC 1 — KIỂM TRA MÁY BẠN ĐÃ ĐỦ ĐIỀU KIỆN CHƯA
+--------------------------------------------------------------------------------
+
+   Windows      :  nháy đúp vào file    KIEM-TRA.bat
+   macOS/Linux  :  mở terminal ở thư mục này rồi gõ    sh kiem-tra.sh
+
+   Nó in ra đúng thứ nào còn thiếu kèm lệnh cài. Cứ cài rồi chạy lại cho tới
+   khi hiện dòng "DU HET. CHAY DUOC ROI." thì mới sang bước 2.
+
+   Trọn bộ cần:
+
+      - ffmpeg + ffprobe gọi được từ terminal
+      - Python 3.9 trở lên
+      - pip install faster-whisper numpy onnxruntime Pillow
+
+   Thư viện nào cho skill nào:
+
+      faster-whisper  ->  nns-auto-sub, nns-full-pass, edit-nns-v1
+      numpy           ->  hầu hết skill xử lý âm thanh
+      onnxruntime     ->  nns-face-highlight (dò mặt)
+      Pillow          ->  nns-split-compare (vẽ giao diện)
+
+   ==> LẦN CHẠY nns-auto-sub ĐẦU TIÊN sẽ TỰ TẢI MODEL WHISPER large-v3,
+       khoảng 1.5 GB. Cần mạng. Từ lần sau chạy offline.
+
+
+--------------------------------------------------------------------------------
+   BƯỚC 2 — CHÉP VÀO PROJECT   (đọc kỹ chỗ này, dễ sai nhất)
+--------------------------------------------------------------------------------
+
+   Chép CẢ HAI thư mục  .claude  và  shared-sources  vào thư mục gốc project
+   của bạn. Phải ra đúng cấu trúc này:
+
+         <project-cua-ban>\
+         ├── .claude\
+         │   └── skills\           <-- 12 skill
+         └── shared-sources\       <-- font, logo, SFX dùng chung
+
+   ==> shared-sources PHẢI NẰM NGANG HÀNG với .claude, KHÔNG nằm bên trong nó.
+       Nhóm skill edit-* và script-writer đi tìm font/logo theo đúng đường
+       dẫn này. Đặt sai chỗ là chúng báo không tìm thấy font.
+
+   Chép xong phải ĐÓNG VÀ MỞ LẠI Claude Code thì skill mới hiện ra.
+
+   Muốn dùng chung cho MỌI project?
+      Chép thư mục skills\ vào  C:\Users\<tên-bạn>\.claude\skills\
+      (macOS/Linux: ~/.claude/skills/)
+      Lúc đó 6 skill nns-* vẫn chạy bình thường vì asset nằm sẵn trong chúng.
+      Riêng nhóm edit-* vẫn cần shared-sources đặt ở gốc project đang làm.
+
+
+--------------------------------------------------------------------------------
+   BƯỚC 3 — CHẠY THỬ
+--------------------------------------------------------------------------------
+
+   Mở terminal tại thư mục project:
+
+      python .claude\skills\nns-full-pass\scripts\preflight.py --video "raw.mp4"
+
+   Nếu preflight sạch, mở Claude Code và gõ:
+
+      /nns-full-pass làm hết hậu kỳ cho file raw.mp4
+
+   Skill sẽ DỪNG LẠI sau khi lập kế hoạch để bạn duyệt bảng bố cục, cue sheet
+   và thẻ chữ, rồi mới render. Không tự ý render luôn.
+
+
+--------------------------------------------------------------------------------
+   TRONG NÀY CÓ GÌ
+--------------------------------------------------------------------------------
+
+   NHÓM nns-*  —  công cụ chạy thật, ra file video
+
+   Sáu skill này tự chứa asset (model dò mặt 17MB, font, 9 file SFX đều nằm
+   sẵn trong assets\ của từng skill).
+
+      nns-full-pass       Gộp cả dây chuyền vào 1 lệnh: từ file thô ra video
+                          đăng được. CẦN 4 skill dưới nằm cạnh nó.
+      nns-cut-silence     Cắt khoảng lặng frame-exact, ngưỡng suy từ chính
+                          file nên không cắt mất phụ âm nhẹ.
+      nns-auto-sub        Sub karaoke word-by-word tiếng Việt, burn vào video.
+      nns-add-sfx         Chèn SFX dồn vào hook + chuẩn hoá -14 LUFS.
+      nns-face-highlight  Zoom/punch-in bám vùng mặt, báo safe zone để đặt
+                          overlay không đè lên mặt.
+      nns-split-compare   Video so sánh chia đôi trước/sau, chạy tuần tự
+                          thô -> AI.
+
+   ==> nns-full-pass gọi thẳng sang nns-cut-silence, nns-auto-sub,
+       nns-face-highlight, nns-add-sfx. ĐỪNG TÁCH LẺ — phải để cả 5 cùng
+       một thư mục skills\, thiếu một cái là chạy không được.
+
+
+   NHÓM edit-*  VÀ  script-writer  —  ra blueprint / composition
+
+   Nhóm này CẦN shared-sources. Chúng gắn với phong cách một kênh cụ thể,
+   nên đọc SKILL.md rồi sửa lại palette / giọng văn cho kênh của bạn.
+
+      script-writer                Viết kịch bản lời thoại trước khi quay.
+      edit-style-nns               Blueprint dựng CapCut, phong cách
+                                   talking-head 3-tip.
+      edit-style-gpt-secret-code   Blueprint phong cách screen-recording
+                                   + PiP mềm + white-flash.
+      extract-edit-style           META-SKILL: đưa video đối thủ vào, nó đẻ
+                                   ra một skill edit-style-<tên> mới.
+      edit-nns-v1                  Dựng bằng Remotion từ file raw: cắt ậm ừ
+                                   + SFX + logo + caption.
+      edit-remotion-nns            Bản dựng Remotion của phong cách 3-tip.
+
+   ==> edit-nns-v1 và edit-remotion-nns cần thêm Node.js + Remotion, và tham
+       chiếu vài file blueprint của project gốc. Đọc SKILL.md của chúng trước
+       khi dùng.
+
+
+   shared-sources\  có gì
+
+      Font\Be_Vietnam_Pro\   18 weight, đầy đủ dấu tiếng Việt
+      brand-logos\           126 logo SVG + library.json
+                             (Claude, ChatGPT, Gemini...)
+      sound-effects\         ~100 file SFX + library.json + USAGE_GUIDE.md
+      demo-screens\          ảnh chụp màn hình demo
+      SOURCES.md             manifest — đọc file này trước khi đi tìm asset mới
+
+
+--------------------------------------------------------------------------------
+   HAY GẶP
+--------------------------------------------------------------------------------
+
+   "ffmpeg khong tim thay"
+       Cài xong ffmpeg phải ĐÓNG VÀ MỞ LẠI terminal thì PATH mới ăn.
+       Kiểm tra bằng lệnh:  ffmpeg -version
+
+   "Claude Code khong thay skill"
+       - Kiểm tra đúng đường dẫn  .claude\skills\<tên-skill>\SKILL.md
+         SKILL.md phải nằm NGAY trong thư mục skill, không lồng thêm 1 lớp.
+       - Đóng hẳn Claude Code rồi mở lại.
+
+   "pip khong phai la lenh"
+       Dùng:  python -m pip install <tên-thư-viện>
+
+   "Khong tim thay font Be Vietnam Pro"
+       Gần như chắc chắn do shared-sources đặt sai chỗ. Nó phải nằm NGANG
+       HÀNG với .claude, ở thư mục gốc project.
+
+   "Chu hien ra o vuong / mat dau"
+       Do dùng font không có dấu tiếng Việt (Arial, Impact, Inter...).
+       Bỏ tham số --resources đi để skill dùng font kèm sẵn.
+
+   "nns-full-pass bao thieu skill anh em"
+       Bạn tách lẻ skill rồi. Chép đủ cả 5 skill nns-* vào cùng thư mục
+       skills\ là hết.
+
+
+--------------------------------------------------------------------------------
+   GIẤY PHÉP
+--------------------------------------------------------------------------------
+
+   Font Be Vietnam Pro : SIL Open Font License
+                         (xem shared-sources\Font\Be_Vietnam_Pro\OFL.txt)
+   Logo trong brand-logos\ : nhãn hiệu thuộc về chủ sở hữu tương ứng
+   File SFX            : xem shared-sources\sound-effects\library.json
+                         để biết nguồn từng file
+   Script trong skill  : dùng thoải mái, sửa thoải mái.

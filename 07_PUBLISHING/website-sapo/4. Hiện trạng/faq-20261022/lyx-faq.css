@@ -1,0 +1,131 @@
+/* Louis Yoga — Câu hỏi thường gặp (22/10/2026). Dùng cho templates/page.faq.bwt (.lyxq-page) và khối cuối trang chủ snippets/lyx-home-faq.bwt (.lyxq-home).
+   Bố cục tham khảo Olaben (cột hỏi–đáp gọn, nhóm in hoa, dấu +); nét riêng Louis Yoga: số nhóm 01–06 đỏ rượu, chữ "FAQ" chìm nền kem, mục lục ghim bên trái, vạch đỏ rượu khi mở câu.
+   CSS cũ của theme ép h1/h2/p/button bằng !important → khai font/căn lề kèm !important trong phạm vi .lyxq. */
+.lyxq{--f-ink:var(--lyx-ink,#141414);--f-text:var(--lyx-text,#2b2b2b);--f-muted:var(--lyx-muted,#7a7470);--f-line:var(--lyx-line,#e7e2dc);--f-cream:var(--lyx-cream,#f8f5f0);--f-cta:var(--lyx-cta,#5a2333);--f-wine:var(--lyx-wine,#4a1f2b);font-family:var(--lyx-font,Montserrat,Arial,sans-serif);color:var(--f-text)}
+.lyxq *,.lyxq *::before,.lyxq *::after{box-sizing:border-box}
+
+/* ---------- Câu hỏi (dùng chung) ---------- */
+html body .lyxq .lyxq-q{position:relative;border-bottom:1px solid var(--f-line);scroll-margin-top:120px}
+html body .lyxq .lyxq-q::before{content:"";position:absolute;left:-18px;top:18px;bottom:18px;width:2px;background:var(--f-cta);transform:scaleY(0);transform-origin:top;transition:transform .35s var(--lyx-ease,ease)}
+html body .lyxq .lyxq-q[open]::before{transform:scaleY(1)}
+html body .lyxq .lyxq-q>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 0;cursor:pointer;font:600 15.5px/1.55 var(--lyx-font,Montserrat,sans-serif)!important;letter-spacing:.01em;color:var(--f-ink);text-align:left!important;transition:color .2s}
+html body .lyxq .lyxq-q>summary::-webkit-details-marker{display:none}
+html body .lyxq .lyxq-q>summary:hover,html body .lyxq .lyxq-q[open]>summary{color:var(--f-cta)}
+html body .lyxq .lyxq-q>summary:focus-visible{outline:2px solid var(--f-cta);outline-offset:4px;border-radius:2px}
+html body .lyxq .lyxq-q>summary>i{position:relative;flex:0 0 30px;width:30px;height:30px;border:1px solid var(--f-line);border-radius:50%;transition:border-color .2s,background .2s,transform .35s var(--lyx-ease,ease)}
+html body .lyxq .lyxq-q>summary>i::before,html body .lyxq .lyxq-q>summary>i::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1.5px;margin:-.75px 0 0 -5.5px;background:currentColor;transition:transform .35s var(--lyx-ease,ease)}
+html body .lyxq .lyxq-q>summary>i::after{transform:rotate(90deg)}
+html body .lyxq .lyxq-q>summary:hover>i{border-color:var(--f-cta)}
+html body .lyxq .lyxq-q[open]>summary>i{background:var(--f-cta);border-color:var(--f-cta);color:#fff;transform:rotate(180deg)}
+html body .lyxq .lyxq-q[open]>summary>i::after{transform:rotate(0)}
+html body .lyxq .lyxq-a{padding:0 48px 22px 0;font-size:14.5px;line-height:1.75;color:var(--f-muted)}
+html body .lyxq .lyxq-a p,html body .lyxq .lyxq-a li{font:400 14.5px/1.75 var(--lyx-font,Montserrat,sans-serif)!important;color:var(--f-muted)!important;text-align:left!important;margin:0 0 10px}
+html body .lyxq .lyxq-a p:last-child{margin-bottom:0}
+html body .lyxq .lyxq-a ul,html body .lyxq .lyxq-a ol{margin:0 0 12px;padding-left:20px}
+html body .lyxq .lyxq-a ul{list-style:disc}html body .lyxq .lyxq-a ol{list-style:decimal}
+html body .lyxq .lyxq-a li{margin-bottom:6px}
+html body .lyxq .lyxq-a b{font-weight:600;color:var(--f-text)}
+html body .lyxq .lyxq-a a{color:var(--f-cta)!important;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+html body .lyxq .lyxq-a a:hover{text-decoration-thickness:2px}
+.lyxq .lyxq-q.is-anim .lyxq-a{animation:lyxq-in .35s var(--lyx-ease,ease)}
+@keyframes lyxq-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.lyxq .lyxq-q.is-anim .lyxq-a{animation:none}html body .lyxq .lyxq-q::before,html body .lyxq .lyxq-q>summary>i{transition:none}}
+
+/* ---------- Trang FAQ ---------- */
+html body .lyxq-hero{position:relative;overflow:hidden;background:var(--f-cream);padding:clamp(44px,6vw,84px) 0 clamp(36px,4.5vw,60px);text-align:center}
+html body .lyxq-hero::after{content:"FAQ";position:absolute;right:-.04em;bottom:-.24em;font:700 clamp(120px,22vw,300px)/1 var(--lyx-font,Montserrat,sans-serif);letter-spacing:-.02em;color:#efe8df;pointer-events:none;z-index:0}
+html body .lyxq-hero .lyx-wrap{position:relative;z-index:1}
+html body .lyxq-hero .lyx-eyebrow{justify-content:center;text-align:center!important}
+html body .lyxq-hero h1{font:500 clamp(28px,3.4vw,46px)/1.15 var(--lyx-font,Montserrat,sans-serif)!important;letter-spacing:.06em!important;text-transform:uppercase;color:var(--f-ink)!important;text-align:center!important;margin:10px 0 14px!important}
+html body .lyxq-hero .lyxq-lead{max-width:600px;margin:0 auto!important;font:400 15px/1.7 var(--lyx-font,Montserrat,sans-serif)!important;color:var(--f-muted)!important;text-align:center!important}
+.lyxq-search{position:relative;max-width:560px;margin:28px auto 0}
+.lyxq-search svg{position:absolute;left:20px;top:50%;width:18px;height:18px;margin-top:-9px;fill:none;stroke:var(--f-muted);stroke-width:1.8;pointer-events:none}
+html body .lyxq-search input{width:100%;height:54px;padding:0 48px 0 50px;border:1px solid var(--f-line);border-radius:999px;background:#fff;font:400 14.5px var(--lyx-font,Montserrat,sans-serif)!important;color:var(--f-ink);box-shadow:0 10px 30px -18px rgba(74,31,43,.35);transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;appearance:none}
+html body .lyxq-search input::placeholder{color:#a39b95}
+html body .lyxq-search input:focus{outline:none;border-color:var(--f-cta);box-shadow:0 0 0 3px rgba(90,35,51,.12)}
+.lyxq-search input::-webkit-search-cancel-button{display:none}
+html body .lyxq-search .lyxq-clear{position:absolute;right:10px;top:50%;width:34px;height:34px;margin-top:-17px;border:0;border-radius:50%;background:transparent;color:var(--f-muted);font:400 18px/1 var(--lyx-font,sans-serif)!important;cursor:pointer}
+.lyxq-search .lyxq-clear[hidden]{display:none}
+.lyxq-search .lyxq-clear:hover{background:var(--f-cream);color:var(--f-cta)}
+.lyxq-count{min-height:20px;margin:12px 0 0;font-size:12.5px;color:var(--f-muted);text-align:center}
+
+.lyxq-body{padding:clamp(40px,5vw,72px) 0 clamp(44px,5vw,72px)}
+.lyxq-grid{display:grid;grid-template-columns:240px minmax(0,1fr);gap:clamp(40px,6vw,96px);align-items:start;max-width:1120px;margin:0 auto}
+.lyxq-nav{position:sticky;top:110px}
+html body .lyxq-nav-h{font:600 11px/1 var(--lyx-font,sans-serif)!important;letter-spacing:.3em;text-transform:uppercase;color:var(--f-cta)!important;margin:0 0 14px!important}
+.lyxq-nav ul{list-style:none;margin:0;padding:0;border-left:1px solid var(--f-line)}
+html body .lyxq-nav a{position:relative;display:flex;justify-content:space-between;gap:10px;padding:10px 0 10px 18px;font:500 13.5px/1.4 var(--lyx-font,sans-serif)!important;color:var(--f-muted)!important;text-decoration:none!important;transition:color .2s}
+.lyxq-nav a::before{content:"";position:absolute;left:-1px;top:8px;bottom:8px;width:2px;background:var(--f-cta);transform:scaleY(0);transition:transform .3s var(--lyx-ease,ease)}
+html body .lyxq-nav a:hover,html body .lyxq-nav a.is-on{color:var(--f-ink)!important}
+.lyxq-nav a.is-on::before{transform:scaleY(1)}
+.lyxq-nav a small{font-size:11.5px;color:#a39b95}
+.lyxq-nav a.is-empty{opacity:.35;pointer-events:none}
+.lyxq-nav-help{margin-top:28px;padding:20px;border-radius:14px;background:var(--f-cream)}
+html body .lyxq-nav-help p{margin:0 0 10px!important;font:400 13px/1.6 var(--lyx-font,sans-serif)!important;color:var(--f-muted)!important;text-align:left!important}
+html body .lyxq-nav-help a{display:block;font:600 14px/1.6 var(--lyx-font,sans-serif)!important;color:var(--f-cta)!important;text-decoration:none!important}
+
+html body .lyxq-grp{scroll-margin-top:110px}
+html body .lyxq-grp+.lyxq-grp{margin-top:clamp(40px,5vw,64px)}
+.lyxq-grp[hidden]{display:none}
+.lyxq-gh{display:flex;align-items:baseline;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--f-ink)}
+.lyxq-gn{font:300 clamp(28px,3vw,40px)/1 var(--lyx-font,sans-serif);color:var(--f-cta);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+html body .lyxq-gh h2{margin:0!important;font:600 clamp(16px,1.6vw,20px)/1.3 var(--lyx-font,sans-serif)!important;letter-spacing:.08em!important;text-transform:uppercase;color:var(--f-ink)!important;text-align:left!important}
+html body .lyxq-page .lyxq-q[hidden]{display:none}
+.lyxq-page mark{background:#f3e3e7;color:inherit;border-radius:2px;padding:0 1px}
+
+.lyxq-empty{padding:40px 0;text-align:center}
+html body .lyxq-empty p{font:400 15px/1.7 var(--lyx-font,sans-serif)!important;color:var(--f-muted)!important;text-align:center!important;margin:0 0 18px!important}
+.lyxq-empty[hidden]{display:none}
+
+/* Thẻ liên hệ cuối trang (tách khỏi dải đỏ rượu của footer) */
+.lyxq-cta{padding:0 0 clamp(48px,6vw,88px)}
+.lyxq-cta .lyx-wrap{max-width:1120px}
+.lyxq-cta-card{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;padding:clamp(28px,4vw,52px) clamp(24px,4.5vw,60px);border-radius:20px;background:var(--f-wine);color:#fff}
+.lyxq-cta-card::after{content:"";position:absolute;right:-90px;top:-90px;width:260px;height:260px;border-radius:50%;border:1px solid rgba(255,255,255,.12);box-shadow:0 0 0 40px rgba(255,255,255,.03),0 0 0 80px rgba(255,255,255,.02);pointer-events:none}
+.lyxq-cta-card>*{position:relative;z-index:1}
+html body .lyxq-cta .lyx-eyebrow{color:#e9c9d1!important}
+html body .lyxq-cta h2{margin:8px 0 6px!important;font:500 clamp(20px,2.2vw,30px)/1.25 var(--lyx-font,sans-serif)!important;letter-spacing:.04em!important;text-transform:uppercase;color:#fff!important;text-align:left!important}
+html body .lyxq-cta p{margin:0!important;font:400 14.5px/1.7 var(--lyx-font,sans-serif)!important;color:rgba(255,255,255,.78)!important;text-align:left!important}
+.lyxq-cta-btns{display:flex;gap:12px;flex-wrap:wrap}
+html body .lyxq-cta .lyx-btn{background:#fff!important;color:var(--f-wine)!important;border-color:#fff!important}
+html body .lyxq-cta .lyx-btn.lyxq-ghost{background:transparent!important;color:#fff!important;border-color:rgba(255,255,255,.55)!important}
+html body .lyxq-cta .lyx-btn.lyxq-ghost:hover{border-color:#fff!important}
+
+@media (max-width:1023px){
+  .lyxq-grid{grid-template-columns:minmax(0,1fr);gap:0}
+  .lyxq-nav{position:sticky;top:var(--lyx-head-h,60px);z-index:5;margin:0 calc(-1*clamp(16px,3vw,40px)) 28px;padding:10px clamp(16px,3vw,40px);background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--f-line)}
+  html body .lyxq-nav-h,.lyxq-nav-help{display:none!important}
+  .lyxq-nav ul{display:flex;gap:8px;overflow-x:auto;border:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .lyxq-nav ul::-webkit-scrollbar{display:none}
+  .lyxq-nav li{flex:0 0 auto}
+  html body .lyxq-nav a{padding:8px 14px;border:1px solid var(--f-line);border-radius:999px;font-size:12.5px!important;white-space:nowrap}
+  .lyxq-nav a::before,.lyxq-nav a small{display:none}
+  html body .lyxq-nav a.is-on{background:var(--f-cta);border-color:var(--f-cta);color:#fff!important}
+  html body .lyxq .lyxq-q::before{left:-12px}
+  html body .lyxq-grp{scroll-margin-top:150px}
+  html body .lyxq .lyxq-q{scroll-margin-top:160px}
+}
+@media (max-width:767px){
+  html body .lyxq .lyxq-q>summary{font-size:14.5px!important;padding:17px 0;gap:14px}
+  html body .lyxq .lyxq-q>summary>i{flex-basis:28px;width:28px;height:28px}
+  html body .lyxq .lyxq-a{padding-right:0}
+  html body .lyxq .lyxq-a p,html body .lyxq .lyxq-a li{font-size:14px!important}
+  html body .lyxq .lyxq-q::before{display:none}
+  html body .lyxq-search input{height:50px}
+  .lyxq-cta-btns{width:100%}
+  .lyxq-cta-btns .lyx-btn{flex:1 1 auto}
+}
+
+/* ---------- Khối trang chủ ---------- */
+html body .lyxq-home{background:var(--f-cream)}
+.lyxq-home-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(36px,6vw,96px);align-items:start}
+.lyxq-home-intro{position:sticky;top:110px}
+html body .lyxq-home-intro .lyx-h2{text-align:left!important;margin:10px 0 16px!important}
+html body .lyxq-home-intro p.lyxq-home-p{font:400 15px/1.75 var(--lyx-font,sans-serif)!important;color:var(--f-muted)!important;text-align:left!important;margin:0 0 26px!important;max-width:400px}
+.lyxq-home-big{display:block;margin:0 0 10px;font:300 clamp(64px,8vw,112px)/.9 var(--lyx-font,sans-serif);letter-spacing:-.04em;color:var(--f-cta)}
+html body .lyxq-home-contact{margin:22px 0 0!important;font:400 13.5px/1.7 var(--lyx-font,sans-serif)!important;color:var(--f-muted)!important;text-align:left!important}
+html body .lyxq-home-contact a{color:var(--f-cta)!important;font-weight:600;text-decoration:none!important;white-space:nowrap}
+.lyxq-home .lyxq-list{border-top:1px solid var(--f-ink)}
+.lyxq-home .lyxq-q>summary{background:transparent}
+@media (max-width:1023px){.lyxq-home-grid{grid-template-columns:minmax(0,1fr);gap:28px}.lyxq-home-intro{position:static}.lyxq-home-big{display:none}}
+@media (max-width:767px){html body .lyxq-home-intro p.lyxq-home-p{margin-bottom:20px!important}}

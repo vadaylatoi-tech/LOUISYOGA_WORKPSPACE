@@ -1,0 +1,404 @@
+/* Louis Yoga — thẻ sản phẩm + trang chủ, phong cách editorial sang trọng (16/10/2026, anh Công duyệt).
+   Nền trắng/kem, đỏ rượu (--lyx-cta) cho hành động, hồng logo chỉ làm điểm nhấn, chữ in hoa giãn rộng, nút viền mảnh bo tròn.
+   Thẻ (.lyx-card) dùng chung cho trang chủ, danh mục, sản phẩm tương tự. */
+
+/* ================= Thẻ sản phẩm ================= */
+.ly-card.lyx-card{position:relative;display:flex;flex-direction:column;min-width:0;height:100%;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;overflow:visible;font-family:var(--lyx-font,Montserrat,sans-serif)}
+.lyx-card-img{position:relative;display:block;aspect-ratio:1/1;overflow:hidden;border-radius:2px;background:var(--lyx-soft,#f4f1ed)}
+.lyx-card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.lyx-card-img::after{display:none}
+.ly-card.lyx-card:hover .lyx-card-img img{transform:scale(1.05)}
+.lyx-card-sale{position:absolute;top:10px;left:10px;z-index:2;display:flex;gap:4px;padding:5px 8px;border-radius:999px;background:var(--lyx-cta,#5a2333);color:#fff;font:600 9.5px/1 var(--lyx-font);letter-spacing:.12em;text-transform:uppercase}
+.lyx-card-sale br{display:none}
+.lyx-card-sale.is-out{background:#8a8580}
+.ly-card.lyx-card .lyx-card-wish{position:absolute;top:8px;right:8px;z-index:2;display:flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.85);color:#141414;cursor:pointer;transition:background .2s}
+.ly-card.lyx-card .lyx-card-wish:hover{background:#fff}
+.lyx-card-wish svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5}
+.lyx-card-wish[aria-pressed="true"],.lyx-card-wish.active{color:var(--lyx-brand,#d82183)}
+.lyx-card-wish[aria-pressed="true"] svg,.lyx-card-wish.active svg{fill:currentColor}
+.lyx-card-info{position:relative;display:flex;flex:1;flex-direction:column;gap:6px;margin:0;padding:14px 2px 0}
+.lyx-card-name{margin:0;min-height:2.7em;font:500 13px/1.35 var(--lyx-font)!important;letter-spacing:.01em;color:#141414}
+.lyx-card-name a{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:#141414!important;text-decoration:none!important}
+.lyx-card-row{display:flex;align-items:flex-end;justify-content:space-between;gap:6px;margin-top:auto}
+.lyx-card-rate{display:flex;align-items:center;gap:4px;margin:0 0 2px;font:500 10px/1 var(--lyx-font);color:#7a7470;white-space:nowrap}
+.lyx-card-rate b{font-weight:600;color:#141414}
+.lyx-stars{display:inline-block;font:400 10.5px/1 Arial,sans-serif;letter-spacing:1px;white-space:nowrap;background:linear-gradient(90deg,var(--lyx-star,#c9973f) var(--v),#d8d2ca var(--v));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#c9973f}
+.lyx-card-price{display:flex;flex-direction:column;align-items:flex-end;gap:3px;text-align:right}
+.lyx-card-price del{font:500 10.5px/1 var(--lyx-font);color:#9a938c}
+.lyx-card-price strong{font:600 15.5px/1.1 var(--lyx-font);color:#141414;white-space:nowrap;letter-spacing:.01em}
+.lyx-card-price u{text-decoration:none}
+.lyx-card-actions{display:flex;gap:8px;margin-top:10px}
+.ly-card.lyx-card .lyx-card-cart{position:relative;flex:0 0 42px;width:42px;height:42px;min-height:0;padding:0;border:1px solid #cfc8c0;border-radius:50%;background:#fff;color:transparent!important;font-size:0!important;cursor:pointer;overflow:hidden;transition:border-color .2s,background .2s}
+.ly-card.lyx-card .lyx-card-cart::before{content:'';position:absolute;inset:0;margin:auto;width:20px;height:20px;background:#141414;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7H6'/%3E%3Ccircle cx='9.5' cy='20' r='1.4'/%3E%3Ccircle cx='17' cy='20' r='1.4'/%3E%3Cpath d='M13.5 8v5M11 10.5h5'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7H6'/%3E%3Ccircle cx='9.5' cy='20' r='1.4'/%3E%3Ccircle cx='17' cy='20' r='1.4'/%3E%3Cpath d='M13.5 8v5M11 10.5h5'/%3E%3C/svg%3E") center/contain no-repeat}
+.ly-card.lyx-card .lyx-card-cart:hover{border-color:var(--lyx-cta,#5a2333);background:var(--lyx-cta,#5a2333)}
+.ly-card.lyx-card .lyx-card-cart:hover::before{background:#fff}
+.ly-card.lyx-card .lyx-card-cart[disabled]{cursor:wait;opacity:.6}
+.ly-card.lyx-card .lyx-card-cart[disabled]::before{animation:lyx-pulse .9s ease-in-out infinite}
+@keyframes lyx-pulse{50%{opacity:.3}}
+.ly-card.lyx-card .lyx-card-buy{flex:1;display:flex;align-items:center;justify-content:center;height:42px;min-height:0;padding:0 10px;border:1px solid var(--lyx-cta,#5a2333);border-radius:999px;background:var(--lyx-cta,#5a2333);color:#fff!important;font:600 10.5px/1 var(--lyx-font)!important;letter-spacing:.18em;text-transform:uppercase;text-decoration:none!important;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s}
+.ly-card.lyx-card .lyx-card-buy:hover{background:#fff;color:var(--lyx-cta,#5a2333)!important}
+.ly-card.lyx-card .lyx-card-buy.is-ghost{background:#fff;border-color:#cfc8c0;color:#141414!important;letter-spacing:.06em}
+.ly-card.lyx-card .lyx-card-buy[disabled]{opacity:.7;cursor:wait}
+
+/* ================= Trang chủ ================= */
+.lyxh{font-family:var(--lyx-font);color:var(--lyx-ink)}
+.lyxh section{scroll-margin-top:90px}
+.lyxh-empty{margin:0;padding:24px 0;color:#7a7470;font-size:13px}
+.lyxh-sec-note{max-width:360px;margin:0;font:400 13px/1.7 var(--lyx-font);color:var(--lyx-muted)}
+
+/* 1. Hero video — 17/10 (anh Công, tham chiếu olaben.com): PC khung ngang thấp 14:5, ảnh/video phủ kín khung */
+.lyxh-hero{position:relative;width:100%;aspect-ratio:14/5;max-height:88vh;max-height:88svh;min-height:380px;overflow:hidden;background:#3a2328;color:#fff;isolation:isolate}
+.lyxh-hero-media{position:absolute;inset:0;z-index:-1}
+.lyxh-hero-media picture,.lyxh-hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.lyxh-hero-video{position:absolute;inset:0;opacity:0;container-type:size;transition:opacity 1.2s ease;pointer-events:none}
+.lyxh-hero-video video,.lyxh-hero-video iframe{position:absolute;top:50%;left:50%;width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw);border:0;object-fit:cover;transform:translate(-50%,-50%)}
+/* YouTube: phóng nhẹ để đẩy thanh tiêu đề/logo của trình phát ra ngoài khung; không nhận chuột/chạm */
+.lyxh-hero-video iframe{transform:translate(-50%,-50%) scale(1.18);pointer-events:none}
+.lyxh-hero-video::after{content:'';position:absolute;inset:0}
+.lyxh-hero-media::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,12,18,.18) 0%,rgba(28,12,18,.08) 40%,rgba(28,12,18,.62) 100%);opacity:0;transition:opacity 1.2s ease}
+.lyxh-hero.is-playing .lyxh-hero-video,.lyxh-hero.is-playing .lyxh-hero-media::after{opacity:1}
+.lyxh-hero-copy{position:absolute;left:0;right:0;bottom:clamp(36px,8%,96px);display:flex;flex-direction:column;align-items:center;padding:0 20px;text-align:center}
+.lyxh-hero-kick{margin:0 0 14px;font:500 11px/1 var(--lyx-font);letter-spacing:.42em;text-transform:uppercase}
+.lyxh-hero-t{margin:0 0 30px;font:300 clamp(30px,4.6vw,66px)/1.05 var(--lyx-font);letter-spacing:.1em;text-transform:uppercase;text-shadow:0 2px 24px rgba(0,0,0,.25)}
+.lyxh-hero-t span{display:block;margin-top:12px;font:italic 400 clamp(13px,1.4vw,19px)/1.2 var(--lyx-font);letter-spacing:.32em}
+/* Khi chưa phát video: ảnh poster đã có khẩu hiệu → ẩn chữ HTML (vẫn còn cho trình đọc màn hình) */
+.lyxh-hero:not(.is-playing) .lyxh-hero-kick,.lyxh-hero:not(.is-playing) .lyxh-hero-t{opacity:0}
+.lyxh-hero-kick,.lyxh-hero-t{transition:opacity 1s ease .3s}
+.lyxh-hero-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+.lyxh-hero-btns .lyx-btn{min-width:200px}
+.lyxh-hero:not(.is-playing) .lyx-btn-light{background:rgba(255,255,255,.9)}
+.lyxh-play-ico{width:0;height:0;border:5px solid transparent;border-left:8px solid currentColor;margin-right:-2px}
+.lyxh-hero-down{position:absolute;right:clamp(16px,3vw,40px);bottom:clamp(20px,5%,48px);width:1px;height:56px;background:rgba(255,255,255,.45);overflow:hidden}
+.lyxh-hero-down span{position:absolute;left:0;top:-20px;width:1px;height:20px;background:#fff;animation:lyxh-drop 2.2s ease-in-out infinite}
+@keyframes lyxh-drop{to{top:100%}}
+
+/* Hộp thoại video */
+.lyxh-modal{width:min(1000px,92vw);max-width:none;padding:0;border:0;background:#000;overflow:visible}
+.lyxh-modal::backdrop{background:rgba(10,6,8,.86)}
+.lyxh-modal-frame{position:relative;aspect-ratio:16/9}
+.lyxh-modal-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.lyxh-modal-x{position:absolute;right:0;top:-44px;width:40px;height:40px;border:0;background:none;color:#fff;font:300 26px/1 var(--lyx-font);cursor:pointer}
+
+/* 2. Danh mục */
+.lyxh-cats{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.4vw,32px)}
+.lyxh-cat{display:flex;flex-direction:column;color:var(--lyx-ink)!important;text-decoration:none!important}
+.lyxh-cat-img{position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:2px;background:var(--lyx-soft)}
+.lyxh-cat-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.lyxh-cat:hover .lyxh-cat-img img{transform:scale(1.04)}
+.lyxh-cat-body{display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;gap:4px 18px;padding:18px 0 0;border-bottom:1px solid var(--lyx-line)}
+.lyxh-cat-n{grid-row:span 2;font:300 30px/1 var(--lyx-font);color:var(--lyx-cta)}
+.lyxh-cat-body h3{margin:0;font:500 clamp(15px,1.4vw,19px)/1.2 var(--lyx-font);letter-spacing:.14em;text-transform:uppercase}
+.lyxh-cat-body p{grid-column:2;margin:0 0 16px;font:400 13px/1.5 var(--lyx-font);color:var(--lyx-muted)}
+.lyxh-cat-more{grid-row:1/span 2;grid-column:3;align-self:center;display:flex;align-items:center;gap:10px;font:600 10.5px/1 var(--lyx-font);letter-spacing:.2em;text-transform:uppercase;transition:gap .2s}
+.lyxh-cat:hover .lyxh-cat-more{gap:14px;color:var(--lyx-cta)}
+.lyxh-cat-more svg{width:20px;height:9px;fill:none;stroke:currentColor;stroke-width:1.3}
+.lyxh-tiles-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:clamp(40px,5vw,64px) 0 22px}
+.lyxh-tiles-head h3{margin:0;font:500 12px/1 var(--lyx-font);letter-spacing:.28em;text-transform:uppercase}
+.lyxh-tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(12px,1.8vw,24px)}
+.lyxh-tiles a{display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--lyx-ink)!important;text-decoration:none!important}
+/* 16/10: ô bo góc + icon line (không dùng ảnh sản phẩm có logo/chữ) */
+.lyxh-tile-img{position:relative;display:grid;place-items:center;width:100%;aspect-ratio:1/1;border-radius:18px;overflow:hidden;background:var(--lyx-cream);box-shadow:inset 0 0 0 1px rgba(90,35,51,.08);transition:background .35s,box-shadow .35s,transform .35s var(--lyx-ease,ease)}
+.lyxh-tile-img svg{width:46%;height:46%;fill:none;stroke:var(--lyx-cta);stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;transition:stroke .35s,transform .5s var(--lyx-ease,ease)}
+.lyxh-tiles a:hover .lyxh-tile-img{background:var(--lyx-cta);transform:translateY(-4px);box-shadow:0 14px 28px rgba(74,31,43,.18)}
+.lyxh-tiles a:hover .lyxh-tile-img svg{stroke:#fff;transform:scale(1.06)}
+.lyxh-tiles a:focus-visible{outline:none}
+.lyxh-tiles a:focus-visible .lyxh-tile-img{box-shadow:0 0 0 2px var(--lyx-brand)}
+.lyxh-tile-t{font:500 12px/1.3 var(--lyx-font);letter-spacing:.12em;text-transform:uppercase;text-align:center}
+
+/* 3. Săn sale — nền kem, chữ lớn + đếm ngược bên trái, hàng sản phẩm kéo ngang bên phải (không còn khoảng trống) */
+.lyxh-sale-sec{background:var(--lyx-cream)}
+.lyxh-sale-sec .lyxh-sale{display:grid;grid-template-columns:minmax(260px,330px) minmax(0,1fr);gap:clamp(28px,4vw,64px);align-items:center}
+.lyxh-sale-sec .lyxh-sale-big{margin:0 0 22px;font:300 clamp(18px,1.6vw,22px)/1.1 var(--lyx-font);letter-spacing:.24em;text-transform:uppercase;color:var(--lyx-ink)}
+.lyxh-sale-sec .lyxh-sale-big b{display:block;margin-top:6px;font:200 clamp(68px,8vw,112px)/.95 var(--lyx-font);letter-spacing:-.02em;color:var(--lyx-cta)}
+.lyxh-cd{display:flex;align-items:stretch;margin:0 0 14px;border-top:1px solid var(--lyx-ink);border-bottom:1px solid var(--lyx-ink)}
+.lyxh-cd[hidden]{display:none}
+.lyxh-cd span{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px}
+.lyxh-cd span+span{border-left:1px solid var(--lyx-line)}
+.lyxh-cd b{font:300 30px/1 var(--lyx-font);font-variant-numeric:tabular-nums;color:var(--lyx-ink)}
+.lyxh-cd small{font:600 9px/1 var(--lyx-font);letter-spacing:.24em;text-transform:uppercase;color:var(--lyx-muted)}
+.lyxh-sale-sec .lyxh-sale-note{margin:0 0 26px;font:italic 400 12.5px/1.5 var(--lyx-font);color:var(--lyx-muted)}
+.lyxh-sale-sec .lyxh-sale-btns{display:flex;flex-direction:column;align-items:flex-start;gap:18px}
+.lyxh-sale-ico{display:none}
+.lyxh-sale-ico svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linejoin:round}
+
+/* Khối sale rút gọn dùng ở trang danh mục (snippets/lyx-sale.bwt, .lyxc-sale-m) — cùng tông editorial */
+.lyxh-sale-top{display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:2px;background:var(--lyx-cream)}
+.lyxh-sale-badge{flex:none;width:46px;height:46px;color:var(--lyx-cta)}
+.lyxh-sale-badge svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2.4}
+.lyxh-sale-top .lyxh-sale-txt{flex:1;min-width:0}
+.lyxh-sale-top .lyxh-sale-txt p{margin:0}
+.lyxh-sale-kick{font:600 10.5px/1.3 var(--lyx-font);letter-spacing:.24em;text-transform:uppercase;color:var(--lyx-cta)}
+.lyxh-sale-top .lyxh-sale-big{margin:6px 0 4px!important;font:300 26px/1.1 var(--lyx-font);letter-spacing:.06em;text-transform:uppercase;color:var(--lyx-ink)}
+.lyxh-sale-top .lyxh-sale-note{font:italic 400 11.5px/1.4 var(--lyx-font);color:var(--lyx-muted)}
+.lyxh-sale-side{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.lyxh-sale-side .lyxh-sale-btns{display:flex;flex-direction:column;gap:8px}
+.lyxh-sale-cards{margin-top:16px}
+
+/* Hàng cuộn ngang dùng chung */
+.lyxh-track{position:relative;min-width:0}
+.lyxh-row{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 0 4px;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.lyxh-row::-webkit-scrollbar{display:none}
+.lyxh-row>.lyxh-item{flex:0 0 calc((100% - 60px)/4.3);scroll-snap-align:start;min-width:0}
+.lyxh-sale-sec .lyxh-row>.lyxh-item{flex-basis:calc((100% - 40px)/3.25)}
+.lyxh-track-nav{display:flex;align-items:center;gap:10px;margin-top:26px}
+.lyxh-track-nav[hidden]{display:none}
+.lyxh-bar{position:relative;flex:1;height:1px;margin-right:14px;background:var(--lyx-line);overflow:hidden}
+.lyxh-bar i{position:absolute;top:-1px;bottom:-1px;left:0;width:30%;background:var(--lyx-ink);transition:transform .15s linear}
+.lyxh-arr{display:grid;place-items:center;width:42px;height:42px;padding:0;border:1px solid #cfc8c0;border-radius:50%;background:#fff;color:var(--lyx-ink);font:300 22px/1 var(--lyx-font);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.lyxh-arr:hover:not(:disabled){background:var(--lyx-ink);border-color:var(--lyx-ink);color:#fff}
+.lyxh-arr:disabled{opacity:.35;cursor:default}
+.lyxh-nav-more,.lyxh-mat-all,.lyxh-mat-ptitle,.lyxh-dots{display:none}
+
+/* 4. Yoga mat 3 phân khúc */
+.lyxh-mat-rail{display:contents}
+.lyxh-mat-tabs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--lyx-line)}
+.lyxh-mat-tab{display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 10px 18px;margin-bottom:-1px;border:0;border-bottom:2px solid transparent;background:none;color:#a59d95;cursor:pointer;transition:color .25s,border-color .25s}
+.lyxh-mat-tab b{font:500 clamp(16px,1.8vw,24px)/1 var(--lyx-font);letter-spacing:.2em;text-transform:uppercase}
+.lyxh-mat-tab small{font:400 12px/1.3 var(--lyx-font);letter-spacing:.04em}
+.lyxh-mat-tab[aria-selected="true"]{color:var(--lyx-ink);border-bottom-color:var(--lyx-cta)}
+.lyxh-mat-tab:hover{color:var(--lyx-ink)}
+.lyxh-mat-tab:focus-visible{outline:2px solid var(--lyx-brand);outline-offset:-2px}
+.lyxh-mat-banner{display:block;margin:clamp(24px,3vw,40px) 0;line-height:0}
+.lyxh-mat-banner a{display:block;overflow:hidden;border-radius:2px}
+.lyxh-mat-banner a[hidden]{display:none}
+.lyxh-mat-banner img{width:100%;height:auto;aspect-ratio:4/1;object-fit:cover}
+.lyxh-mat-panel[hidden]{display:none}
+.lyxh-mat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,28px)}
+.lyxh-more{display:flex;justify-content:center;margin-top:clamp(28px,3.5vw,48px)}
+
+/* 5. Phụ kiện */
+.lyxh-acc{background:var(--lyx-cream)}
+
+/* 6. Video — thẻ dọc bằng nhau, kéo ngang */
+.lyxh-vids .lyxh-row>.lyxh-item{flex-basis:calc((100% - 80px)/5.2)}
+.lyxh-vid-card{display:flex;flex-direction:column;gap:12px}
+.lyxh-vid-poster{position:relative;display:block;width:100%;aspect-ratio:9/16;padding:0;border:0;border-radius:2px;overflow:hidden;background:#d9d2ca;cursor:pointer}
+.lyxh-vid-poster img,.lyxh-vid-poster iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;transition:transform .6s}
+.lyxh-vid-poster:hover img{transform:scale(1.04)}
+.lyxh-vid-poster::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.35));pointer-events:none}
+.lyxh-vid-play{position:absolute;left:50%;top:50%;z-index:1;width:54px;height:54px;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.9);border-radius:50%;background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:background .25s,transform .25s}
+.lyxh-vid-play::after{content:'';position:absolute;left:21px;top:17px;border:9px solid transparent;border-left:14px solid #fff}
+.lyxh-vid-poster:hover .lyxh-vid-play,.lyxh-news-video:hover .lyxh-vid-play{background:var(--lyx-cta);border-color:var(--lyx-cta);transform:translate(-50%,-50%) scale(1.06)}
+.lyxh-vid-t{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0;font:500 12px/1.45 var(--lyx-font);letter-spacing:.06em;text-transform:uppercase;color:var(--lyx-ink)}
+.lyxh-vid-poster{background:linear-gradient(160deg,#3a2328,#7a3a52)}
+.lyxh-vid-src{position:absolute;left:10px;top:10px;z-index:1;padding:4px 8px;border-radius:999px;background:rgba(20,10,14,.55);color:#fff;font:600 9px/1 var(--lyx-font);letter-spacing:.14em;text-transform:uppercase}
+/* Ô sản phẩm dưới video (16/10, như thiết kế gốc): ảnh nhỏ + tên + giá + nút + */
+.ly-card.lyxh-vp{display:grid;grid-template-columns:56px minmax(0,1fr) 36px;align-items:center;gap:10px;margin:0;padding:8px;border:0;border-radius:12px;background:var(--lyx-cream);box-shadow:none;overflow:visible}
+.lyxh-vp-img{display:block;aspect-ratio:1/1;border-radius:8px;overflow:hidden;background:#fff}
+.lyxh-vp-img img{width:100%;height:100%;object-fit:cover}
+.lyxh-vp-b{display:flex;flex-direction:column;gap:4px;min-width:0}
+.lyxh-vp-n{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--lyx-ink)!important;font:500 11.5px/1.35 var(--lyx-font);text-decoration:none!important}
+.lyxh-vp-p{font:600 12px/1 var(--lyx-font);color:var(--lyx-cta)}
+.lyxh-vp-p u{text-decoration:none}
+.ly-card.lyxh-vp .lyxh-vp-add{display:grid;place-items:center;width:36px;height:36px;min-height:0;padding:0;border:1px solid #cfc8c0;border-radius:50%;background:#fff;color:var(--lyx-ink)!important;font:300 22px/1 var(--lyx-font)!important;text-decoration:none!important;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.ly-card.lyxh-vp .lyxh-vp-add:hover{background:var(--lyx-cta);border-color:var(--lyx-cta);color:#fff!important}
+.lyxh-modal.is-tall{width:min(420px,92vw)}
+.lyxh-modal.is-tall .lyxh-modal-frame{aspect-ratio:9/16;max-height:86vh}
+
+/* 7. Màu sắc — 16/10: ô bo góc, tên màu giữa (như bản thiết kế); màu nền/chữ từ lyx_colors */
+.lyxh-colors{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(10px,1.4vw,18px)}
+.lyxh-color{position:relative;display:grid;place-items:center;aspect-ratio:1/1;border-radius:20px;background:var(--c);color:var(--t,#fff)!important;text-decoration:none!important;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);overflow:hidden;transition:transform .35s var(--lyx-ease,ease),box-shadow .35s}
+.lyxh-color::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.22) 50%,transparent 70%);transform:translateX(-100%);transition:transform .8s var(--lyx-ease,ease)}
+.lyxh-color:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px rgba(0,0,0,.05),0 16px 30px rgba(40,20,25,.18)}
+.lyxh-color:hover::after{transform:translateX(100%)}
+.lyxh-color:focus-visible{outline:2px solid var(--lyx-brand);outline-offset:3px}
+.lyxh-color-t{position:relative;z-index:1;font:500 clamp(13px,1.3vw,17px)/1 var(--lyx-font);letter-spacing:.24em;text-transform:uppercase;padding-left:.24em}
+
+/* 8. Câu chuyện — tràn ngang: ảnh trái, chữ phải trên nền kem */
+.lyxh-story{display:grid;grid-template-columns:1fr 1fr;min-height:clamp(420px,42vw,620px);background:var(--lyx-cream)}
+.lyxh-story-img{position:relative;display:block;overflow:hidden}
+.lyxh-story-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lyxh-story-txt{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:clamp(40px,6vw,96px)}
+.lyxh-story-p{max-width:420px;margin:22px 0 34px;font:400 15px/1.85 var(--lyx-font);color:#5b5550}
+
+/* 9. Louis News */
+.lyxh-news-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(24px,4vw,60px);align-items:start}
+.lyxh-news-feat{margin:0}
+.lyxh-news-video{position:relative;display:block;width:100%;aspect-ratio:3/2;padding:0;border:0;border-radius:2px;overflow:hidden;background:#2a1a1e;cursor:pointer}
+.lyxh-news-video img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%;transition:transform .8s}
+.lyxh-news-video:hover img{transform:scale(1.03)}
+.lyxh-news-video .lyxh-vid-play{width:66px;height:66px}
+.lyxh-news-video .lyxh-vid-play::after{left:26px;top:21px;border-width:11px;border-left-width:17px}
+.lyxh-news-feat figcaption{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:24px;padding:20px 0 0}
+.lyxh-news-feat figcaption b{font:600 12px/1.6 var(--lyx-font);letter-spacing:.16em;text-transform:uppercase}
+.lyxh-news-feat blockquote{margin:0;padding:0 0 0 18px;border-left:1px solid var(--lyx-cta);font:italic 400 15px/1.6 var(--lyx-font);color:#5b5550}
+.lyxh-press{display:flex;flex-direction:column;border-top:1px solid var(--lyx-line)}
+.lyxh-press a{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center;padding:20px 0;border-bottom:1px solid var(--lyx-line);color:var(--lyx-ink)!important;text-decoration:none!important}
+.lyxh-press-logo{display:flex;align-items:center;justify-content:center;aspect-ratio:150/90;border:1px solid var(--lyx-line);border-radius:2px;background:#fff;overflow:hidden}
+.lyxh-press-logo img{width:100%;height:100%;object-fit:contain;padding:10px;box-sizing:border-box}
+.lyxh-press-logo b{font:700 12px/1.2 var(--lyx-font);color:var(--lyx-cta);text-align:center;padding:6px}
+.lyxh-press-body{display:flex;flex-direction:column;align-items:flex-start;gap:12px;min-width:0}
+.lyxh-press-t{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font:600 13px/1.5 var(--lyx-font);letter-spacing:.04em;text-transform:uppercase}
+.lyxh-press-btn{display:inline-flex;align-items:center;gap:10px;font:600 10px/1 var(--lyx-font);letter-spacing:.22em;text-transform:uppercase;color:var(--lyx-muted);transition:color .2s,gap .2s}
+.lyxh-press-btn svg{width:20px;height:9px;fill:none;stroke:currentColor;stroke-width:1.3}
+.lyxh-press a:hover .lyxh-press-btn{color:var(--lyx-cta);gap:14px}
+
+/* ================= Máy tính bảng ================= */
+@media (max-width:1023px){
+  .lyxh-row>.lyxh-item{flex-basis:calc((100% - 40px)/3.2)}
+  .lyxh-sale-sec .lyxh-sale{grid-template-columns:1fr}
+  .lyxh-sale-sec .lyxh-sale-txt{display:grid;grid-template-columns:auto 1fr;column-gap:40px;align-items:end}
+  .lyxh-sale-sec .lyxh-sale-txt>.lyx-eyebrow{grid-column:1/-1}
+  .lyxh-sale-sec .lyxh-sale-big{grid-row:span 3;margin:0}
+  .lyxh-sale-sec .lyxh-sale-btns{flex-direction:row;align-items:center;flex-wrap:wrap}
+  .lyxh-sale-sec .lyxh-row>.lyxh-item{flex-basis:calc((100% - 40px)/2.6)}
+  .lyxh-mat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lyxh-vids .lyxh-row>.lyxh-item{flex-basis:calc((100% - 40px)/3.3)}
+  .lyxh-colors{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .lyxh-news-grid{grid-template-columns:1fr}
+  .lyxh-tiles{grid-template-columns:repeat(5,minmax(110px,1fr));overflow-x:auto;scrollbar-width:none}
+  .lyxh-tiles::-webkit-scrollbar{display:none}
+}
+
+/* ================= Điện thoại — 16/10: giữ BỐ CỤC bản thiết kế PDF mobile trang 1, chỉ áp màu/chữ/nút editorial ================= */
+@media (max-width:767px){
+  .lyx-card-info{padding-top:10px}
+  .lyx-card-name{font-size:12.5px!important}
+  .lyx-card-price strong{font-size:15px}
+  .lyx-card-row{flex-direction:column;align-items:flex-start;gap:6px}
+  .lyx-card-price{flex-direction:row-reverse;align-items:baseline;gap:8px}
+  .ly-card.lyx-card .lyx-card-cart{flex-basis:38px;width:38px;height:38px}
+  .ly-card.lyx-card .lyx-card-buy{height:38px;font-size:10px!important;letter-spacing:.12em}
+
+  /* Hero 17/10 (anh Công): khung ngang 5:4 để chiếu được cả ảnh và video; ảnh ngang ly-hero-pc.jpg cắt hai mép — dải 5:4 chứa trọn khẩu hiệu + thảm + người mẫu; không nhúng YouTube */
+  .lyxh-hero{aspect-ratio:5/4;max-height:none;min-height:0}
+  .lyxh-hero-media img{object-position:58% 50%}
+  .lyxh-hero-kick,.lyxh-hero-t{position:absolute!important;width:1px;height:1px;margin:0;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .lyxh-hero-copy{bottom:5%}
+  .lyxh-hero-btns{width:auto}
+  .lyxh-hero-btns .lyx-btn-ghost-light{display:none}
+  .lyxh-hero .lyx-btn-light,.lyxh-hero:not(.is-playing) .lyx-btn-light{min-width:0;min-height:34px;height:34px;padding:0 22px;background:rgba(255,255,255,.26);border-color:rgba(255,255,255,.75);color:#fff!important;font-size:9.5px;letter-spacing:.28em;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  .lyxh-hero-down{display:none}
+
+  /* Danh mục: chỉ "Danh mục phổ biến" — 5 ô nhỏ một hàng, nút XEM TẤT CẢ nền đen như thiết kế */
+  .lyxh-cats-wrap{padding:22px 0 20px}
+  .lyxh-cats-wrap .lyx-sec-head,.lyxh-cats{display:none}
+  .lyxh-tiles-head{margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--lyx-ink)}
+  .lyxh-tiles-head h3{font-size:11.5px;letter-spacing:.14em}
+  .lyxh-tiles-head .lyx-link{gap:0;padding:7px 14px;border:0;border-radius:4px;background:var(--lyx-ink);color:#fff!important;font-size:9.5px;letter-spacing:.16em}
+  .lyxh-tiles-head .lyx-link svg{display:none}
+  .lyxh-tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:0;padding:0;overflow:visible}
+  .lyxh-tiles a{gap:7px}
+  .lyxh-tile-img{aspect-ratio:9/10;border-radius:10px}
+  .lyxh-tile-img svg{width:60%;height:60%;stroke-width:1.4}
+  .lyxh-tile-t{font-size:9.5px;line-height:1.25;letter-spacing:.02em;text-transform:none}
+
+  /* Săn sale: hộp bo góc — huy hiệu % + chữ, 2 nút, đồng hồ (thiết kế mobile không có hàng sản phẩm) */
+  .lyxh-sale-sec{padding:0 0 28px;background:transparent}
+  .lyxh-sale-sec .lyxh-sale{display:block}
+  .lyxh-sale-sec .lyxh-sale-txt{display:grid;grid-template-columns:50px minmax(0,1fr);column-gap:14px;align-items:center;padding:18px 16px;border-radius:14px;background:var(--lyx-cream)}
+  .lyxh-sale-ico{display:block;grid-row:1/4;grid-column:1;width:48px;height:48px;color:var(--lyx-cta)}
+  .lyxh-sale-sec .lyxh-sale-txt>.lyx-eyebrow{grid-row:1;grid-column:2;margin:0 0 4px;font-size:10px;letter-spacing:.14em}
+  .lyxh-sale-sec .lyxh-sale-big{grid-row:2;grid-column:2;display:flex;align-items:baseline;gap:8px;margin:0;font:500 12px/1 var(--lyx-font);letter-spacing:.14em}
+  .lyxh-sale-sec .lyxh-sale-big b{display:inline;margin:0;font:300 42px/1 var(--lyx-font);letter-spacing:-.01em}
+  .lyxh-sale-sec .lyxh-sale-note{grid-row:3;grid-column:2;margin:6px 0 0;font-size:11px}
+  .lyxh-sale-sec .lyxh-sale-btns{grid-row:4;grid-column:1/-1;flex-direction:row;align-items:stretch;gap:8px;margin-top:16px}
+  .lyxh-sale-sec .lyxh-sale-btns>*{flex:1;justify-content:center;min-height:40px;padding:0 8px;font-size:9.5px;letter-spacing:.12em;text-align:center}
+  .lyxh-sale-sec .lyxh-sale-btns .lyx-link{border:1px solid var(--lyx-ink);border-radius:999px}
+  .lyxh-sale-sec .lyxh-sale-btns .lyx-link svg{display:none}
+  .lyxh-sale-sec .lyxh-cd{grid-row:5;grid-column:1/-1;margin:14px 0 0}
+  .lyxh-cd b{font-size:22px}
+  .lyxh-cd span{padding:9px 2px}
+  .lyxh-sale-sec .lyxh-track{display:none}
+
+  /* Hàng ngang: thẻ tràn mép để gợi ý kéo */
+  .lyxh-track{margin:0 calc(-1*clamp(16px,3vw,40px))}
+  .lyxh-row{gap:14px;padding:0 clamp(16px,3vw,40px) 4px;scroll-padding:0 clamp(16px,3vw,40px)}
+  .lyxh-row>.lyxh-item{flex-basis:62%}
+  .lyxh-track-nav{margin:20px clamp(16px,3vw,40px) 0}
+  .lyxh-arr{display:none}
+
+  /* Yoga mat: thanh đen tiêu đề + banner + cột tab trái (Harmony/Balance/Mastery, nút xem toàn bộ) + lưới 2 cột phải */
+  .lyxh-mat{padding:0 0 32px}
+  .lyxh-mat>.lyx-wrap{display:grid;grid-template-columns:30% minmax(0,1fr);padding:0;background:var(--lyx-cream)}
+  .lyxh-mat .lyx-sec-head{grid-column:1/-1;grid-row:1;display:flex;flex-direction:column-reverse;align-items:flex-start;gap:5px;margin:0;padding:14px 16px 12px;background:#141414;text-align:left}
+  .lyxh-mat .lyx-sec-head .lyx-h2{color:#fff;font-size:19px;letter-spacing:.06em}
+  .lyxh-mat .lyx-sec-head .lyx-eyebrow{margin:0;color:#fff;opacity:.8;font-size:9.5px;letter-spacing:.22em}
+  .lyxh-mat-banner{grid-column:1/-1;grid-row:2;margin:0}
+  .lyxh-mat-banner a{border-radius:0}
+  .lyxh-mat-rail{display:flex;flex-direction:column;grid-column:1;grid-row:3;background:#fff}
+  .lyxh-mat-tabs{display:flex;flex-direction:column;border:0}
+  .lyxh-mat-tab{align-items:flex-start;justify-content:center;gap:6px;min-height:92px;margin:0;padding:12px 10px 12px 14px;border:0;border-bottom:1px solid var(--lyx-line);background:#fff;color:#8a837c;text-align:left}
+  .lyxh-mat-tab b{font:600 12.5px/1 var(--lyx-font);letter-spacing:.08em}
+  .lyxh-mat-tab small{display:block;font-size:9px;line-height:1.3;letter-spacing:0}
+  .lyxh-mat-tab[aria-selected="true"]{background:var(--lyx-cream);color:var(--lyx-ink);border-bottom-color:transparent;box-shadow:inset 3px 0 0 var(--lyx-cta)}
+  .lyxh-mat-all{position:sticky;top:76px;display:flex;min-height:0;margin:22px 8px 0;padding:11px 6px;border-radius:8px;font-size:9px;line-height:1.45;letter-spacing:.12em;white-space:normal;text-align:center}
+  .lyxh-mat-panel{grid-column:2;grid-row:3;min-width:0;padding:16px 10px 18px}
+  .lyxh-mat-ptitle{display:flex;flex-direction:column;align-items:flex-end;margin:0 2px 14px;text-align:right}
+  .lyxh-mat-ptitle b{font:600 27px/1 var(--lyx-font);letter-spacing:.04em;text-transform:uppercase}
+  .lyxh-mat-ptitle small{margin-top:7px;font:500 8.5px/1.2 var(--lyx-font);letter-spacing:.22em;text-transform:uppercase;color:var(--lyx-muted)}
+  .lyxh-mat-ptitle span{margin-top:3px;font:500 10px/1.3 var(--lyx-font);letter-spacing:.14em;text-transform:uppercase}
+  .lyxh-mat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 8px}
+  .lyxh-mat-grid .lyx-card-name{font-size:11px!important}
+  .lyxh-mat-grid .lyx-card-price strong{font-size:12.5px}
+  .lyxh-mat-grid .lyx-card-price del{font-size:9.5px}
+  .lyxh-mat-grid .lyx-card-actions{gap:5px;margin-top:8px}
+  .lyxh-mat-grid .ly-card.lyx-card .lyx-card-cart{flex-basis:32px;width:32px;height:32px}
+  .lyxh-mat-grid .ly-card.lyx-card .lyx-card-cart::before{width:16px;height:16px}
+  .lyxh-mat-grid .ly-card.lyx-card .lyx-card-buy{height:32px;padding:0 4px;font-size:8.5px!important;letter-spacing:.06em}
+  .lyxh-mat-grid .ly-card.lyx-card .lyx-card-wish{width:28px;height:28px;top:6px;right:6px}
+  .lyxh-mat-grid .lyx-card-sale{top:6px;left:6px;padding:4px 6px;font-size:8px}
+  .lyxh-mat .lyxh-more{display:none}
+
+  /* Phụ kiện: nền kem, thanh tiến độ + nút XEM TOÀN BỘ SẢN PHẨM ở chân như thiết kế */
+  .lyxh-acc .lyx-sec-split>.lyx-link{display:none}
+  .lyxh-acc .lyxh-track-nav{justify-content:space-between;gap:16px}
+  .lyxh-acc .lyxh-bar{flex:0 1 40%;height:3px;margin:0;border-radius:2px}
+  .lyxh-nav-more{display:inline-flex;min-height:38px;padding:0 16px;border-radius:6px;font-size:9.5px;letter-spacing:.12em}
+
+  /* Video: thẻ giữa nổi bật, hai bên mờ, mũi tên hai bên, chấm trang; ô sản phẩm dưới video */
+  .lyxh-vids .lyxh-row{gap:10px;padding:10px 18% 6px;scroll-padding:0}
+  .lyxh-vids .lyxh-row>.lyxh-item{flex:0 0 64%;scroll-snap-align:center;opacity:.5;transform:scale(.9);transform-origin:50% 40%;transition:opacity .35s,transform .35s var(--lyx-ease,ease)}
+  .lyxh-vids .lyxh-row>.lyxh-item.is-center{opacity:1;transform:none}
+  .lyxh-vids .lyxh-vid-card{gap:10px}
+  .lyxh-vid-card:has(.lyxh-vp) .lyxh-vid-t{display:none}
+  .lyxh-vids .lyxh-track{position:relative}
+  .lyxh-vids .lyxh-track-nav{margin:0}
+  .lyxh-vids .lyxh-bar{display:none}
+  .lyxh-vids .lyxh-arr{position:absolute;z-index:2;top:calc(10px + 64vw*.8889 - 21px);display:grid;width:38px;height:38px;border-color:transparent;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .lyxh-vids .lyxh-arr[data-dir="-1"]{left:8px}
+  .lyxh-vids .lyxh-arr[data-dir="1"]{right:8px}
+  .lyxh-dots{display:flex;justify-content:center;gap:6px;margin-top:16px}
+  .lyxh-dots i{width:6px;height:6px;border-radius:3px;background:#cfc8c0;transition:width .3s,background .3s}
+  .lyxh-dots i.is-on{width:22px;background:var(--lyx-ink)}
+
+  /* Màu sắc: 2 cột ô lớn bo góc */
+  .lyxh-colors{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .lyxh-color{aspect-ratio:1.08/1;border-radius:16px}
+  .lyxh-color-t{font-size:15px;letter-spacing:.22em}
+
+  /* Câu chuyện: nền kem, ảnh bo góc, nút viên thuốc giữa */
+  .lyxh-story{grid-template-columns:1fr;min-height:0;padding:30px 16px 40px}
+  .lyxh-story-img{aspect-ratio:16/10;border-radius:18px}
+  .lyxh-story-txt{padding:26px 4px 0}
+  .lyxh-story-p{margin:16px 0 26px;font-size:14px}
+  .lyxh-story-txt .lyx-btn{align-self:center;width:min(100%,320px)}
+
+  /* Louis News: tiêu đề kèm vạch kẻ */
+  .lyxh-news .lyx-sec-split>div{width:100%}
+  .lyxh-news .lyx-h2{display:flex;align-items:center;gap:12px}
+  .lyxh-news .lyx-h2::after{content:'';flex:1;height:1.5px;background:var(--lyx-ink)}
+  .lyxh-news-feat figcaption{grid-template-columns:1fr;gap:12px}
+  .lyxh-press a{grid-template-columns:104px minmax(0,1fr);gap:14px;padding:16px 0}
+  .lyxh-press-t{font-size:11.5px}
+  .lyx-sec-split{align-items:flex-start;flex-direction:column;gap:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .lyx-card-img img,.lyxh-cat-img img,.lyxh-vid-poster img,.lyxh-hero-video,.lyxh-hero-media::after,.lyxh-tile-img,.lyxh-tile-img svg,.lyxh-color,.lyxh-color::after,.lyxh-vids .lyxh-row>.lyxh-item{transition:none}
+  .lyxh-hero-down span{animation:none}
+}
+/* 17/10: mobile theo PDF mobile trang 1 — Màu sắc đứng trước Video (PC giữ thứ tự editorial) */
+@media (max-width:767px){
+  .lyxh{display:flex;flex-direction:column}
+  .lyxh>.lyxh-vids,.lyxh>.lyxh-story,.lyxh>.lyxh-news{order:1}
+}
+
+/* 19/10 — màn rất hẹp ≤359px (vd 320px): lưới Yoga mat 2 cột chỉ còn ~98px/thẻ, giá + nút "Xem chi tiết" lố ra ngoài màn hình
+   → giá được xuống dòng, nút được ngắt dòng, nút giỏ nhỏ lại. 375px trở lên không đổi */
+@media (max-width:359px){
+  .lyxh-mat-grid .lyx-card-row{min-width:0}
+  .lyxh-mat-grid .lyx-card-price{flex-wrap:wrap;gap:2px 6px;max-width:100%}
+  .lyxh-mat-grid .lyx-card-actions{gap:4px}
+  .lyxh-mat-grid .ly-card.lyx-card .lyx-card-cart{flex-basis:30px;width:30px;height:30px}
+  .lyxh-mat-grid .ly-card.lyx-card .lyx-card-buy{min-width:0;height:30px;padding:0 3px;white-space:normal;text-align:center;line-height:1.15!important;letter-spacing:.02em}
+}

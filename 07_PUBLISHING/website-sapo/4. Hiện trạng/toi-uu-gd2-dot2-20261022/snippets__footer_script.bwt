@@ -1,0 +1,33 @@
+{%include 'ajaxcart'%}
+{%if template contains 'product'%}{%if settings.product_tab3_enable%}{%include 'bpr-products-module'%}{%endif%}{%endif%}
+{%- comment -%} 22/10/2026 tối ưu GĐ2 đợt 2 (bản trước: snippets/zz-backup-footer_script-20261022-js.bwt):
+  - Bỏ hộp "xem nhanh" (quickview-template + quickview.js): thẻ SP mới không còn nút .quick-view nào hiển thị (đã kiểm danh mục, tìm kiếm, yêu thích, SP). Muốn bật lại: khôi phục từ bản sao lưu.
+  - placeholdertypewriter.js: nạp defer, đặt TRƯỚC main.js (main.js luôn gọi $('.search-auto').placeholderTypewriter → thiếu plugin sẽ lỗi). {%- endcomment -%}
+{%if settings.use_search_auto%}<script type="text/javascript" defer src="{{ 'placeholdertypewriter.js' | asset_url }}"></script>{%endif%}
+<link rel="preload" as="script" href="{{ 'main.js' | asset_url }}" />
+<script type="text/javascript" defer src="{{ 'main.js' | asset_url }}"></script>
+{%if template contains 'index'%}<link rel="preload" as="script" href="{{ 'index.js' | asset_url }}" />
+<script type="text/javascript" defer src="{{ 'index.js' | asset_url }}"></script>{%endif%}
+{%if template contains 'collection'%}{%- comment -%} 22/10/2026 tối ưu GĐ2: bỏ jquery-ui-min.scss.css (0 khác biệt khi gỡ; JS jquery-ui giữ nguyên) {%- endcomment -%}
+<link rel="preload" as="script" href="{{ 'jquery-ui-min.js' | asset_url }}" />
+{{ 'jquery-ui-min.js' | asset_url | script_tag }}
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+{{ 'search_filter.js'  | asset_url | script_tag }}
+<script>
+	var filter = new Bizweb.SearchFilter()
+	{%if collection.id > 0%}filter.addValue("collection", "collections", "{{ collection.id }}", "AND");{%endif%}
+					function clearAllFiltered() {
+		filter = new Bizweb.SearchFilter();
+		{%if collection.id > 0%}filter.addValue("collection", "collections", "{{ collection.id }}", "AND");{%endif%}
+		$(".filter-container__selected-filter-list ul").html("");
+		$(".filter-container input[type=checkbox]").attr('checked', false);
+		$(".filter-container__selected-filter").hide();
+		doSearch(1);
+	}
+</script>
+<link rel="preload" as="script" href="{{ 'col.js' | asset_url }}" />
+{{ 'col.js' | asset_url | script_tag }}{%endif%}
+{%if template contains 'product'%}<link rel="preload" as="script" href="{{ 'picbox.js' | asset_url }}" />
+<link rel="preload" as='style'  type="text/css" href="{{ 'picbox.scss.css' | asset_url }}">
+{{ 'picbox.scss.css' | asset_url | stylesheet_tag }}
+{{ 'picbox.js' | asset_url | script_tag }}{%endif%}

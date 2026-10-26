@@ -1,0 +1,7 @@
+{%- comment -%} Tìm phân khúc của biến `product` hiện tại theo nguồn snippets/ly-segments.bwt (phải include ly-segments trước). Kết quả: ly_seg_i = 0/1/2 (Harmony/Balance/Mastery) hoặc -1 nếu chưa gán. {%- endcomment -%}
+{%- capture ly_seg_pid -%}{{ product.id }}{%- endcapture -%}
+{%- assign ly_seg_i = -1 -%}
+{%- comment -%} 24/10/2026: ưu tiên TAG phân khúc của sản phẩm; chưa có tag thì dùng dãy mã cũ. {%- endcomment -%}
+{%- assign ly_seg_ptags = product.tags | join: '|' | downcase | prepend: '|' | append: '|' -%}
+{%- for ly_seg_t in ly_seg_tags -%}{%- if ly_seg_i == -1 -%}{%- assign ly_seg_tt = ly_seg_t | downcase | prepend: '|' | append: '|' -%}{%- if ly_seg_ptags contains ly_seg_tt -%}{%- assign ly_seg_i = forloop.index0 -%}{%- endif -%}{%- endif -%}{%- endfor -%}
+{%- if ly_seg_i == -1 -%}{%- for ly_seg_list in ly_seg_ids -%}{%- assign ly_seg_arr = ly_seg_list | split: ' ' -%}{%- if ly_seg_arr contains ly_seg_pid -%}{%- assign ly_seg_i = forloop.index0 -%}{%- endif -%}{%- endfor -%}{%- endif -%}

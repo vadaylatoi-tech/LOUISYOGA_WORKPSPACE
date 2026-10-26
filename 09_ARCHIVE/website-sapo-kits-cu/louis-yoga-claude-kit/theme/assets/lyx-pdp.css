@@ -1,0 +1,232 @@
+/* Louis Yoga — trang sản phẩm theo bản thiết kế 15/10/2026 (PDF PC trang 3, mobile trang 6/8).
+   Lớp phủ lên templates/product.bwt + snippets/tab_product.bwt: không đổi form/variant/giỏ (variantId, quantity, .btn_add_cart, .btn-buyNow).
+   ≤767px: lớp mobile cũ (assets/ly-pdp.css + ly-pdp.js, body.lyp-on) giữ nguyên; tệp này chỉ thêm phần đánh giá gộp, thứ tự khối và sản phẩm tương tự.
+   JS đi kèm: assets/lyx-pdp.js (nhãn Chính hãng, dòng sao, tim/chia sẻ, trang ảnh 2×2, đánh giá web + Shopee). */
+.ly-template-product{--lyxp-ink:#111;--lyxp-cta:var(--lyx-cta,#be3a63);--lyxp-star:var(--lyx-star,#e2a330);--lyxp-soft:#f2f2f2;--lyxp-line:#d9d9d9}
+.lyxp-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.lyxp-stars{position:relative;display:inline-block;color:#d6d6d6;letter-spacing:2px;line-height:1}
+.lyxp-toast{position:fixed;left:50%;bottom:90px;z-index:3000;max-width:calc(100% - 32px);padding:10px 16px;border-radius:6px;background:#111;color:#fff;font:500 13px/1.4 var(--lyx-font,Montserrat,sans-serif);transform:translateX(-50%);opacity:0;pointer-events:none;transition:opacity .2s}
+.lyxp-toast.is-visible{opacity:1}
+.lyxp-stars::before{content:'★★★★★';position:absolute;inset:0 auto 0 0;width:var(--v,100%);overflow:hidden;color:var(--lyxp-star);white-space:nowrap}
+
+/* ---------- Khối trên: ảnh + thông tin (PC/tablet) ---------- */
+@media (min-width:768px){
+  .ly-template-product .layout-product .details-product>.row{align-items:flex-start}
+  /* Ảnh 2×2, chuyển trang bằng các chấm bên dưới */
+  .ly-template-product .product-image-block{position:relative}
+  .ly-template-product .gallery-top{overflow:visible!important;height:auto!important}
+  .ly-template-product .gallery-top .swiper-wrapper{display:grid!important;grid-template-columns:1fr 1fr;gap:10px;transform:none!important;height:auto!important;transition:none!important}
+  .ly-template-product .gallery-top .swiper-slide{width:auto!important;height:auto!important;margin:0!important;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--lyxp-soft);display:block}
+  .ly-template-product .gallery-top .swiper-slide img{width:100%!important;height:100%!important;max-height:none!important;object-fit:cover;margin:0!important}
+  .ly-template-product .gallery-top .swiper-slide.lyxp-off{display:none!important}
+  .ly-template-product .gallery-thumbs{display:none!important}
+  .lyxp-gdots{display:flex;justify-content:center;align-items:center;gap:6px;margin:12px 0 0}
+  .lyxp-gdots button{width:12px;height:8px;border:0;border-radius:8px;padding:0;background:#ddd;cursor:pointer;transition:width .2s,background .2s}
+  .lyxp-gdots button[aria-current="true"]{width:64px;background:#bbb}
+  .lyxp-gdots button:focus-visible{outline:2px solid var(--lyxp-ink);outline-offset:2px}
+
+  /* Cột thông tin */
+  .ly-template-product .layout-product .details-pro{display:flex!important;flex-direction:column;padding-left:22px;font-family:var(--lyx-font,Montserrat,sans-serif);color:var(--lyxp-ink)}
+  .ly-template-product .details-pro>*{order:20}
+  .ly-template-product .details-pro>.lyxp-badges{order:1}
+  .ly-template-product .details-pro>.title-product{order:2}
+  .ly-template-product .details-pro>.lyxp-rate{order:3}
+  .ly-template-product .details-pro>form{order:4}
+  .ly-template-product .details-pro>.sapo-buyxgety-module-detail-v2{order:5}
+  .ly-template-product .details-pro>.product-policises-wrapper{order:6}
+  .ly-template-product .details-pro>.lysr-badge,.ly-template-product .details-pro>.danhgiasao,.ly-template-product .details-pro>.product-top,.ly-template-product .details-pro>.clearfix{display:none!important}
+  .lyxp-badges{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4px 0 14px}
+  .lyxp-badges .ly-seg-chip{margin:0!important;padding:5px 16px!important;border:0!important;border-radius:3px!important;background:var(--lyx-mastery,#5c3317)!important;color:#fff!important;font:400 12px/1.3 var(--lyx-font)!important;letter-spacing:0!important}
+  .lyxp-badges .ly-seg-chip b{color:#fff!important;font-weight:700;text-transform:uppercase}
+  .lyxp-genuine{display:inline-block;padding:4px 10px;border-radius:2px;background:var(--lyxp-cta);color:#fff;font:700 11px/1.3 var(--lyx-font);letter-spacing:.12em;text-transform:uppercase;margin-left:auto}
+  .ly-template-product .details-pro .title-product{margin:0 0 8px!important;font:800 25px/1.25 var(--lyx-font)!important;color:var(--lyxp-ink)!important;text-transform:none!important}
+  .lyxp-rate{display:flex;align-items:center;gap:10px;margin:0 0 10px;padding:0;border:0;background:none;font:400 14px/1.2 var(--lyx-font);color:var(--lyxp-ink);cursor:pointer;align-self:flex-start}
+  .lyxp-rate .lyxp-stars{font-size:15px}
+  .lyxp-rate i{width:1px;height:20px;background:#bbb}
+  .lyxp-rate em{font-style:normal;color:#888}
+  .lyxp-rate em b{color:var(--lyxp-ink)}
+
+  /* Form: sắp xếp lại bằng order, phần tử gốc giữ nguyên chỗ trong form */
+  .ly-template-product .details-pro .form-product{display:flex!important;flex-direction:column;width:100%;padding:0!important;margin:0!important}
+  .ly-template-product .details-pro .form-product>*{order:20}
+  .ly-template-product .details-pro .form-product>.price-box{order:1}
+  .ly-template-product .details-pro .form-product>.select-swatch{order:2}
+  .ly-template-product .details-pro .form-product>.product-summary{order:3}
+  .ly-template-product .details-pro .form-product>.lyxp-ship{order:4}
+  .ly-template-product .details-pro .form-product>.form-group{order:5}
+  .ly-template-product .details-pro .form-product>.sale{display:none!important}
+
+  .ly-template-product .details-pro .price-box{display:flex!important;align-items:center;flex-wrap:wrap;gap:6px 12px;margin:0 0 16px!important;padding:0 0 10px!important;border:0!important;border-bottom:1.5px solid #333!important;background:none!important}
+  .ly-template-product .details-pro .price-box .special-price .product-price{font:700 26px/1.2 var(--lyx-font)!important;color:var(--lyxp-cta)!important}
+  .ly-template-product .details-pro .price-box .old-price{margin:0!important}
+  .ly-template-product .details-pro .price-box .product-price-old{font:400 13px/1 var(--lyx-font)!important;color:#888!important}
+  .ly-template-product .details-pro .price-box .label_product{position:static!important;display:inline-block;margin:0!important;padding:3px 6px!important;border-radius:2px!important;background:var(--lyxp-cta)!important;color:#fff!important;font:700 12px/1.2 var(--lyx-font)!important;width:auto!important;height:auto!important}
+  .lyxp-acts{display:flex;gap:8px;margin-left:auto}
+  .lyxp-acts button{display:grid;place-items:center;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:none;color:var(--lyxp-ink);cursor:pointer}
+  .lyxp-acts button:hover,.lyxp-acts button:focus-visible{background:var(--lyxp-soft)}
+  .lyxp-acts svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+  .lyxp-acts button[aria-pressed="true"] svg{fill:var(--lyxp-cta);stroke:var(--lyxp-cta)}
+
+  /* Màu sắc: chấm tròn */
+  .ly-template-product .details-pro .select-swatch{margin:0 0 16px!important}
+  .ly-template-product .details-pro .swatch{margin:0!important}
+  .ly-template-product .details-pro .swatch .header{display:block!important;margin:0 0 12px!important;font:400 16px/1.3 var(--lyx-font)!important;color:#888!important;text-transform:none!important}
+  .ly-template-product .details-pro .swatch .header .value-roperties{display:inline-block;color:var(--lyxp-ink)!important;font-weight:600;text-transform:lowercase}
+  .ly-template-product .details-pro .swatch .header .value-roperties::first-letter{text-transform:uppercase}
+  .ly-template-product .details-pro .swatch-element.color{position:relative;float:none!important;display:inline-block!important;width:auto!important;height:auto!important;margin:0 10px 8px 0!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important}
+  .ly-template-product .details-pro .swatch-element.color input{position:absolute;opacity:0;width:1px;height:1px}
+  .ly-template-product .details-pro .swatch-element.color label{display:block!important;width:30px!important;height:30px!important;min-width:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:50%!important;font-size:0!important;line-height:0!important;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)!important;cursor:pointer;overflow:hidden;outline-offset:3px}
+  .ly-template-product .details-pro .swatch-element.color label::before,.ly-template-product .details-pro .swatch-element.color label::after{display:none!important}
+  .ly-template-product .details-pro .swatch-element.color input:checked+label{outline:2px solid var(--lyxp-ink)}
+  .ly-template-product .details-pro .swatch-element.color input:focus-visible+label{outline:2px dashed var(--lyxp-ink)}
+  .ly-template-product .details-pro .swatch-element.color label img.crossed-out{display:none!important}
+  .ly-template-product .details-pro .swatch-element.color.soldout label{opacity:.45;background-image:linear-gradient(135deg,transparent 46%,#fff 46%,#fff 54%,transparent 54%)!important}
+  .ly-template-product .details-pro .swatch-element.color .tooltip{position:absolute!important;left:50%!important;bottom:calc(100% + 6px)!important;top:auto!important;transform:translateX(-50%);display:block!important;visibility:hidden!important;opacity:0!important;padding:3px 8px!important;border-radius:3px;background:#111!important;color:#fff!important;font:500 11px/1.3 var(--lyx-font)!important;white-space:nowrap;text-transform:capitalize;pointer-events:none;transition:opacity .15s;z-index:3;width:auto!important;margin:0!important}
+  .ly-template-product .details-pro .swatch-element.color .tooltip::before,.ly-template-product .details-pro .swatch-element.color .tooltip::after{display:none!important}
+  .ly-template-product .details-pro .swatch-element.color:hover .tooltip,.ly-template-product .details-pro .swatch-element.color input:focus-visible~.tooltip{visibility:visible!important;opacity:1!important}
+  .ly-template-product .details-pro .price-box{border-radius:0!important}
+  .ly-template-product .details-pro .price-box .label_product::before,.ly-template-product .details-pro .price-box .label_product::after{display:none!important;content:none!important}
+  body.ly-template-product .layout-product .product-detail-left .product-image-block.relative{top:0!important;margin-top:4px}
+  .ly-template-product .product-image-block .swiper-button-next,.ly-template-product .product-image-block .swiper-button-prev{display:none!important}
+  .lyxp-ship{margin:12px 0 0;font:italic 400 12.5px/1.4 var(--lyx-font);color:var(--lyxp-ink)}
+
+  /* Nút: MUA NGAY dạng viên thuốc, giỏ tròn ở đầu phải */
+  .ly-template-product .details-pro .form-product>.form-group{margin:16px 0 0!important}
+  .ly-template-product .details-pro .flex-quantity{display:flex!important;flex-direction:column;align-items:stretch;gap:12px;max-width:380px}
+  .ly-template-product .details-pro .custom-btn-number{display:flex!important;align-items:center;gap:12px;margin:0!important;padding:0!important;border:0!important;background:none!important}
+  .ly-template-product .details-pro .custom-btn-number.d-none{display:none!important}
+  .ly-template-product .details-pro .custom-btn-number label{margin:0!important;font:400 14px/1 var(--lyx-font)!important;color:#888!important}
+  .ly-template-product .details-pro .input_number_product{display:inline-flex!important;align-items:center;height:34px;border:1px solid var(--lyxp-line);border-radius:999px;overflow:hidden;background:#fff}
+  .ly-template-product .details-pro .input_number_product .btn_num{width:34px;height:34px;border:0!important;background:none!important;color:var(--lyxp-ink)!important;font-size:16px;line-height:1;padding:0!important}
+  .ly-template-product .details-pro .input_number_product input{width:42px!important;height:34px!important;border:0!important;padding:0!important;text-align:center;font:600 14px/1 var(--lyx-font)!important;background:none!important;box-shadow:none!important}
+  .ly-template-product .details-pro .btn-mua{position:relative;display:block!important;width:100%;margin:0!important;padding:0!important}
+  .ly-template-product .details-pro .btn-mua .btn-buyNow{display:flex!important;align-items:center;justify-content:center;width:100%!important;height:58px!important;margin:0!important;padding:0 72px 0 24px!important;border:0!important;border-radius:999px!important;background:var(--lyxp-cta)!important;color:#fff!important;font:700 19px/1 var(--lyx-font)!important;letter-spacing:.14em;text-transform:uppercase;box-shadow:none!important}
+  .ly-template-product .details-pro .btn-mua .btn-buyNow:hover{background:var(--lyx-cta-dark,#a32c51)!important}
+  .ly-template-product .details-pro .btn-mua .btn-buyNow.d-none{display:none!important}
+  .ly-template-product .details-pro .btn-mua .btn_add_cart{position:absolute!important;top:6px;right:6px;z-index:2;display:block!important;width:46px!important;min-width:0!important;height:46px!important;margin:0!important;padding:0!important;border:0!important;border-radius:50%!important;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23be3a63' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3h3l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7H6'/%3E%3Ccircle cx='9.5' cy='20' r='1.4'/%3E%3Ccircle cx='17' cy='20' r='1.4'/%3E%3Cpath d='M13 8v5M10.5 10.5h5'/%3E%3C/svg%3E") center/26px no-repeat!important;color:transparent!important;font-size:0!important;box-shadow:0 0 0 2px var(--lyxp-cta) inset!important}
+  .ly-template-product .details-pro .btn-mua .btn_add_cart:hover{transform:scale(1.05)}
+  .ly-template-product .details-pro .btn-mua .btn_add_cart:focus-visible,.ly-template-product .details-pro .btn-mua .btn-buyNow:focus-visible{outline:3px solid var(--lyxp-ink);outline-offset:3px}
+  .ly-template-product .details-pro .btn-mua .btn_add_cart[disabled],.ly-template-product .details-pro .btn-mua.btnsold .btn_add_cart,.ly-template-product .details-pro .btn-mua .btn-soldout{position:static!important;width:100%!important;height:58px!important;border-radius:999px!important;background:#bdbdbd!important;color:#fff!important;font:700 16px/1 var(--lyx-font)!important;letter-spacing:.1em;text-transform:uppercase;box-shadow:none!important;cursor:not-allowed}
+  .ly-template-product .details-pro .btn-mua .product-wish{display:none!important}
+  .ly-template-product .details-pro .btn-mua.lyxp-busy .btn_add_cart{opacity:.6;pointer-events:none}
+
+  /* Cam kết */
+  .ly-template-product .details-pro .product-policises-wrapper{margin:18px 0 0!important;padding:0!important;border:0!important;background:none!important;max-width:380px}
+  .ly-template-product .details-pro .product-policises{display:flex!important;flex-wrap:wrap;gap:8px 14px;margin:0!important;padding:10px 4px!important;border-top:1px solid #bbb;border-bottom:1px solid #bbb;list-style:none}
+  .ly-template-product .details-pro .product-policises .item_poli{display:flex!important;align-items:center;gap:6px;flex:1 1 30%;width:auto!important;min-width:100px;margin:0!important;padding:0!important;border:0!important;background:none!important;font:400 10.5px/1.3 var(--lyx-font)!important;color:#444!important}
+  .ly-template-product .details-pro .product-policises .img_poly{flex:0 0 22px;width:22px!important;height:22px!important;margin:0!important;padding:0!important;background:none!important;border:0!important}
+  .ly-template-product .details-pro .product-policises .img_poly img{width:22px!important;height:22px!important;object-fit:contain}
+  .ly-template-product .details-pro .product-policises .content_poli{margin:0!important;padding:0!important;font:inherit!important;color:inherit!important}
+}
+@media (min-width:768px) and (max-width:991px){
+  .ly-template-product .layout-product .details-pro{padding-left:12px}
+  .ly-template-product .details-pro .title-product{font-size:21px!important}
+}
+
+/* Thông số: hộp xám từ mô tả ngắn (product.summary); lyx-pdp.js tách "Nhãn: giá trị" thành 2 cột (mọi kích thước) */
+.ly-template-product .details-pro .product-summary{margin:0!important;padding:14px 18px!important;border:0!important;border-radius:6px!important;background:var(--lyxp-soft)!important;color:var(--lyxp-ink)!important;box-shadow:none!important}
+.ly-template-product .details-pro .product-summary ul{list-style:none!important;margin:0!important;padding:0!important}
+.ly-template-product .details-pro .product-summary li{display:block;margin:0!important;padding:4px 0!important;font:600 13px/1.45 var(--lyx-font)!important;color:var(--lyxp-ink)!important;background:none!important}
+.ly-template-product .details-pro .product-summary li::before,.ly-template-product .details-pro .product-summary li::marker{display:none!important;content:none!important}
+.ly-template-product .details-pro .product-summary li *{color:inherit!important;font-style:normal!important}
+.ly-template-product .details-pro .product-summary li.lyxp-kv{display:grid!important;grid-template-columns:minmax(96px,38%) 1fr;column-gap:12px;align-items:baseline}
+.ly-template-product .details-pro .product-summary .lyxp-k{font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.ly-template-product .details-pro .product-summary li.lyxp-line{font-size:12px!important;font-weight:700!important}
+.ly-template-product .details-pro .product-summary p{margin:0 0 4px!important;font-size:13px}
+
+/* ---------- Khối dưới: chi tiết, đánh giá, sản phẩm tương tự ---------- */
+.ly-template-product .layout-product .details-product>.row>.col-lg-9{flex:0 0 100%;max-width:100%;display:flex;flex-direction:column}
+.ly-template-product .ly-pd-info.lyi,.ly-template-product .ly-pd-reviews,.ly-template-product .ly-pd-related{width:100%!important;max-width:none!important}
+.ly-template-product .layout-product .details-pro-3:not(:has(.product-view)){display:none}
+.ly-template-product .ly-pd-info{order:1}
+.ly-template-product .ly-pd-reviews{order:2}
+.ly-template-product .ly-pd-related{order:3}
+.ly-template-product .ly-promos{order:4}
+@media (max-width:767px){
+  .ly-template-product .ly-pd-reviews{order:1}
+  .ly-template-product .ly-pd-info{order:2}
+  /* Mobile dùng nhãn, sao, tim/chia sẻ, dòng vận chuyển của lớp ly-pdp.js */
+  .lyxp-badges,.lyxp-rate,.lyxp-ship,.lyxp-acts,.lyxp-gdots{display:none!important}
+  .ly-template-product .details-pro>.lysr-badge{display:none!important}
+  .ly-template-product .details-pro .product-summary{margin:12px 0!important}
+}
+
+/* Chi tiết sản phẩm: nền xám tràn ngang, tiêu đề in hoa lớn */
+.ly-template-product .ly-pd-info.lyi{position:relative;margin:36px 0 0!important;padding:18px 0 28px!important;background:var(--lyxp-soft)!important;box-shadow:0 0 0 100vmax var(--lyxp-soft)!important;clip-path:inset(0 -100vmax)!important;border:0!important;border-radius:0!important}
+.ly-template-product .ly-pd-info .lyi-acc{max-width:none!important;margin:0!important;border:0!important;border-bottom:1px solid #9a9a9a!important;border-radius:0!important;background:none!important;box-shadow:none!important}
+.ly-template-product .ly-pd-info .lyi-acc:first-child{border-bottom-color:#9a9a9a!important}
+.ly-template-product .ly-pd-info .lyi-acc>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 4px!important;background:none!important;font:600 22px/1.25 var(--lyx-font)!important;color:var(--lyxp-ink)!important;text-transform:uppercase!important;letter-spacing:.01em;cursor:pointer;list-style:none}
+.ly-template-product .ly-pd-info .lyi-acc>summary>span{font:inherit!important;color:inherit!important;text-transform:inherit!important;letter-spacing:inherit!important}
+.ly-template-product .ly-pd-info .lyi-acc>summary::-webkit-details-marker{display:none}
+.ly-template-product .ly-pd-info .lyi-acc>summary>i{flex:0 0 18px;width:18px;height:18px;background:none!important;border:0!important;position:relative}
+.ly-template-product .ly-pd-info .lyi-acc>summary>i::before{content:'';position:absolute;inset:2px 3px 6px;border-right:2px solid var(--lyxp-ink);border-bottom:2px solid var(--lyxp-ink);transform:rotate(45deg);transition:transform .2s}
+.ly-template-product .ly-pd-info .lyi-acc>summary>i::after{display:none!important}
+.ly-template-product .ly-pd-info .lyi-acc[open]>summary>i::before{transform:translateY(5px) rotate(-135deg)}
+.ly-template-product .ly-pd-info .lyi-body{padding:0 4px 20px!important;font:400 13.5px/1.75 var(--lyx-font)!important;color:#222!important;background:none!important}
+.ly-template-product .ly-pd-info .lyi-desc h2,.ly-template-product .ly-pd-info .lyi-desc h3{font:700 14px/1.5 var(--lyx-font)!important;margin:0 0 4px!important;padding:0!important;border:0!important;color:var(--lyxp-ink)!important}
+.ly-template-product .ly-pd-info .lyi-desc h2::before,.ly-template-product .ly-pd-info .lyi-desc h3::before{display:none!important}
+.ly-template-product .ly-pd-info .lyi-more{display:block;margin:6px auto 0!important;padding:7px 38px!important;border:1px solid var(--lyxp-ink)!important;border-radius:999px!important;background:#fff!important;color:var(--lyxp-ink)!important;font:500 12px/1.2 var(--lyx-font)!important;letter-spacing:.3em!important;text-transform:uppercase!important}
+.ly-template-product .ly-pd-info .lyi-more span{font:inherit!important;letter-spacing:inherit!important;text-transform:inherit!important}
+.ly-template-product .ly-pd-info .lyi-more[hidden]{display:none!important}
+.ly-template-product .ly-pd-info .lyi-more svg{display:none}
+
+/* Đánh giá của khách hàng: tổng hợp web + Shopee, hai tab */
+.ly-template-product .ly-pd-reviews{margin:0!important;padding:36px 0 24px!important;border:0!important;background:#fff!important;font-family:var(--lyx-font)}
+.ly-template-product .ly-pd-reviews>.ly-pd-h{margin:0 0 26px!important;font:700 22px/1.3 var(--lyx-font)!important;color:var(--lyxp-ink)!important;text-transform:none!important;border:0!important;padding:0!important}
+.ly-template-product .ly-pd-reviews>.ly-pd-h::before,.ly-template-product .ly-pd-reviews>.ly-pd-h::after{display:none!important}
+.lyxp-rv-sum{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px 40px;margin:0 0 30px}
+.lyxp-rv-score{display:flex;flex-direction:column;align-items:center;gap:8px;padding-right:40px;border-right:1px solid #bbb}
+.lyxp-rv-score b{font:600 64px/1 var(--lyx-font);color:var(--lyxp-ink)}
+.lyxp-rv-score .lyxp-stars{font-size:28px;letter-spacing:3px}
+.lyxp-rv-score span{font:400 13px/1.2 var(--lyx-font)}
+.lyxp-rv-bars{display:grid;gap:6px;max-width:220px;width:100%}
+.lyxp-rv-bar{display:grid;grid-template-columns:34px 1fr;align-items:center;gap:6px;font:400 10px/1 var(--lyx-font)}
+.lyxp-rv-bar i{display:block;height:4px;border-radius:4px;background:#d6d6d6;overflow:hidden}
+.lyxp-rv-bar i b{display:block;height:100%;background:var(--lyxp-star);border-radius:4px}
+.lyxp-rv-write{justify-self:end;padding:10px 30px;border:0;border-radius:3px;background:#d9a030;color:#fff;font:700 16px/1.2 var(--lyx-font);cursor:pointer}
+.lyxp-rv-write:hover,.lyxp-rv-write:focus-visible{background:#c38c22}
+.lyxp-rv-tabs{display:flex;gap:6px;margin:0 0 6px;border-bottom:1px solid #ccc}
+.lyxp-rv-tabs button{margin:0 0 -1px;padding:8px 8px 6px;border:0;border-bottom:4px solid transparent;background:none;color:var(--lyxp-ink);font:400 12px/1.2 var(--lyx-font);cursor:pointer}
+.lyxp-rv-tabs button[aria-selected="true"]{font-weight:600;border-bottom-color:#0d3b2e}
+.lyxp-rv-tabs button:focus-visible{outline:2px solid var(--lyxp-ink);outline-offset:2px}
+.lyxp-rv-panel[hidden]{display:none!important}
+.ly-template-product .ly-pd-reviews.lyxp-rv-on .sapo-product-reviews-summary,.ly-template-product .ly-pd-reviews.lyxp-rv-on .lysr-sum,.ly-template-product .ly-pd-reviews.lyxp-rv-on .lysr-web-h,.ly-template-product .ly-pd-reviews.lyxp-rv-on .lysr-logo{display:none!important}
+.ly-template-product .ly-pd-reviews.lyxp-rv-on .lysr{margin:0!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important}
+.ly-template-product .ly-pd-reviews.lyxp-rv-on .lysr-head{margin:10px 0!important}
+.ly-template-product .ly-pd-reviews.lyxp-rv-on .lysr-title h3{font:600 14px/1.3 var(--lyx-font)!important}
+.ly-template-product .ly-pd-reviews.lyxp-rv-on .sapo-review,.ly-template-product .ly-pd-reviews.lyxp-rv-on .lysr-card{padding:18px 0!important;border:0!important;border-bottom:1px solid #ccc!important;border-radius:0!important;background:none!important;box-shadow:none!important}
+.ly-template-product .ly-pd-reviews.lyxp-rv-on .ly-rv-av{width:58px!important;height:58px!important;background:#d9d9d9!important;color:#fff!important;font:400 30px/58px var(--lyx-font)!important}
+.ly-template-product .ly-pd-reviews.lyxp-rv-on .sapo-review-author{font:500 18px/1.2 var(--lyx-font)!important;color:var(--lyxp-ink)!important}
+.ly-template-product .ly-pd-reviews .ly-rv-more{display:block;margin:18px auto 0!important;padding:7px 30px!important;border:0!important;border-radius:999px!important;background:#4a4a4a!important;color:#fff!important;font:700 12px/1.2 var(--lyx-font)!important;text-transform:uppercase}
+.ly-template-product .ly-pd-reviews .ly-rv-more[hidden]{display:none!important}
+.ly-template-product .ly-pd-reviews.lyxp-rv-on .btn-new-review,.ly-template-product .ly-pd-reviews.lyxp-rv-on .ly-rv-tabs{display:none!important}
+@media (max-width:767px){
+  .ly-template-product .ly-pd-reviews{padding:22px 0 10px!important}
+  .ly-template-product .ly-pd-reviews>.ly-pd-h{font-size:21px!important;margin:0 0 16px!important}
+  .lyxp-rv-sum{grid-template-columns:1fr 1fr;gap:14px 16px;margin:0 0 18px}
+  .lyxp-rv-score{padding-right:16px;grid-row:span 2}
+  .lyxp-rv-score b{font-size:52px}
+  .lyxp-rv-score .lyxp-stars{font-size:21px;letter-spacing:2px}
+  .lyxp-rv-score span{font-style:italic}
+  .lyxp-rv-write{justify-self:stretch;padding:9px 12px;border-radius:999px;background:#000;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+  .lyxp-rv-write:hover,.lyxp-rv-write:focus-visible{background:#333}
+  .lyxp-rv-tabs button{font-size:12.5px}
+  .ly-template-product .ly-pd-info .lyi-acc>summary{font-size:19px!important}
+}
+
+/* Sản phẩm tương tự: nền xám, 5 thẻ PC / 2 thẻ mobile */
+.ly-template-product .ly-pd-related{position:relative;margin:0!important;padding:26px 0 30px!important;background:var(--lyxp-soft)!important;box-shadow:0 0 0 100vmax var(--lyxp-soft);clip-path:inset(0 -100vmax);border:0!important}
+.ly-template-product .ly-pd-related .ly-section-title{margin:0!important;text-align:left!important;font:600 22px/1.2 var(--lyx-font)!important;color:var(--lyxp-ink)!important;text-transform:uppercase}
+.ly-template-product .ly-pd-related .ly-section-title br{display:none}
+.ly-template-product .ly-pd-related .ly-section-title span{display:block;margin:6px 0 0;font:500 10px/1.2 var(--lyx-font)!important;letter-spacing:.14em;color:var(--lyxp-ink)!important}
+.ly-template-product .ly-pd-related .ly-section-subtitle{display:none!important}
+.ly-template-product .ly-pd-related .ly-grid{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:16px 0 0!important}
+.ly-template-product .ly-pd-related .ly-grid>*{width:auto!important;max-width:none!important;margin:0!important}
+.ly-template-product .ly-pd-related .ly-text-link{display:inline-block;margin:16px 0 0!important;padding:8px 10px!important;border-radius:3px;background:#000!important;color:#fff!important;font:700 12px/1.2 var(--lyx-font)!important;text-transform:uppercase;text-decoration:none!important}
+.ly-template-product .ly-pd-related .ly-text-link:hover{background:#333!important}
+@media (max-width:991px){.ly-template-product .ly-pd-related .ly-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:767px){
+  .ly-template-product .ly-pd-related .ly-section-title{font-size:30px!important}
+  .ly-template-product .ly-pd-related .ly-section-title span{font-size:14px!important}
+  .ly-template-product .ly-pd-related .ly-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+}

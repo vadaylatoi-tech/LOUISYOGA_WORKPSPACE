@@ -1,0 +1,136 @@
+/* Tinh chỉnh khớp thiết kế — nạp sau ly-design.css */
+
+/* Tiêu đề khối lớn như thiết kế (YOGA MAT, PHỤ KIỆN) */
+.ly-section-title{font-size:clamp(40px,6.2vw,70px);line-height:1.02;letter-spacing:-1.5px}
+.ly-section-title span{font-size:1.08em}
+.ly-section-subtitle{font-size:20px;margin:18px 0 34px;line-height:1.3}
+.ly-section-subtitle:before{width:310px;max-width:70%;height:2px;margin-bottom:9px}
+.ly-yogi .ly-section-title{font-size:clamp(30px,3.8vw,46px);line-height:1.12;letter-spacing:-.8px}
+.ly-yogi .ly-section-title span{font-size:1em}
+
+/* Khối YOGA MAT: 3 cột thẻ + banner rộng 1/3 */
+.ly-mats-layout{grid-template-columns:minmax(0,1.885fr) minmax(0,1fr);gap:36px;align-items:stretch}
+.ly-mats .ly-tabs{padding:2px;margin-bottom:19px;border-radius:30px}
+.ly-mats .ly-tabs button{font-size:13px;font-weight:700;padding:6px 10px;color:#5f5f5f}
+.ly-mats .ly-tabs button[aria-selected=true]{color:#fff}
+.ly-mats .ly-grid-three{column-gap:36px;row-gap:39px}
+.ly-mats .ly-mat-banner{margin:51px 0 46px;min-height:0;height:auto;border-radius:12px}
+
+/* Ảnh thẻ sản phẩm cao hơn như thiết kế (rộng:cao ≈ 9:10) */
+.ly-product-image{aspect-ratio:9/10}
+
+/* Dòng đánh giá + giá: không bị cắt chữ khi thẻ hẹp */
+/* 22/10/2026: bỏ khai báo vùng chứa + truy vấn theo vùng chứa (chỉ chạy iOS 16+; lớp .ly-rv/.ly-card-actions cũ không còn dùng). Bản trước: zz-backup-ly-tweaks-20261022-opt.css */
+.ly-card-info{padding:12px 11px 13px}
+.ly-rating{font-size:9px;gap:2px;overflow:visible}
+.ly-star{font-size:13px}
+.ly-rating.is-empty .ly-star{font-size:10px;letter-spacing:-1px;color:#d9d9d9}
+.ly-card .ly-price strong{font-size:16px;letter-spacing:-.2px}
+
+/* Nút trên thẻ: tỉ lệ theo thiết kế (nút giỏ rộng hơn nút mua), chữ không tràn */
+.ly-card-actions{grid-template-columns:minmax(0,1.27fr) minmax(0,1fr);gap:6px}
+.ly-card-actions .ly-btn-cart,.ly-card-actions .ly-btn-buy{height:30px;min-height:30px;padding:0 4px;font-size:10px;letter-spacing:0;font-family:inherit;cursor:pointer;overflow:hidden;text-overflow:ellipsis;box-shadow:none}
+.ly-card-actions .ly-btn-cart{border-color:#b6b6b6!important;color:#606060!important}
+.ly-card-actions .ly-btn-buy{font-weight:600}
+
+/* Hộp chọn phân loại khi bấm Thêm vào giỏ / Mua ngay */
+.ly-pick{width:min(440px,calc(100% - 30px))}
+.ly-pick .ly-dialog-head{margin-bottom:8px}
+.ly-pick h2{font-size:17px!important;line-height:1.35}
+.ly-pick-label{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0 0 10px;font-size:13px;color:#4a202c}
+.ly-pick-price{color:#00869e;font-size:16px;font-weight:600}
+.ly-pick-opts{display:flex;flex-wrap:wrap;gap:8px;max-height:40vh;overflow:auto;margin-bottom:18px;padding:2px}
+.ly-pick-opts button{border:1px solid #d9d9d9;background:#fff;border-radius:4px;padding:8px 12px;font:inherit;font-size:12px;color:#4a202c;text-transform:capitalize;cursor:pointer}
+.ly-pick-opts button[aria-checked=true]{border-color:#d72182;box-shadow:0 0 0 1px #d72182;color:#d72182;font-weight:600}
+.ly-pick-opts button:disabled{opacity:.45;cursor:not-allowed}
+.ly-pick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ly-pick-actions button{height:44px;border-radius:4px;font:inherit;font-weight:700;font-size:12px;text-transform:uppercase;cursor:pointer}
+.ly-pick-actions .ly-btn-cart{background:#fff;border:1px solid #606060;color:#606060}
+.ly-pick-actions .ly-btn-buy{background:#d72182;border:1px solid #d72182;color:#fff}
+.ly-pick-actions button:disabled{opacity:.6}
+.ly-pick-more{display:inline-block;margin-top:14px;font-size:12px;color:#d72182!important;font-weight:600}
+
+/* Khối phụ kiện: khoảng cách thoáng như thiết kế */
+.ly-accessory-track .ly-grid{gap:36px}
+.ly-accessory-track .ly-card{flex-basis:calc((100% - 108px)/4)}
+
+/* ---------- BỘ LỌC TRANG DANH MỤC (theo thiết kế) ---------- */
+.ly-collection .dqdt-sidebar .section-box-bg{background:#fff;padding:0}
+.ly-filters .aside-item{border:0!important;border-top:1px solid #e6e6e6!important;padding:20px 0 22px!important;margin:0!important;background:none!important}
+.ly-filters .aside-title{padding:0!important;margin:0 0 14px!important;background:none!important;border:0!important}
+.ly-filters .aside-title h2,.ly-filters .title-head{font-size:17px!important;font-weight:700!important;color:#000!important;margin:0!important;padding:0!important;text-transform:none!important;letter-spacing:0;line-height:1.3;background:none!important}
+.ly-filters .aside-title h2:after,.ly-filters .aside-title h2:before{display:none!important}
+.ly-filters .aside-content{padding:0!important;margin:0!important;max-height:none!important;overflow:visible!important}
+.ly-filters ul{list-style:none;margin:0;padding:0}
+.ly-filters .filter-item{margin:0 0 8px!important;padding:0!important;line-height:1.3}
+.ly-filters .filter-item label,.ly-rate-opt{display:flex!important;align-items:center;gap:10px;margin:0!important;padding:0!important;font-size:12px!important;font-weight:400;color:#222!important;cursor:pointer;position:static!important}
+.ly-filters .filter-item label .fa{display:none!important}
+/* 10/10: mọi ô tích cùng một cỡ 14px (trước: ô thường 18px + viền = 20px, ô đánh giá 14px → lệch nhau) */
+.ly-filters input[type=checkbox]{-webkit-appearance:none;appearance:none;box-sizing:border-box!important;position:static!important;opacity:1!important;visibility:visible!important;display:grid!important;place-content:center;flex:0 0 14px!important;width:14px!important;height:14px!important;min-width:14px;padding:0!important;margin:0!important;border:1.2px solid #8a8a8a;border-radius:2px;background:#fff;cursor:pointer;transform:none!important}
+.ly-filters input[type=checkbox]:hover{border-color:#d72182}
+.ly-filters input[type=checkbox]:checked{background:#d72182;border-color:#d72182}
+.ly-filters input[type=checkbox]:checked:after{content:'';width:4px;height:7px;border:solid #fff;border-width:0 1.8px 1.8px 0;transform:translateY(-1px) rotate(45deg)}
+.ly-filters input[type=checkbox]:focus-visible{outline:2px solid #d72182;outline-offset:2px}
+.ly-filters .filter-item-toggle{font-size:11px;color:#4a202c;margin-top:4px;cursor:pointer}
+.ly-filters .filter-item-toggle img{display:none}
+.ly-filters .overflow-item{display:none!important}
+.ly-filters .overflow-item.show{display:block!important}
+
+/* Thanh kéo giá */
+.ly-filters .ly-range{position:relative;padding:22px 2px 0!important}
+.ly-range-labels span{position:absolute;top:0;transform:translateX(-50%);font-size:9.5px;color:#333;white-space:nowrap;line-height:1;margin-left:2px}
+.ly-range-labels span.is-start{transform:translateX(0)}
+.ly-range-labels span.is-end{transform:translateX(-100%)}
+.ly-range-labels span[data-range-label=max].is-close{top:-12px}
+.ly-range-track{position:relative;height:18px}
+.ly-range-track:before{content:'';position:absolute;left:0;right:0;top:8px;height:3px;background:#ccc;border-radius:2px}
+.ly-range-fill{position:absolute;top:8px;height:3px;background:#08392a;border-radius:2px}
+.ly-range input[type=range]{-webkit-appearance:none;appearance:none;position:absolute;left:0;top:0;width:100%;height:18px;margin:0;background:none;pointer-events:none;z-index:3}
+.ly-range input[type=range]::-webkit-slider-runnable-track{background:none;border:0;height:18px}
+.ly-range input[type=range]::-moz-range-track{background:none;border:0}
+.ly-range input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;pointer-events:auto;width:6px;height:16px;margin-top:1px;background:#08392a;border:0;border-radius:2px;cursor:grab}
+.ly-range input[type=range]::-moz-range-thumb{pointer-events:auto;width:6px;height:16px;background:#08392a;border:0;border-radius:2px;cursor:grab}
+.ly-range input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px #d7218255}
+
+/* Đánh giá */
+.ly-filter-rating li{margin:0 0 8px}
+.ly-rate-stars{display:inline-flex;gap:1px;font-size:17px;line-height:1;color:#d0d0d0}
+.ly-rate-stars i{font-style:normal}
+.ly-rate-stars i.on{color:#d69d31}
+.ly-rate-text{font-size:9.5px;color:#666}
+
+/* Vùng sản phẩm nền xám + dải Đang lọc theo */
+.ly-collection .block-collection>.section-box-bg{background:#f2f2f2;border-radius:0;padding:20px 18px 30px}
+.ly-active-filters{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:0 0 18px}
+.ly-active-filters[hidden]{display:none}
+.ly-af-label{font-size:12px;font-weight:600;color:#000}
+.ly-active-filters .ly-af-chip{display:inline-flex;align-items:center;gap:14px;background:#d72182!important;color:#fff!important;border:0;border-radius:20px;padding:5px 14px 5px 16px;font:inherit;font-size:11px;font-weight:500;line-height:1.4;cursor:pointer}
+.ly-active-filters .ly-af-chip *{color:#fff!important}
+.ly-af-chip i{font-style:normal;font-size:11px}
+.ly-active-filters .ly-af-chip:hover{background:#b9166d!important}
+.ly-active-filters .ly-af-clear{background:none!important;border:0;padding:0;font:inherit;font-size:11px;font-weight:600;color:#ed1c24!important;text-decoration:underline;cursor:pointer}
+.ly-result-note{font-size:12px;color:#4a202c;margin:0 0 14px}
+.category-products.is-loading{opacity:.5;pointer-events:none;transition:opacity .2s}
+.ly-collection #sort-by{margin-bottom:16px}
+
+@media(max-width:1000px){
+  .ly-mats .ly-grid-three{column-gap:16px;row-gap:20px}
+  .ly-mats-layout{gap:20px}
+}
+@media(max-width:991px){
+  .ly-collection .block-collection>.section-box-bg{padding:14px 10px 20px}
+  .ly-collection .dqdt-sidebar .section-box-bg{padding:0 4px}
+}
+@media(max-width:760px){
+  .ly-section-title{font-size:38px}
+  .ly-section-subtitle{font-size:15px;margin:12px 0 22px}
+  .ly-section-subtitle:before{width:200px}
+  .ly-yogi .ly-section-title{font-size:28px}
+  .ly-mats-layout{grid-template-columns:1fr}
+  .ly-mats .ly-tabs button{font-size:10px;padding:7px 4px}
+  .ly-mats .ly-grid-three{column-gap:10px;row-gap:12px}
+  .ly-mats .ly-mat-banner{margin:0;aspect-ratio:1/1.3}
+  .ly-accessory-track .ly-grid{gap:12px}
+  .ly-accessory-track .ly-card{flex-basis:calc((100% - 12px)/2)}
+  .ly-card-actions .ly-btn-cart,.ly-card-actions .ly-btn-buy{height:34px}
+}

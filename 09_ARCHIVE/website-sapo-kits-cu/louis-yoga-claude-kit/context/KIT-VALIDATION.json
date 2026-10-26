@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-15",
+  "source_file_count": 60,
+  "source_bytes": 475347028,
+  "skill_count": 5,
+  "checks": [
+    "JSON parse",
+    "5 skill entrypoints",
+    "UTF-8 and code fences",
+    "local Markdown links",
+    "no credential/source binary in package",
+    "source inventory SHA256"
+  ],
+  "not_tested": [
+    "Claude Code actual skill invocation",
+    "Admin API connectivity",
+    "theme build",
+    "draft upload",
+    "live publish",
+    "remote restore"
+  ],
+  "frontmatter_validation": "Validated the two simple scalar fields in all five files; bundled quick_validate.py was unavailable because PyYAML is absent and dependency download could not resolve DNS."
+}

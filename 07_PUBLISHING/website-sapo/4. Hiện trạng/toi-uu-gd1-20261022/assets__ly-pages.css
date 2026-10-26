@@ -1,0 +1,182 @@
+/* Louis Yoga — các trang KHÔNG có thiết kế mẫu (giới thiệu, liên hệ, tin tức, bài viết, tìm kiếm, tài khoản, 404)
+   đồng bộ theo ngôn ngữ của 3 trang đã có thiết kế. Nạp sau cùng. 09/10/2026 */
+
+/* 1. Đầu trang thống nhất: dải gradient như trang Cửa hàng, chữ căn giữa, bỏ breadcrumb */
+#ly-page-main{overflow-x:clip}
+/* 22/10/2026: iOS < 16 không hiểu overflow:clip → dùng hidden để chặn tràn ngang */
+@supports not (overflow:clip){#ly-page-main{overflow-x:hidden}}
+#ly-page-main:has(.ly-page-heading)>.bread-crumb{display:none}
+.ly-inner-page .ly-page-heading{position:relative;isolation:isolate;text-align:center;padding:58px 15px 52px!important;margin:0 auto 40px!important}
+.ly-inner-page .ly-page-heading:before{content:'';position:absolute;z-index:-1;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;background:radial-gradient(120% 160% at 0% 20%,#ea9db6 0,#f6cfdc 40%,#fde9ef 65%,#fff 100%)}
+.ly-inner-page .ly-page-heading .ly-eyebrow{margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:2.5px;color:#d72182;text-transform:uppercase}
+.ly-inner-page .ly-page-heading>*{text-align:center!important;margin-left:auto!important;margin-right:auto!important}
+.ly-inner-page .ly-page-heading h1{display:block!important;float:none!important;width:auto!important;margin:0!important;font-size:clamp(34px,4.6vw,60px)!important;font-weight:800!important;line-height:1.08!important;letter-spacing:-1px;color:#4a202c!important;text-transform:uppercase}
+.ly-inner-page .ly-page-heading .ly-page-lead{max-width:620px;margin:14px auto 0;font-size:15px;line-height:1.55;color:#6d4d58}
+
+/* 2. Chip danh mục (Tin tức...) dùng màu hồng chủ đạo như bộ lọc */
+.ly-inner-page .ly-category-nav a{border-radius:20px}
+.ly-inner-page .ly-category-nav a[aria-current=page],.ly-inner-page .ly-category-nav a:hover{background:#d72182!important;border-color:#d72182!important;color:#fff!important}
+
+/* 3. Nút: nút viền bị chữ trắng trên nền trắng (lỗi ở trang 404) */
+.ly-button.ly-button-outline{background:#fff!important;color:#d72182!important;border:1.5px solid #d72182!important}
+.ly-button.ly-button-outline:hover{background:#fff1f7!important}
+.ly-search-large button{background:#d72182!important;border-color:#d72182!important;color:#fff!important;border-radius:30px!important;padding-left:26px!important;padding-right:26px!important}
+.ly-search-large input{border-radius:30px!important;padding-left:20px!important;border:1px solid #f1d3e1!important;background:#fff!important}
+.ly-search-large input:focus{outline:none;border-color:#d72182!important;box-shadow:0 0 0 3px #d7218222}
+
+/* 4. Trang bài viết: nền hồng nhạt, thẻ trắng bo góc, sidebar nhẹ nhàng thay khối hồng đặc */
+.ly-template-article .bread-crumb{background:#fff8fa!important}
+.ly-template-article .blogpage{background:#fff8fa!important;padding-bottom:50px}
+.ly-template-article .article-details{border:1px solid #f1e4ea;box-shadow:none!important}
+.ly-template-article .article-details h1{color:#4a202c!important;font-weight:800!important;letter-spacing:-.5px}
+.ly-template-article .tocs{background:#fff8fa!important;border:1px solid #f1e4ea!important;border-radius:12px!important}
+.ly-template-article .side-right-stick>div{background:#fff;border:1px solid #f1e4ea;border-radius:14px;padding:18px 18px 12px;margin-bottom:18px}
+.ly-template-article .side-right-stick h3.title_,.ly-template-article .side-right-stick .title_{background:none!important;color:#4a202c!important;border:0!important;border-bottom:2px solid #d72182!important;border-radius:0!important;padding:0 0 9px!important;margin:0 0 12px!important;font-size:13px!important;font-weight:800!important;letter-spacing:1.6px;text-transform:uppercase}
+.ly-template-article .side-right-stick h3.title_ *{color:inherit!important}
+.ly-template-article .side-right-stick a:hover{color:#d72182!important}
+.ly-template-article .side-right-stick img{border-radius:8px}
+
+/* 5. Đăng nhập / đăng ký / quên mật khẩu: một thẻ duy nhất, rộng hơn */
+.ly-inner-page .pagecustome{background:#fff!important;border:1px solid #f1e4ea!important;border-radius:18px!important;padding:30px 28px!important;box-shadow:0 14px 36px #4a202c14!important}
+.ly-inner-page .pagecustome .wpx,.ly-inner-page .pagecustome .wrap_background_aside{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;width:100%!important}
+.ly-inner-page .row:has(>[class*=col]>.row>.pagecustome){justify-content:center;padding:40px 0 60px}
+.ly-inner-page [class*=col]:has(>.row>.pagecustome){flex:0 0 min(460px,100%);max-width:min(460px,100%);margin-left:0!important}
+.ly-inner-page .row:has(>.pagecustome){margin:0}
+.ly-inner-page .row>.pagecustome{width:100%}
+.ly-inner-page .pagecustome input[type=text],.ly-inner-page .pagecustome input[type=email],.ly-inner-page .pagecustome input[type=password],.ly-inner-page .pagecustome input[type=tel]{height:46px!important;border:1px solid #e3cfd8!important;border-radius:10px!important;padding:0 14px!important;font-size:14px!important;background:#fff!important}
+.ly-inner-page .pagecustome input:focus{outline:none;border-color:#d72182!important;box-shadow:0 0 0 3px #d7218222!important}
+.ly-inner-page .pagecustome button[type=submit],.ly-inner-page .pagecustome input[type=submit],.ly-inner-page .pagecustome .btn-style{height:48px!important;border-radius:30px!important;background:#d72182!important;border-color:#d72182!important;font-weight:700!important;text-transform:uppercase;letter-spacing:.5px}
+.ly-inner-page .pagecustome [class*=social-login]{display:inline-block;border-radius:8px;overflow:hidden;margin:4px}
+.ly-inner-page .pagecustome a{color:#d72182}
+
+/* 6. Giỏ hàng trên điện thoại: tóm tắt đơn ngay sau danh sách, gợi ý xuống cuối; nút Zalo/gọi không đè thanh thanh toán */
+@media (max-width:991px){
+  .ly-cartpage .ly-cp-main{display:contents}
+  .ly-cartpage .ly-cp-list{order:1}
+  .ly-cartpage .ly-cp-side{order:2}
+  .ly-cartpage .ly-cp-upsell{order:3;margin-top:4px}
+}
+@media (max-width:640px){
+  .ly-template-cart .addThis_listSharing{bottom:150px!important}
+  .ly-template-cart .zalo-chat-widget{bottom:92px!important}
+  .ly-inner-page .ly-page-heading{padding:38px 12px 34px!important;margin-bottom:26px!important}
+  .ly-inner-page .ly-page-heading .ly-page-lead{font-size:13px}
+  .ly-inner-page .pagecustome{padding:24px 18px!important}
+}
+
+/* 7. Bộ lọc & lưới sản phẩm mượt hơn (10/2026) */
+.ly-af-wrap{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .26s ease,opacity .2s ease}
+.ly-af-wrap.is-open{grid-template-rows:1fr;opacity:1}
+.ly-af-wrap>.ly-active-filters{display:flex!important;min-height:0;overflow:hidden;margin:0!important}
+.ly-af-wrap.is-open>.ly-active-filters{padding-bottom:18px}
+.ly-collection .category-products{position:relative;transition:opacity .2s ease}
+.ly-collection .category-products.is-loading{opacity:.55!important;pointer-events:none}
+.ly-collection .category-products.is-loading:before{content:'';position:absolute;z-index:5;left:0;right:0;top:-10px;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,#d72182,transparent);background-size:40% 100%;background-repeat:no-repeat;animation:ly-progress 1s linear infinite}
+@keyframes ly-progress{from{background-position:-40% 0}to{background-position:140% 0}}
+@keyframes ly-card-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.ly-card.ly-enter{animation:ly-card-in .42s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--ly-i,0) * 40ms)}
+.ly-product-image img{transition:opacity .35s ease,transform .5s ease}
+.ly-product-image img.ly-img-wait{opacity:0}
+.ly-card{transition:box-shadow .25s ease,transform .25s ease}
+@media (hover:hover){.ly-card:hover{transform:translateY(-3px)}.ly-card:hover .ly-product-image img{transform:scale(1.03)}}
+.ly-product-image{overflow:hidden}
+.ly-range input[type=range]::-webkit-slider-thumb{transition:transform .15s ease}
+.ly-range input[type=range]:active::-webkit-slider-thumb{transform:scaleY(1.2)}
+@keyframes ly-fade-in{from{opacity:0}to{opacity:1}}
+[role=tabpanel]:not([hidden]){animation:ly-fade-in .3s ease}
+@media (prefers-reduced-motion:reduce){
+  .ly-af-wrap,.ly-card,.ly-product-image img,.ly-collection .category-products{transition:none!important}
+  .ly-card.ly-enter,[role=tabpanel]:not([hidden]),.ly-collection .category-products.is-loading:before{animation:none!important}
+  .ly-card:hover,.ly-card:hover .ly-product-image img{transform:none!important}
+}
+
+/* 8. Đánh giá của khách hàng — theo thiết kế (dữ liệu từ app Sapo, sắp xếp lại bằng ly-reviews.js) */
+.ly-pd-reviews{max-width:900px}
+.ly-pd-reviews .ly-pd-h{font-size:clamp(22px,2.4vw,28px)!important;font-weight:700!important;color:#000!important;margin:0 0 28px!important}
+.ly-pd-reviews #sapo-product-reviews{font-family:Montserrat,Inter,system-ui,sans-serif;color:#000}
+.ly-pd-reviews #sapo-product-reviews-sub{border:0!important;padding:0!important;background:none!important;box-shadow:none!important}
+.ly-pd-reviews #sapo-product-reviews .sapo-product-reviews-summary{background:none!important;border:0!important;padding:0!important;margin:0 0 34px!important;box-shadow:none!important}
+.ly-pd-reviews #sapo-product-reviews .summary-filter{display:block!important;padding:0!important;margin:0!important}
+.ly-pd-reviews #sapo-product-reviews .sapo-product-reviews-filter{display:none!important}
+.ly-pd-reviews #sapo-product-reviews .sapo-product-reviews-action{display:flex!important;align-items:center;gap:24px;width:100%!important;max-width:none!important;float:none!important;padding:0!important;margin:0!important;border:0!important;text-align:left!important}
+.ly-pd-reviews #sapo-product-reviews .sapo-product-reviews-action>div{display:flex;align-items:center;flex:1;min-width:0}
+.ly-pd-reviews #sapo-product-reviews .sapo-product-reviews-action>div>span:first-child{display:none!important}
+.ly-pd-reviews #sapo-product-reviews .bpr-summary{display:flex!important;flex-direction:column;align-items:center;min-width:160px;padding:6px 34px 6px 0!important;margin:0 26px 0 0!important;border-right:1px solid #cfcfcf;float:none!important;width:auto!important;text-align:center}
+.ly-pd-reviews #sapo-product-reviews .bpr-summary-average,.ly-pd-reviews #sapo-product-reviews .bpr-summary-average *{display:block;font-size:64px!important;font-weight:200!important;line-height:1!important;letter-spacing:3px;color:#000!important;margin:0!important}
+.ly-pd-reviews #sapo-product-reviews .bpr-summary-average .max-score{display:none!important}
+.ly-pd-reviews #sapo-product-reviews .bpr-summary .sapo-product-reviews-star{--ly-star:28px;margin:10px 0 2px!important;display:flex!important;gap:2px}
+.ly-pd-reviews #sapo-product-reviews .bpr-summary p{margin:4px 0 0!important;font-size:12px!important;color:#000!important}
+.ly-pd-reviews #sapo-product-reviews .star-on-png,.ly-pd-reviews #sapo-product-reviews .star-off-png,.ly-pd-reviews #sapo-product-reviews .star-half-png{background:none!important;width:auto!important;height:auto!important;display:inline-block!important;font-style:normal!important;line-height:1!important;margin:0!important;vertical-align:middle}
+.ly-pd-reviews #sapo-product-reviews .star-on-png:before,.ly-pd-reviews #sapo-product-reviews .star-off-png:before,.ly-pd-reviews #sapo-product-reviews .star-half-png:before{content:'★';display:block;font-family:Arial,sans-serif;font-size:var(--ly-star,20px);line-height:1;color:#d69d31}
+.ly-pd-reviews #sapo-product-reviews .star-off-png:before{color:#d9d9d9}
+.ly-pd-reviews #sapo-product-reviews .star-half-png:before{background:linear-gradient(90deg,#d69d31 50%,#d9d9d9 50%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ly-pd-reviews #sapo-product-reviews .sapo-product-reviews-star input{display:none!important}
+.ly-rv-bars{display:grid;gap:3px}
+.ly-rv-bar{display:grid;grid-template-columns:36px 140px;align-items:center;gap:6px;padding:2px 6px 2px 2px;margin:0;border:0;border-radius:4px;background:none!important;font-family:inherit;font-size:10px!important;line-height:1.3!important;color:#000!important;opacity:1!important;white-space:nowrap;height:auto!important;min-height:0!important;text-align:left;cursor:pointer;transition:background .2s}
+.ly-rv-bar i{display:block;height:4px;border-radius:4px;background:#cfcfcf;overflow:hidden}
+.ly-rv-bar b{display:block;height:100%;border-radius:inherit;background:#d69d31;transition:width .6s ease}
+.ly-rv-bar:hover:not(:disabled),.ly-rv-bar[aria-pressed=true]{background:#fbf3e4!important}
+.ly-rv-bar[aria-pressed=true] span{font-weight:700}
+.ly-rv-bar:disabled{cursor:default}
+.ly-rv-bar:focus-visible{outline:2px solid #d69d31;outline-offset:1px}
+.ly-pd-reviews #sapo-product-reviews .btn-new-review{margin:0 0 0 auto!important;height:36px;padding:0 36px!important;border:0!important;border-radius:30px!important;background:#d69d31!important;color:#fff!important;font-family:inherit;font-size:15px!important;font-weight:300!important;letter-spacing:.2px;box-shadow:none!important;white-space:nowrap;transition:background .2s}
+.ly-pd-reviews #sapo-product-reviews .btn-new-review:hover{background:#c08822!important}
+.ly-rv-tabs{display:flex;gap:22px;margin:0;border-bottom:2px solid #cfcfcf;font-size:11px}
+.ly-rv-tabs span{padding:0 6px 5px 0;margin-bottom:-2px;color:#000}
+.ly-rv-tabs .is-active{font-weight:700;border-bottom:4px solid #08392a}
+.ly-pd-reviews #sapo-product-reviews .sapo-product-reviews-list,.ly-rv-prev{margin:0!important;padding:0!important;border:0!important;background:none!important}
+.ly-pd-reviews #sapo-product-reviews .sapo-review{display:grid!important;grid-template-columns:270px minmax(0,1fr);gap:0 10px;align-items:start;padding:20px 0 18px!important;margin:0!important;border:0!important;border-bottom:1px solid #cfcfcf!important;background:none!important}
+.ly-rv-who{display:grid;grid-template-columns:72px minmax(0,1fr);column-gap:18px;align-items:start}
+.ly-rv-av{width:70px;height:70px;border-radius:50%;background:#d9d9d9;display:grid;place-items:center;font-size:26px;font-weight:500;color:#fff;user-select:none}
+.ly-rv-id{padding-top:16px;min-width:0}
+.ly-pd-reviews #sapo-product-reviews .ly-rv-id .sapo-review-author{display:block;font-size:17px!important;font-weight:500!important;line-height:1.3;color:#000!important;overflow-wrap:anywhere}
+.ly-rv-date{grid-column:1;text-align:center;margin-top:8px;font-size:10px;color:#000}
+.ly-pd-reviews #sapo-product-reviews .ly-rv-main .sapo-review-header{display:none!important}
+.ly-pd-reviews #sapo-product-reviews .ly-rv-main>.sapo-product-reviews-star{--ly-star:24px;display:flex!important;gap:3px;margin:10px 0 8px!important}
+.ly-pd-reviews #sapo-product-reviews .ly-rv-main .sapo-review-body,.ly-pd-reviews #sapo-product-reviews .ly-rv-main .sapo-review-content-body{font-size:13.5px!important;line-height:1.55;color:#000!important;margin:0!important}
+.ly-pd-reviews #sapo-product-reviews .ly-rv-main .sapo-review-body img{max-width:90px;border-radius:6px}
+.ly-pd-reviews #sapo-product-reviews .ly-rv-main .sapo-review-actions{margin:10px 0 0!important}
+.ly-pd-reviews #sapo-product-reviews .ly-rv-main .sapo-review-actions ul{display:flex;flex-wrap:wrap;gap:16px;margin:0;padding:0;list-style:none}
+.ly-pd-reviews #sapo-product-reviews .ly-rv-main .sapo-review-actions li:has(.sapo-review-time){display:none!important}
+.ly-pd-reviews #sapo-product-reviews .ly-rv-main .sapo-review-actions a,.ly-pd-reviews #sapo-product-reviews .ly-rv-main .sapo-review-actions a *{color:#8a8a8a!important;font-size:11px!important}
+.ly-pd-reviews #sapo-product-reviews .ly-rv-main .sapo-review-actions svg *{fill:#8a8a8a!important}
+.ly-pd-reviews #sapo-product-reviews .ly-rv-main .sapo-review-actions a:hover,.ly-pd-reviews #sapo-product-reviews .ly-rv-main .sapo-review-actions a:hover *{color:#000!important;fill:#000!important}
+@keyframes ly-rv-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.ly-rv-in{animation:ly-rv-in .4s ease both}
+.ly-pd-reviews #bpr-more-reviews{display:none!important}
+.ly-rv-more{display:block;margin:38px auto 0;min-width:180px;height:38px;padding:0 44px;border:0;border-radius:30px;background:#4d4d4d!important;color:#fff!important;font-family:inherit;font-size:16px!important;font-weight:700;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.ly-rv-more:hover:not(:disabled){background:#171516!important}
+.ly-rv-more:disabled{opacity:.7;cursor:wait}
+.ly-rv-more[hidden]{display:none}
+@media (max-width:760px){
+  .ly-pd-reviews #sapo-product-reviews .sapo-product-reviews-action{flex-wrap:wrap;gap:18px}
+  .ly-pd-reviews #sapo-product-reviews .sapo-product-reviews-action>div{flex:1 1 100%}
+  .ly-pd-reviews #sapo-product-reviews .bpr-summary{min-width:0;padding:4px 18px 4px 0!important;margin-right:16px!important}
+  .ly-pd-reviews #sapo-product-reviews .bpr-summary-average,.ly-pd-reviews #sapo-product-reviews .bpr-summary-average *{font-size:48px!important}
+  .ly-pd-reviews #sapo-product-reviews .bpr-summary .sapo-product-reviews-star{--ly-star:20px}
+  .ly-rv-bar{grid-template-columns:36px minmax(80px,1fr)}
+  .ly-rv-bars{flex:1}
+  .ly-pd-reviews #sapo-product-reviews .btn-new-review{margin:0!important;width:100%}
+  .ly-pd-reviews #sapo-product-reviews .sapo-review{grid-template-columns:1fr;gap:6px}
+  .ly-rv-who{grid-template-columns:48px minmax(0,1fr);column-gap:12px;align-items:center}
+  .ly-rv-av{width:46px;height:46px;font-size:18px}
+  .ly-rv-id{padding-top:0}
+  .ly-rv-date{grid-column:2;text-align:left;margin-top:-2px}
+  .ly-pd-reviews #sapo-product-reviews .ly-rv-main>.sapo-product-reviews-star{--ly-star:20px;margin-top:4px!important}
+}
+@media (prefers-reduced-motion:reduce){.ly-rv-in{animation:none}.ly-rv-bar b{transition:none}}
+/* Popup "Đánh giá sản phẩm" của app: nút gửi và ô nhập đồng bộ tông vàng của khối đánh giá */
+#sapo-product-reviews-frm .bpr-button-submit{height:42px;padding:0 40px!important;border:0!important;border-radius:30px!important;background:#d69d31!important;color:#fff!important;font-size:14px!important;font-weight:500!important;box-shadow:none!important;transition:background .2s}
+#sapo-product-reviews-frm .bpr-button-submit:hover{background:#c08822!important}
+#sapo-product-reviews-frm input[type=text],#sapo-product-reviews-frm input[type=email],#sapo-product-reviews-frm textarea{border:1px solid #d9d9d9!important;border-radius:8px!important;box-shadow:none!important}
+#sapo-product-reviews-frm input:focus,#sapo-product-reviews-frm textarea:focus{outline:none;border-color:#d69d31!important;box-shadow:0 0 0 3px #d69d3126!important}
+/* Sản phẩm chưa có đánh giá */
+.ly-pd-reviews #sapo-product-reviews-noitem,.ly-pd-reviews #sapo-product-reviews-noitem>div{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0!important}
+.ly-pd-reviews #sapo-product-reviews-noitem .content{display:flex!important;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:24px 0!important;border-top:2px solid #cfcfcf!important;border-bottom:1px solid #cfcfcf!important;text-align:left!important}
+.ly-pd-reviews #sapo-product-reviews-noitem .content p{margin:0!important;font-size:14px!important;color:#000!important;max-width:520px}
+.ly-pd-reviews #sapo-product-reviews-noitem .product-reviews-summary-actions{margin:0!important}
+/* 9. Trang sản phẩm: sửa nhỏ (10/2026) */
+/* Vòng tròn chỉ báo cũ của theme đè lên ô màu đang chọn — đã có viền hồng làm chỉ báo */
+.ly-template-product .product .swatch-element.color label:before,.ly-template-product .product .swatch-element.color label:after{display:none!important}
+/* Khối ảnh dính theo khi cuộn: header mới không cố định → bỏ khoảng 160px của header cũ */
+.ly-template-product .product .product-image-block{top:24px!important}

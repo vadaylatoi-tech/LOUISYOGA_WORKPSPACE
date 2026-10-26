@@ -1,0 +1,81 @@
+/* Louis Yoga — giỏ trượt theo bản thiết kế 15/10/2026 (mobile trang 10 có hàng, trang 11 trống). Nạp từ snippets/ly-cart-drawer.bwt.
+   Phủ lên assets/ly-cart.css, chỉ trong #ly-cart (trang /cart giữ nguyên). */
+#ly-cart.lyx-cart{--lyxc-ink:#111;--lyxc-line:#e3e3e3;--lyxc-gold:#d9a030;font-family:var(--lyx-font,Montserrat,Arial,sans-serif);color:var(--lyxc-ink);background:#fff}
+#ly-cart.lyx-cart .ly-dialog-head{display:flex;align-items:center;justify-content:space-between;margin:0 18px!important;padding:18px 0 14px!important;border:0!important;border-bottom:1px solid var(--lyxc-ink)!important;background:none!important}
+#ly-cart.lyx-cart #ly-cart-title{margin:0!important;font:600 17px/1.3 var(--lyx-font)!important;color:var(--lyxc-ink)!important;text-transform:uppercase;letter-spacing:.01em}
+#ly-cart.lyx-cart #ly-cart-title .ly-cp-count{font:inherit!important;color:inherit!important}
+#ly-cart.lyx-cart .ly-dialog-head .ly-icon{width:36px;height:36px;border:0!important;background:none!important;color:#444!important;font:300 26px/1 var(--lyx-font)!important;box-shadow:none!important}
+
+/* Miễn phí vận chuyển: chữ xám giữa + vạch vàng */
+#ly-cart.lyx-cart .ly-freeship{margin:0 30px!important;padding:8px 0 0!important;border:0!important;border-radius:0!important;background:none!important;text-align:center}
+#ly-cart.lyx-cart .ly-freeship p{display:flex;align-items:center;justify-content:center;gap:6px;margin:0 0 6px!important;font:400 12.5px/1.35 var(--lyx-font)!important;color:#777!important}
+#ly-cart.lyx-cart .ly-freeship p::before{content:'';flex:0 0 18px;height:14px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 18' fill='none' stroke='%23888' stroke-width='1.3' stroke-linejoin='round'%3E%3Cpath d='M1 2h14v11H1zM15 6h5l4 4v3h-9z'/%3E%3Ccircle cx='6' cy='14.5' r='2' fill='%23fff'/%3E%3Ccircle cx='19' cy='14.5' r='2' fill='%23fff'/%3E%3C/svg%3E") center/contain no-repeat}
+#ly-cart.lyx-cart .ly-freeship p b{font-weight:600;color:var(--lyxc-ink)}
+#ly-cart.lyx-cart .ly-freeship-bar{height:3px!important;border-radius:0!important;background:#eee!important}
+#ly-cart.lyx-cart .ly-freeship-bar span{height:100%!important;border-radius:0!important;background:var(--lyxc-gold)!important}
+
+/* Dòng sản phẩm: thẻ viền mảnh, ảnh trái, X góc phải, số lượng dạng viên thuốc, giá dưới phải */
+#ly-cart.lyx-cart .ly-drawer-items{padding:14px 12px 6px!important;background:#fff!important}
+#ly-cart.lyx-cart .ly-line{position:relative;display:grid!important;grid-template-columns:104px 1fr auto!important;grid-template-areas:"img info info" "img qty total"!important;align-items:end;gap:6px 14px!important;margin:0 0 12px!important;padding:5px 10px 5px 5px!important;border:1px solid var(--lyxc-line)!important;border-radius:6px!important;background:#fff!important;box-shadow:none!important}
+#ly-cart.lyx-cart .ly-line-img{grid-area:img;align-self:stretch;width:104px!important;height:104px!important;border-radius:4px!important;overflow:hidden;background:#f2f2f2!important}
+#ly-cart.lyx-cart .ly-line-img img{width:100%!important;height:100%!important;object-fit:cover}
+#ly-cart.lyx-cart .ly-line-info{grid-area:info;align-self:start;display:flex;flex-direction:column;gap:6px;padding:12px 26px 0 0!important;min-width:0}
+#ly-cart.lyx-cart .ly-line-name{font:600 13px/1.35 var(--lyx-font)!important;color:var(--lyxc-ink)!important;text-decoration:none!important}
+#ly-cart.lyx-cart .ly-line-var{display:block!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:none!important;font:500 12px/1.35 var(--lyx-font)!important;color:var(--lyxc-ink)!important;text-transform:capitalize}
+#ly-cart.lyx-cart .ly-line-var::before{content:'Phân loại:\00a0\00a0';color:#888;font-weight:400;text-transform:none}
+#ly-cart.lyx-cart .ly-line-unit{display:none!important}
+#ly-cart.lyx-cart .ly-qty{grid-area:qty;justify-self:start;display:inline-flex!important;align-items:center;height:28px!important;margin:0 0 6px!important;padding:0!important;border:1px solid #ddd!important;border-radius:999px!important;overflow:hidden;background:#fff!important}
+#ly-cart.lyx-cart .ly-qty button{width:30px!important;height:28px!important;border:0!important;background:none!important;color:#333!important;font:300 16px/1 var(--lyx-font)!important;padding:0!important}
+#ly-cart.lyx-cart .ly-qty button:disabled{opacity:.35}
+#ly-cart.lyx-cart .ly-qty input{width:30px!important;height:28px!important;border:0!important;padding:0!important;background:none!important;text-align:center;font:500 14px/1 var(--lyx-font)!important;-moz-appearance:textfield}
+#ly-cart.lyx-cart .ly-qty input::-webkit-inner-spin-button,#ly-cart.lyx-cart .ly-qty input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+#ly-cart.lyx-cart .ly-line-total{grid-area:total;justify-self:end;margin:0 0 10px!important;font:600 13px/1.2 var(--lyx-font)!important;color:var(--lyxc-ink)!important;text-align:right}
+#ly-cart.lyx-cart .ly-line-remove{position:absolute!important;top:8px;right:8px;width:24px!important;height:24px!important;padding:0!important;border:0!important;background:none!important;color:#444!important}
+#ly-cart.lyx-cart .ly-line-remove svg{display:none}
+#ly-cart.lyx-cart .ly-line-remove::before,#ly-cart.lyx-cart .ly-line-remove::after{content:'';position:absolute;left:3px;right:3px;top:50%;height:1.3px;background:currentColor;transform:rotate(45deg)}
+#ly-cart.lyx-cart .ly-line-remove::after{transform:rotate(-45deg)}
+#ly-cart.lyx-cart .ly-line-remove:hover,#ly-cart.lyx-cart .ly-line-remove:focus-visible{color:var(--lyx-cta,#be3a63)}
+
+/* Sản phẩm thường được mua cùng */
+#ly-cart.lyx-cart .lyx-up{margin:6px 0 0;background:#d9d9d9;border-top:1px solid #e8e8e8}
+#ly-cart.lyx-cart .lyx-up[hidden]{display:none}
+#ly-cart.lyx-cart .lyx-up>summary{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:#f2f2f2;font:400 13px/1.3 var(--lyx-font);color:var(--lyxc-ink);cursor:pointer;list-style:none}
+#ly-cart.lyx-cart .lyx-up>summary::-webkit-details-marker{display:none}
+#ly-cart.lyx-cart .lyx-up>summary::after{content:'';width:9px;height:9px;border-left:1.3px solid currentColor;border-top:1.3px solid currentColor;transform:translateY(2px) rotate(45deg);transition:transform .2s}
+#ly-cart.lyx-cart .lyx-up:not([open])>summary::after{transform:translateY(-3px) rotate(225deg)}
+#ly-cart.lyx-cart .lyx-up-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:8px 12px 10px}
+#ly-cart.lyx-cart .lyx-up-item{position:relative;display:flex;flex-direction:column;gap:6px;padding:4px 4px 8px;border-radius:5px;background:#fff;min-width:0}
+#ly-cart.lyx-cart .lyx-up-item[hidden]{display:none}
+#ly-cart.lyx-cart .lyx-up-img{display:block;aspect-ratio:1;border-radius:4px;overflow:hidden;background:#e6e6e6}
+#ly-cart.lyx-cart .lyx-up-img img{width:100%;height:100%;object-fit:cover}
+#ly-cart.lyx-cart .lyx-up-add{position:absolute;top:8px;right:8px;display:grid;place-items:center;width:22px;height:22px;padding:0;border:0;border-radius:50%;background:#000;color:#fff!important;font:700 16px/1 var(--lyx-font);text-decoration:none!important;cursor:pointer}
+#ly-cart.lyx-cart .lyx-up-add:hover,#ly-cart.lyx-cart .lyx-up-add:focus-visible{background:var(--lyx-cta,#be3a63)}
+#ly-cart.lyx-cart .lyx-up-add.is-busy{opacity:.5;cursor:progress}
+#ly-cart.lyx-cart .lyx-up-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font:400 11px/1.35 var(--lyx-font);color:var(--lyxc-ink)!important;text-decoration:none!important}
+#ly-cart.lyx-cart .lyx-up-price{margin-top:auto;font:500 13px/1.2 var(--lyx-font);color:var(--lyxc-ink)}
+
+/* Chân giỏ: Tổng phụ + THANH TOÁN đen */
+#ly-cart.lyx-cart .ly-drawer-foot{padding:14px 18px 18px!important;border:0!important;background:#fff!important;box-shadow:none!important}
+#ly-cart.lyx-cart .ly-cart-total{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 4px!important}
+#ly-cart.lyx-cart .ly-cart-total span{font:500 15px/1.3 var(--lyx-font)!important;color:var(--lyxc-ink)!important}
+#ly-cart.lyx-cart .ly-cart-total strong{font:600 15px/1.3 var(--lyx-font)!important;color:var(--lyxc-ink)!important}
+#ly-cart.lyx-cart .ly-cart-note{margin:0 0 12px!important;font:400 11px/1.4 var(--lyx-font)!important;color:#888!important}
+#ly-cart.lyx-cart .ly-drawer-actions{display:flex!important;flex-direction:column;gap:10px}
+#ly-cart.lyx-cart .ly-drawer-checkout{display:flex!important;align-items:center;justify-content:center;gap:10px;width:100%;height:52px;margin:0!important;border:0!important;border-radius:6px!important;background:#000!important;color:#fff!important;font:700 17px/1 var(--lyx-font)!important;letter-spacing:.06em;text-transform:uppercase;text-decoration:none!important}
+#ly-cart.lyx-cart .ly-drawer-checkout::before{content:'';width:18px;height:20px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 7h14l1 14H4L5 7Z'/%3E%3Cpath d='M8 8V6a4 4 0 0 1 8 0v2'/%3E%3C/svg%3E") center/contain no-repeat}
+#ly-cart.lyx-cart .ly-drawer-checkout:hover,#ly-cart.lyx-cart .ly-drawer-checkout:focus-visible{background:#333!important}
+#ly-cart.lyx-cart .ly-drawer-view{display:block!important;width:auto!important;height:auto!important;margin:0 auto!important;padding:2px 4px!important;border:0!important;border-radius:0!important;background:none!important;color:#555!important;font:500 12.5px/1.3 var(--lyx-font)!important;text-decoration:underline!important;text-transform:none!important;box-shadow:none!important}
+
+/* Giỏ trống */
+#ly-cart.lyx-cart .ly-cp-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:60vh;padding:20px 12px!important;border:0!important;background:none!important;text-align:center}
+#ly-cart.lyx-cart .ly-cp-empty svg{width:56px!important;height:56px!important;padding:0!important;border-radius:0!important;background:none!important;color:var(--lyxc-ink)!important;stroke-width:1.4;box-shadow:none!important}
+#ly-cart.lyx-cart .ly-cp-empty h3{margin:0!important;font:400 15px/1.4 var(--lyx-font)!important;color:var(--lyxc-ink)!important}
+#ly-cart.lyx-cart .ly-cp-empty>p:not(.lyx-cart-login){display:none!important}
+#ly-cart.lyx-cart .ly-cp-empty .lyx-cart-cta,#ly-cart.lyx-cart .ly-cp-empty>a{display:inline-flex!important;align-items:center;justify-content:center;min-width:230px;height:48px;padding:0 24px!important;border:0!important;border-radius:5px!important;background:#000!important;color:#fff!important;font:700 14.5px/1 var(--lyx-font)!important;letter-spacing:.06em;text-transform:uppercase;text-decoration:none!important}
+#ly-cart.lyx-cart .ly-cp-empty .lyx-cart-cta:hover,#ly-cart.lyx-cart .ly-cp-empty>a:hover{background:#333!important}
+#ly-cart.lyx-cart .lyx-cart-login{margin:0!important;font:400 13px/1.4 var(--lyx-font)!important;color:#666!important}
+#ly-cart.lyx-cart .ly-cp-empty .lyx-cart-login a{display:inline!important;min-width:0!important;height:auto!important;padding:0!important;border:0!important;border-radius:0!important;background:none!important;color:var(--lyxc-ink)!important;font:600 13px/1.4 var(--lyx-font)!important;letter-spacing:0!important;text-transform:none!important;text-decoration:underline!important;box-shadow:none!important}
+@media (max-width:420px){
+  #ly-cart.lyx-cart .ly-line{grid-template-columns:96px 1fr auto!important}
+  #ly-cart.lyx-cart .ly-line-img{width:96px!important;height:96px!important}
+}

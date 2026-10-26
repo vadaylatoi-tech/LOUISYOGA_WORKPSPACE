@@ -1,0 +1,1 @@
+{%- comment -%} 22/10/2026 — BẢN THỬ trang chủ + khối Câu hỏi thường gặp, xem tại /?view=lyxtest. Duyệt xong: chèn include 'lyx-home-faq' vào lyx-home.bwt rồi xoá file này. {%- endcomment -%}{% include 'lyx-home' %}{% include 'lyx-home-faq' %}

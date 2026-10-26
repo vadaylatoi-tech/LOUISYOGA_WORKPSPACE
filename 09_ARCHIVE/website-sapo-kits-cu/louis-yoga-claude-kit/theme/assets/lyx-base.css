@@ -1,0 +1,267 @@
+/* Louis Yoga — hệ thống giao diện theo bản thiết kế PC/mobile 15/10/2026 (tiền tố .lyx).
+   Nạp SAU các CSS cũ (ly-*.css) để thắng thứ tự. Màu đo từ PDF: thanh trên #4a1f2b, logo #d82183, nút MUA NGAY #be3a63. */
+:root{
+  --lyx-wine:#4a1f2b;
+  --lyx-brand:#d82183;
+  /* 16/10/2026 editorial: đỏ rượu là màu hành động chính, hồng logo chỉ làm điểm nhấn */
+  --lyx-cta:#5a2333;
+  --lyx-cta-dark:#3f1824;
+  --lyx-ink:#141414;
+  --lyx-text:#2b2b2b;
+  --lyx-muted:#7a7470;
+  --lyx-line:#e7e2dc;
+  --lyx-soft:#f4f1ed;
+  --lyx-cream:#f8f5f0;
+  --lyx-star:#c9973f;
+  --lyx-mastery:#5c3317;
+  --lyx-w:1280px;
+  --lyx-font:Montserrat,Arial,sans-serif;
+  --lyx-head-h:80px;
+  --lyx-sec-y:clamp(52px,6.5vw,96px);
+  --lyx-ease:cubic-bezier(.2,.7,.2,1);
+}
+.lyx-wrap{width:100%;max-width:var(--lyx-w);margin:0 auto;padding:0 clamp(16px,3vw,40px);box-sizing:border-box}
+.lyx-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.lyx-logo-svg{display:block;width:100%;height:auto}
+
+/* ---------- Nút ---------- */
+/* Nút viên thuốc viền mảnh, chữ in hoa giãn rộng (16/10/2026) */
+.lyx-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:0 30px;border:1px solid var(--lyx-ink);border-radius:999px;background:var(--lyx-ink);color:#fff!important;font:600 11.5px/1.1 var(--lyx-font);letter-spacing:.2em;text-transform:uppercase;text-decoration:none!important;white-space:nowrap;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.lyx-btn:hover{background:#333;border-color:#333}
+.lyx-btn:focus-visible{outline:2px solid var(--lyx-brand);outline-offset:3px}
+.lyx-btn-out{background:transparent;color:var(--lyx-ink)!important}
+.lyx-btn-out:hover{background:var(--lyx-ink);color:#fff!important}
+.lyx-btn-cta,.lyx-btn-wine{background:var(--lyx-cta);border-color:var(--lyx-cta)}
+.lyx-btn-cta:hover,.lyx-btn-wine:hover{background:var(--lyx-cta-dark);border-color:var(--lyx-cta-dark)}
+.lyx-btn-light{background:#fff;border-color:#fff;color:var(--lyx-ink)!important}
+.lyx-btn-light:hover{background:transparent;color:#fff!important}
+.lyx-btn-ghost-light{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.85);color:#fff!important}
+.lyx-btn-ghost-light:hover{background:#fff;color:var(--lyx-ink)!important}
+.lyx-btn[disabled],.lyx-btn.is-busy{opacity:.6;cursor:not-allowed}
+.lyx-link{display:inline-flex;align-items:center;gap:10px;padding:4px 0;border-bottom:1px solid currentColor;color:var(--lyx-ink)!important;font:600 11px/1.2 var(--lyx-font);letter-spacing:.2em;text-transform:uppercase;text-decoration:none!important;white-space:nowrap;transition:color .2s,gap .2s}
+.lyx-link svg{width:20px;height:9px;fill:none;stroke:currentColor;stroke-width:1.3}
+.lyx-link:hover{color:var(--lyx-cta)!important;gap:14px}
+
+/* ---------- Tiêu đề khối ---------- */
+.lyx-eyebrow{margin:0 0 10px;font:600 11px/1.3 var(--lyx-font);letter-spacing:.3em;text-transform:uppercase;color:var(--lyx-cta)}
+.lyx-h2{margin:0;font:500 clamp(24px,2.7vw,38px)/1.15 var(--lyx-font);letter-spacing:.06em;text-transform:uppercase;color:var(--lyx-ink)}
+.lyx-h2-up{text-transform:uppercase;letter-spacing:.06em}
+.lyx-sec{padding:var(--lyx-sec-y) 0}
+.lyx-sec-head{margin-bottom:clamp(26px,3.2vw,44px)}
+.lyx-sec-center{text-align:center}
+.lyx-sec-split{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.lyx-lotus{display:none!important}
+
+/* ---------- Thanh tiện ích (đỏ rượu) — 16/10: thông điệp chạy luân phiên (trượt lên + mờ dần) như site live ---------- */
+.lyx-util{position:relative;z-index:901;background:var(--lyx-wine);color:#f6dfe8;font:600 10.5px/1 var(--lyx-font);letter-spacing:.14em;text-transform:uppercase}
+.lyx-util-row{display:flex;align-items:center;justify-content:space-between;gap:16px;height:36px}
+.lyx-ticker{position:relative;flex:1;min-width:0;height:100%;overflow:hidden}
+.lyx-tick{position:absolute;inset:0;display:flex;align-items:center;gap:10px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transform:translateY(10px);transition:opacity .45s ease,transform .5s var(--lyx-ease)}
+.lyx-tick.is-on{opacity:1;transform:none}
+.lyx-tick.is-out{opacity:0;transform:translateY(-10px)}
+.lyx-tick i{flex:none;width:5px;height:5px;border-radius:50%;background:var(--lyx-brand);box-shadow:0 0 0 3px rgba(216,33,131,.28)}
+.lyx-util-links{display:flex;align-items:center;gap:14px;letter-spacing:.08em}
+.lyx-util-links a{position:relative;display:inline-flex;align-items:center;gap:6px;color:#f6dfe8!important;text-decoration:none!important;white-space:nowrap;transition:color .2s}
+.lyx-util-links a:hover{color:#fff!important}
+.lyx-util-links .lyx-dot{width:4px;height:4px;border-radius:50%;background:#f47cb6;flex:none}
+.lyx-util-links svg{width:12px;height:12px;fill:currentColor}
+.lyx-util-soc{display:flex;align-items:center;gap:10px;padding-left:12px;border-left:1px solid rgba(255,255,255,.35)}
+.lyx-util-soc a{font-weight:600;text-transform:none}
+
+/* ---------- Header — 16/10: hiệu ứng như site live (main 1170134 / ly-header.css):
+   khung ghim giữ nguyên chiều cao (không giật trang), thanh bên trong thu thành viên kính mờ bo tròn khi cuộn;
+   vạch gradient dưới chân, gạch chân menu chạy từ giữa, bảng thả xuống trượt nhẹ, ô tìm kiếm giãn khi gõ. ---------- */
+.lyx-head-sentinel{display:block;height:1px;margin-bottom:-1px;pointer-events:none}
+.lyx-head{position:sticky;top:0;z-index:900;display:flow-root;height:var(--lyx-head-h);background:transparent}
+.lyx-head-bar{position:relative;height:var(--lyx-head-h);max-width:100%;margin:0 auto;border:1px solid transparent;border-width:0 0 1px;background:#fff;box-sizing:border-box;transition:height .35s var(--lyx-ease),max-width .35s var(--lyx-ease),margin .35s var(--lyx-ease),border-radius .35s var(--lyx-ease),background .35s ease,box-shadow .35s ease,border-color .35s ease}
+.lyx-head-bar::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--lyx-brand) 30%,#f39cc4 50%,var(--lyx-brand) 70%,transparent);opacity:.75;transition:opacity .3s}
+.lyx-head.is-stuck{pointer-events:none}
+.lyx-head.is-stuck .lyx-head-bar{pointer-events:auto;height:64px;max-width:min(1240px,calc(100% - 40px));margin-top:8px;border-width:1px;border-color:rgba(90,35,51,.12);border-radius:999px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);box-shadow:0 16px 40px rgba(74,31,43,.16),0 2px 6px rgba(74,31,43,.06)}
+.lyx-head.is-stuck .lyx-head-bar::after{opacity:0}
+.lyx-head.is-stuck .lyx-head-row{padding:0 14px 0 28px}
+.lyx-head-row{display:grid;grid-template-columns:200px 1fr auto;align-items:center;gap:24px;height:100%;transition:padding .35s var(--lyx-ease)}
+.lyx-logo{display:block;width:190px;color:var(--lyx-brand)!important;line-height:0;text-decoration:none!important;transition:width .35s var(--lyx-ease)}
+.lyx-head.is-stuck .lyx-head-row .lyx-logo{width:156px}
+.lyx-nav{display:flex;justify-content:center;align-items:center;gap:22px}
+.lyx-nav>a,.lyx-dd>button{position:relative;display:inline-flex;align-items:center;gap:4px;height:44px;padding:0 2px;border:0;background:none;color:var(--lyx-ink)!important;font:600 12px/1 var(--lyx-font);letter-spacing:.08em;text-transform:uppercase;text-decoration:none!important;cursor:pointer;white-space:nowrap;transition:color .2s}
+.lyx-nav>a::after,.lyx-dd>button::after{content:'';position:absolute;left:50%;bottom:6px;width:18px;height:2px;margin-left:-9px;border-radius:2px;background:var(--lyx-brand);transform:scaleX(0);transition:transform .25s var(--lyx-ease)}
+.lyx-nav>a:hover,.lyx-dd>button:hover,.lyx-dd.is-open>button,.lyx-nav>a[aria-current],.lyx-dd>button.is-current{color:var(--lyx-brand)!important}
+.lyx-nav>a:hover::after,.lyx-dd>button:hover::after,.lyx-dd.is-open>button::after,.lyx-nav>a[aria-current]::after,.lyx-dd>button.is-current::after{transform:scaleX(1)}
+.lyx-nav a:focus-visible,.lyx-dd>button:focus-visible,.lyx-ico:focus-visible,.lyx-logo:focus-visible,.lyx-util a:focus-visible{outline:2px solid var(--lyx-brand);outline-offset:2px;border-radius:8px}
+.lyx-dd{position:relative}
+.lyx-dd>button svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2.4;transition:transform .25s}
+.lyx-dd.is-open>button svg{transform:rotate(180deg)}
+.lyx-dd-panel{position:absolute;top:calc(100% + 14px);left:50%;min-width:270px;padding:16px 10px 12px;border:1px solid #f3e4eb;border-radius:20px;background:#fff;box-shadow:0 22px 50px rgba(74,31,43,.16);opacity:0;visibility:hidden;transform:translate(-50%,10px);transition:opacity .22s ease,transform .22s var(--lyx-ease),visibility 0s .22s;z-index:5}
+.lyx-dd-panel::before{content:'';position:absolute;left:0;right:0;top:-18px;height:18px}
+.lyx-dd.is-open .lyx-dd-panel{opacity:1;visibility:visible;transform:translate(-50%,0);transition:opacity .22s ease,transform .22s var(--lyx-ease)}
+.lyx-dd-panel p{margin:8px 12px 6px;font:700 10px/1 var(--lyx-font);letter-spacing:.2em;text-transform:uppercase;color:var(--lyx-brand)}
+.lyx-dd-panel a{display:block;padding:9px 12px;border-radius:12px;color:var(--lyx-ink)!important;font:500 13px/1.35 var(--lyx-font);text-decoration:none!important;transition:background .18s,color .18s,padding .18s}
+.lyx-dd-panel a small{display:block;margin-top:2px;font-size:11px;color:var(--lyx-muted)}
+.lyx-dd-panel a:hover,.lyx-dd-panel a.is-current{background:#fff2f8;color:var(--lyx-brand)!important;padding-left:16px}
+.lyx-tools{display:flex;align-items:center;gap:10px}
+.lyx-search{position:relative;display:flex;align-items:center;width:190px;height:38px;padding:0 14px 0 34px;border-radius:999px;background:#f6f0f3;box-sizing:border-box;transition:width .3s var(--lyx-ease),background .2s,box-shadow .2s}
+.lyx-search:focus-within{width:240px;background:#fff;box-shadow:0 0 0 1px var(--lyx-brand),0 0 0 4px rgba(216,33,131,.12)}
+.lyx-search svg{position:absolute;left:11px;top:50%;width:14px;height:14px;transform:translateY(-50%);fill:none;stroke:#555;stroke-width:2}
+.lyx-search input{width:100%;height:100%;padding:0;border:0!important;background:transparent!important;box-shadow:none!important;outline:0;font:400 12.5px/1 var(--lyx-font);color:var(--lyx-ink)}
+.lyx-search button{position:absolute;inset:0 auto 0 0;width:32px;border:0;background:transparent;cursor:pointer;padding:0}
+.lyx-ico{position:relative;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;border:0;border-radius:50%;background:none;color:var(--lyx-ink)!important;cursor:pointer;text-decoration:none!important;transition:background .2s,color .2s}
+.lyx-ico svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.lyx-ico:hover{background:#fff0f6;color:var(--lyx-brand)!important}
+.lyx-count{position:absolute;top:0;right:-2px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--lyx-brand);color:#fff;font:700 9.5px/16px var(--lyx-font);text-align:center}
+.lyx-count[hidden]{display:none}
+.lyx-only-m{display:none!important}
+
+/* ---------- Menu điện thoại ---------- */
+.lyx-drawer{position:fixed;inset:0;z-index:1200;visibility:hidden}
+.lyx-drawer.is-open{visibility:visible}
+.lyx-drawer-bg{position:absolute;inset:0;background:rgba(0,0,0,.42);opacity:0;transition:opacity .25s}
+.lyx-drawer.is-open .lyx-drawer-bg{opacity:1}
+.lyx-drawer-panel{position:absolute;top:0;bottom:0;left:0;display:flex;flex-direction:column;width:min(86vw,400px);background:#fff;transform:translateX(-100%);transition:transform .28s ease;overflow:hidden}
+.lyx-drawer.is-right .lyx-drawer-panel{left:auto;right:0;transform:translateX(100%)}
+.lyx-drawer.is-open .lyx-drawer-panel{transform:none}
+.lyx-drawer-head{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding:8px 14px 8px 18px;background:var(--lyx-soft)}
+.lyx-drawer-head .lyx-logo{width:150px}
+.lyx-drawer-x{width:40px;height:40px}
+.lyx-drawer-x svg{width:24px;height:24px;stroke-width:1.6}
+.lyx-drawer-body{flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.lyx-msearch{padding:18px 18px 16px;border-bottom:1px solid var(--lyx-line)}
+.lyx-msearch form{position:relative}
+.lyx-msearch input{width:100%;height:46px;padding:0 14px 0 44px;border:1px solid var(--lyx-line);border-radius:8px;background:var(--lyx-soft);font:400 15px/1 var(--lyx-font);letter-spacing:.04em;box-sizing:border-box}
+.lyx-msearch svg{position:absolute;left:14px;top:50%;width:20px;height:20px;transform:translateY(-50%);fill:none;stroke:#666;stroke-width:1.8}
+.lyx-trend{margin:14px 0 8px;font:500 12px/1 var(--lyx-font);letter-spacing:.16em;color:#555}
+.lyx-chips{display:flex;flex-wrap:wrap;gap:8px}
+.lyx-chips a{display:inline-flex;align-items:center;height:28px;padding:0 16px;border-radius:999px;background:var(--lyx-brand);color:#fff!important;font:600 11.5px/1 var(--lyx-font);letter-spacing:.06em;text-decoration:none!important}
+.lyx-mnav{padding:6px 18px 24px}
+.lyx-mnav>a,.lyx-mnav summary{display:flex;align-items:center;justify-content:space-between;min-height:54px;border-bottom:1px solid #9a9a9a;color:var(--lyx-ink)!important;font:500 15px/1.2 var(--lyx-font);letter-spacing:.08em;text-transform:uppercase;text-decoration:none!important;cursor:pointer;list-style:none}
+.lyx-mnav summary::-webkit-details-marker{display:none}
+.lyx-mnav summary svg{width:16px;height:16px;fill:none;stroke:#777;stroke-width:1.6;transition:transform .2s}
+.lyx-mnav details[open] summary svg{transform:rotate(180deg)}
+.lyx-mnav details>div{padding:8px 0 10px 14px}
+.lyx-mnav details>div a{display:block;padding:8px 0;color:#666!important;font:400 14px/1.3 var(--lyx-font);letter-spacing:.04em;text-decoration:none!important}
+.lyx-mnav details>div a:hover,.lyx-mnav details>div a.is-current{color:var(--lyx-brand)!important}
+html.lyx-lock,html.lyx-lock body{overflow:hidden}
+
+/* ---------- Footer ---------- */
+.lyx-foot{position:relative;margin-top:0;padding:46px 0 34px;background-color:#f1f1f1;color:#555;font:400 12px/1.6 var(--lyx-font);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='96' viewBox='0 0 120 96'%3E%3Cg fill='none' stroke='%23e3e3e3' stroke-width='1.4'%3E%3Cpath d='M60 70c-6-10-6-24 0-36 6 12 6 26 0 36z'/%3E%3Cpath d='M60 70c-10-4-18-14-20-28 10 2 18 12 20 28z'/%3E%3Cpath d='M60 70c10-4 18-14 20-28-10 2-18 12-20 28z'/%3E%3Cpath d='M60 72c-14 0-26-6-32-16 12-2 24 4 32 16z'/%3E%3Cpath d='M60 72c14 0 26-6 32-16-12-2-24 4-32 16z'/%3E%3C/g%3E%3C/svg%3E")}
+.lyx-foot-top{display:grid;grid-template-columns:1.25fr .9fr 1.15fr .9fr 1.5fr;gap:24px;align-items:start}
+.lyx-foot .lyx-logo{width:190px;margin-top:22px}
+.lyx-foot h3{margin:0 0 8px;font:500 12.5px/1.2 var(--lyx-font);text-transform:uppercase;color:var(--lyx-ink)}
+.lyx-foot a{color:#555!important;text-decoration:none!important}
+.lyx-foot a:hover{color:var(--lyx-brand)!important}
+.lyx-foot-col a,.lyx-foot-col p{display:block;margin:0;font-size:11.5px;line-height:1.75}
+.lyx-foot-rule{height:1px;margin:30px 0 0;border:0;background:#8a8a8a}
+.lyx-foot-follow{display:flex;align-items:center;gap:18px;padding:18px 0}
+.lyx-foot-follow b{font:500 13px/1 var(--lyx-font);letter-spacing:.12em;color:#555}
+.lyx-foot-follow a{display:inline-flex;color:#333!important}
+.lyx-foot-follow svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6}
+.lyx-foot-follow .lyx-zalo{font:800 15px/1 var(--lyx-font);color:#333!important}
+.lyx-foot-bot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:18px}
+.lyx-foot-bot p{margin:0;font:600 11px/1.4 var(--lyx-font);letter-spacing:.12em;text-transform:uppercase;color:#555}
+.lyx-pay{display:flex;gap:10px}
+.lyx-pay img{display:block;height:26px;width:auto;border-radius:4px;background:#fff}
+.lyx-news{display:flex;align-items:center;gap:10px;margin-top:10px}
+.lyx-news input{flex:1;min-width:0;height:36px;padding:0 12px;border:1px solid #cfcfcf;border-radius:6px;background:#fff;font:400 12px/1 var(--lyx-font)}
+.lyx-news button{height:36px;padding:0 14px;border:0;border-radius:6px;background:var(--lyx-ink);color:#fff;font:700 11px/1 var(--lyx-font);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+
+/* ---------- Thanh nổi dưới (điện thoại) ---------- */
+.lyx-sticky{display:none}
+
+/* ---------- PC hẹp (1024–1200px): thu gọn header để không tràn ngang ---------- */
+@media (min-width:1024px) and (max-width:1200px){
+  .lyx-head-row{grid-template-columns:160px 1fr auto;gap:14px}
+  .lyx-logo{width:160px}
+  .lyx-nav{gap:14px}
+  .lyx-nav>a,.lyx-dd>button{font-size:11.5px;letter-spacing:.02em}
+  .lyx-search{width:150px}
+  .lyx-search:focus-within{width:190px}
+  .lyx-tools{gap:8px}
+}
+
+/* ---------- Điện thoại / máy tính bảng ---------- */
+@media (max-width:1023px){
+  :root{--lyx-head-h:60px}
+  .lyx-util{font-size:10px}
+  .lyx-util-row{justify-content:center;height:30px}
+  .lyx-tick{justify-content:center}
+  .lyx-util{letter-spacing:.1em}
+  .lyx-util-links{display:none}
+  .lyx-head-row{grid-template-columns:1fr auto 1fr;gap:8px}
+  .lyx-nav,.lyx-search,.lyx-only-d{display:none!important}
+  .lyx-only-m{display:inline-flex!important}
+  .lyx-logo{width:150px;margin:0 auto}
+  .lyx-head.is-stuck .lyx-head-bar{height:52px;max-width:calc(100% - 16px);margin-top:6px}
+  .lyx-head.is-stuck .lyx-head-row{padding:0 6px}
+  .lyx-head.is-stuck .lyx-head-row .lyx-logo{width:124px}
+  .lyx-ico{width:38px;height:38px}
+  .lyx-head-l{display:flex;align-items:center;gap:6px}
+  .lyx-tools{justify-content:flex-end;gap:6px}
+  .lyx-burger svg{width:26px;height:26px}
+  .lyx-foot{padding:34px 0 30px;font-size:13px}
+  .lyx-foot-top{grid-template-columns:1fr 1fr;gap:26px 18px}
+  .lyx-foot-brand{grid-column:1/-1;padding-bottom:22px;border-bottom:1.5px solid #666;text-align:center}
+  .lyx-foot .lyx-logo{width:min(280px,70vw);margin:0 auto}
+  .lyx-foot-col-shop,.lyx-foot-col-contact{grid-column:1/-1}
+  .lyx-foot h3{font-size:17px;margin-bottom:10px}
+  .lyx-foot-col a,.lyx-foot-col p{font-size:13px;line-height:2.1}
+  .lyx-foot-rule{margin-top:22px}
+  .lyx-foot-bot{flex-direction:column;align-items:flex-start}
+  .lyx-sticky{position:fixed;left:0;right:0;bottom:0;z-index:850;display:flex;height:58px;padding-bottom:env(safe-area-inset-bottom);background:var(--lyx-soft);border-radius:18px 18px 0 0;box-shadow:0 -4px 18px rgba(0,0,0,.12);overflow:hidden}
+  .lyx-sticky a,.lyx-sticky button{display:flex;align-items:center;justify-content:center;gap:10px;border:0;background:none;color:var(--lyx-ink)!important;font:700 13px/1.15 var(--lyx-font);letter-spacing:.02em;text-transform:uppercase;text-decoration:none!important;cursor:pointer}
+  .lyx-sticky .lyx-st-zalo{flex:1;justify-content:flex-start;padding-left:18px}
+  .lyx-sticky .lyx-st-zalo b{font:800 22px/1 var(--lyx-font);text-transform:none}
+  .lyx-sticky .lyx-st-zalo span{font-weight:600;font-size:12px}
+  .lyx-sticky .lyx-st-main{flex:1;background:var(--lyx-cta);color:#fff!important}
+  .lyx-sticky svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6}
+  body.lyx-has-sticky{padding-bottom:calc(58px + env(safe-area-inset-bottom))}
+  body.lyx-has-sticky .zalo-chat-widget,body.lyx-has-sticky .addThis_listSharing,body.lyx-has-sticky #lyq-fab{bottom:calc(72px + env(safe-area-inset-bottom))!important}
+}
+@media (max-width:767px){
+  .lyx-eyebrow{font-size:10.5px;letter-spacing:.26em}
+  .lyx-btn{min-height:44px;padding:0 24px;font-size:11px;letter-spacing:.16em}
+}
+@media (prefers-reduced-motion:reduce){.lyx-drawer-panel,.lyx-drawer-bg,.lyx-dd-panel,.lyx-head-bar,.lyx-logo,.lyx-tick,.lyx-search{transition:none}}
+/* ---------- 17/10 — header tinh chỉnh (anh Công): logo gọn + cách mép, tông trầm đỏ rượu thay hồng, gạch chân mảnh,
+   icon theo thứ tự tìm kiếm · tài khoản · yêu thích · giỏ, bảng "Sản phẩm" kiểu editorial ---------- */
+.lyx-tools>a.lyx-ico{order:2}
+.lyx-tools>[data-favorites-open]{order:3}
+.lyx-tools>[data-cart-open]{order:4}
+.lyx-ico{transition:color .3s ease,transform .3s var(--lyx-ease)}
+.lyx-ico:hover{background:none;color:var(--lyx-cta)!important;transform:translateY(-1px)}
+.lyx-ico svg{width:20px;height:20px;stroke-width:1.35}
+.lyx-count{top:5px;right:3px;min-width:15px;height:15px;padding:0 4px;background:var(--lyx-cta);font:600 9px/15px var(--lyx-font)}
+@media (min-width:1024px){
+  .lyx-head-bar::after{background:var(--lyx-line);opacity:1}
+  .lyx-head-row{grid-template-columns:minmax(max-content,1fr) auto minmax(max-content,1fr);gap:28px;padding:0 clamp(28px,3.4vw,56px)}
+  .lyx-head.is-stuck .lyx-head-row{padding:0 22px 0 40px}
+  .lyx-head-row .lyx-logo{justify-self:start;width:146px}
+  .lyx-head.is-stuck .lyx-head-row .lyx-logo{width:128px}
+  .lyx-head.is-stuck .lyx-head-bar{background:rgba(255,255,255,.94);border-color:rgba(20,20,20,.06);box-shadow:0 12px 34px rgba(30,14,20,.09),0 1px 3px rgba(30,14,20,.04)}
+  .lyx-nav{gap:32px}
+  .lyx-nav>a,.lyx-dd>button{font:500 11.5px/1 var(--lyx-font);letter-spacing:.16em;color:var(--lyx-ink)!important;transition:color .35s ease}
+  .lyx-nav>a::after,.lyx-dd>button::after{left:0;right:0;bottom:9px;width:auto;height:1px;margin:0;border-radius:0;background:var(--lyx-cta);transition:transform .5s var(--lyx-ease)}
+  .lyx-nav>a:hover,.lyx-dd>button:hover,.lyx-dd.is-open>button,.lyx-nav>a[aria-current],.lyx-dd>button.is-current{color:var(--lyx-cta)!important}
+  .lyx-dd>button svg{width:9px;height:9px;stroke-width:2}
+  .lyx-tools{justify-self:end;gap:2px}
+  .lyx-search{width:176px;height:36px;margin-right:8px;background:transparent;border:1px solid var(--lyx-line)}
+  .lyx-search:focus-within{width:220px;background:#fff;border-color:var(--lyx-cta);box-shadow:none}
+  .lyx-search svg{stroke:var(--lyx-muted);stroke-width:1.6}
+  .lyx-search input{font-size:12px;letter-spacing:.04em}
+  /* Bảng thả xuống "Sản phẩm" / "Blog" */
+  .lyx-dd-panel{top:calc(100% + 20px);min-width:300px;padding:22px 26px 18px;border:1px solid var(--lyx-line);border-top:2px solid var(--lyx-cta);border-radius:4px;box-shadow:0 26px 54px rgba(30,14,20,.12)}
+  .lyx-dd-panel::before{top:-22px;height:22px}
+  .lyx-dd-panel p{display:flex;align-items:center;gap:12px;margin:16px 0 6px;font:600 9.5px/1 var(--lyx-font);letter-spacing:.24em;color:var(--lyx-muted)}
+  .lyx-dd-panel p::after{content:'';flex:1;height:1px;background:var(--lyx-line)}
+  .lyx-dd-panel a{padding:7px 0;border-radius:0;font:500 13px/1.3 var(--lyx-font);letter-spacing:.02em;transition:color .25s ease,transform .3s var(--lyx-ease)}
+  .lyx-dd-panel a small{margin-top:3px;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#a39b94}
+  .lyx-dd-panel a:hover,.lyx-dd-panel a.is-current{background:none;color:var(--lyx-cta)!important;padding-left:0;transform:translateX(4px)}
+  .lyx-dd-panel>a:first-child{display:flex;align-items:center;justify-content:space-between;padding:0 0 12px;border-bottom:1px solid var(--lyx-line);font:600 10.5px/1 var(--lyx-font);letter-spacing:.2em;text-transform:uppercase;color:var(--lyx-cta)!important}
+  .lyx-dd-panel>a:first-child::after{content:'→';font-weight:400;letter-spacing:0}
+  .lyx-dd-panel>a:first-child:hover{transform:none}
+}
+@media (min-width:1024px) and (max-width:1240px){
+  .lyx-head-row{gap:16px;padding:0 24px}
+  .lyx-nav{gap:18px}
+  .lyx-nav>a,.lyx-dd>button{font-size:11px;letter-spacing:.1em}
+  .lyx-search{width:140px}
+  .lyx-search:focus-within{width:180px}
+}

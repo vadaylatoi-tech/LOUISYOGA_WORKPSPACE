@@ -1,0 +1,31 @@
+{% comment %} Giỏ trượt bên phải — dùng chung mọi trang. Giữ id ly-cart-items / ly-cart-total vì ly-home.js dùng tới.
+  15/10/2026: giao diện theo bản thiết kế mobile trang 10–11 (assets/lyx-cart.css + lyx-cart.js). Hành vi giỏ (số lượng, xóa, hoàn tác, miễn phí vận chuyển) vẫn do assets/ly-cart.js.
+  Gợi ý "Sản phẩm thường được mua cùng" lấy từ danh mục phụ kiện thật (settings.url_1_all2pro, mặc định phu-kien-yoga); sản phẩm nhiều phân loại dẫn về trang sản phẩm để khách tự chọn. {% endcomment %}
+<link rel="stylesheet" href="{{ 'lyx-cart.css' | asset_url }}">
+<dialog class="ly-dialog ly-drawer lyx-cart" id="ly-cart" aria-labelledby="ly-cart-title" data-freeship="{% if settings.free_shipping_enable %}{{ settings.free_shipping_price | default: 0 }}{% else %}0{% endif %}"{% unless customer %} data-login="/account/login"{% endunless %}>
+  <div class="ly-dialog-head"><h2 id="ly-cart-title">Giỏ hàng của bạn <span class="ly-cp-count" data-drawer-count></span></h2><button type="button" class="ly-icon" data-close aria-label="Đóng giỏ hàng">✕</button></div>
+  <div class="ly-freeship" data-freeship-box hidden><p data-freeship-text></p><div class="ly-freeship-bar"><span data-freeship-fill></span></div></div>
+  <div id="ly-cart-items" class="ly-drawer-items" aria-live="polite"></div>
+  {%- assign lyx_up_h = settings.url_1_all2pro | default: 'phu-kien-yoga' -%}
+  {%- if collections[lyx_up_h].products.size == 0 -%}{%- assign lyx_up_h = 'phu-kien-yoga' -%}{%- endif -%}
+  {%- capture lyx_up -%}{%- for p in collections[lyx_up_h].products limit: 8 -%}{%- if p.available and p.price > 0 -%}{%- assign pv = p.selected_or_first_available_variant -%}
+    <div class="lyx-up-item" data-vid="{{ pv.id }}" hidden>
+      <a class="lyx-up-img" href="{{ p.url }}" tabindex="-1" aria-hidden="true">{% if p.featured_image %}<img src="{{ p.featured_image.src | img_url: 'medium' }}" alt="" loading="lazy" width="160" height="160">{% endif %}</a>
+      {%- if p.variants.size > 1 -%}<a class="lyx-up-add" href="{{ p.url }}" aria-label="Chọn phân loại {{ p.name | escape }}">+</a>{%- else -%}<button type="button" class="lyx-up-add" data-lyx-add="{{ pv.id }}" aria-label="Thêm {{ p.name | escape }} vào giỏ">+</button>{%- endif -%}
+      <a class="lyx-up-name" href="{{ p.url }}">{{ p.name | escape }}</a>
+      <span class="lyx-up-price">{{ pv.price | money }}</span>
+    </div>
+  {%- endif -%}{%- endfor -%}{%- endcapture -%}
+  {%- if lyx_up != blank -%}
+  <details class="lyx-up" data-lyx-up open hidden>
+    <summary>Sản phẩm thường được mua cùng</summary>
+    <div class="lyx-up-row">{{ lyx_up }}</div>
+  </details>
+  {%- endif -%}
+  <div class="ly-drawer-foot" data-drawer-foot hidden>
+    <p class="ly-cart-total"><span>Tổng phụ</span><strong id="ly-cart-total">0₫</strong></p>
+    <p class="ly-cart-note">Phí vận chuyển và mã ưu đãi được áp dụng ở bước thanh toán.</p>
+    <div class="ly-drawer-actions"><a class="ly-drawer-checkout" href="/checkout">Thanh toán</a><a class="ly-drawer-view" href="/cart">Xem giỏ hàng</a></div>
+  </div>
+</dialog>
+<script src="{{ 'lyx-cart.js' | asset_url }}" defer></script>
