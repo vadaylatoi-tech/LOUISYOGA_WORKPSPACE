@@ -25,3 +25,5 @@ SPEED/QUALITY UPGRADE 2026-10-26 (skill copies in `04_AI_SKILLS/louisyoga-reel-s
 
 LOUIS PHOTO LIBRARY 2026-10-27: skill `assets/louis-photos/` (76 curated louisyoga.vn images, 9 MB: tu-the, sinh-hoat, cuon-tham, do-day calipers, be-mat, xit-ve-sinh, khan, tui-dung-tham) indexed in `references/louis-photos-index.md`; new_project copies it; Broll `mode: "photo"`. Reels 03/04 re-rendered as _v2 with Louis-only B-roll. louisyoga.vn product pages scrape fine with curl (Sapo, images on bizweb.dktcdn.net); Windows python writes 
  — strip before shell loops.
+
+FINAL OUTPUT LOCATION 2026-10-26 (user correction): final mp4 → Drive `LOUGA_WORKSPACE_MEDIA/10_FINAL_DELIVERABLES/<YYYY-MM-DD>_<project-slug>/<NN - tên video>.mp4` (date = edit day, name = cut's name). NOT `11_COMPLETED_PROJECTS/.../builds/` nor `05_VIDEO_PROJECTS/.../edit/` (those hold work files/reports only). See CLAUDE.md "NƠI LƯU VIDEO FINAL".

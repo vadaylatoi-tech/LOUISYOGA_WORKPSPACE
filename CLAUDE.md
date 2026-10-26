@@ -34,3 +34,12 @@ Cạnh mỗi video đã cắt trong `11_COMPLETED_PROJECTS/2026-10_reels-chon-th
 - Thư viện dùng chung: `03_MEDIA_LIBRARY/shared-sources/`. Skill `nns-*` không còn tự tìm thấy thư mục này (nó không còn là thư mục cha) → luôn truyền `--resources "<workspace>/03_MEDIA_LIBRARY/shared-sources"`.
 - Media (mp4, ảnh, work/) ở Google Drive `LOUGA_WORKSPACE_MEDIA/`, chép về đúng vị trí bằng `00_SYSTEM/sync/restore_media.ps1`.
 - Đường dẫn cũ còn trong memory/báo cáo cũ: tra `00_SYSTEM/claude-memory/PATH_MAP.md`.
+
+## NƠI LƯU VIDEO FINAL — BẮT BUỘC (chủ thương hiệu chốt 26/10/2026)
+- Video final (bản giao, mọi skill edit) → Google Drive `LOUGA_WORKSPACE_MEDIA/10_FINAL_DELIVERABLES/<YYYY-MM-DD>_<mã-dự-án>/<NN - tên video>.mp4`.
+  - Ngày = ngày edit (vd hôm nay edit thì là ngày hôm nay); `<mã-dự-án>` = phần sau tháng của thư mục dự án (vd `2026-10_san-sale` → `san-sale`).
+  - Tên file = đúng tên video trong `cuts/`; bản sửa sau → `_v2`, `_v3` cùng thư mục, không ghi đè.
+  - Ví dụ: `10_FINAL_DELIVERABLES/2026-10-26_san-sale/01 - Lau thảm bằng cồn có sao không.mp4`, `10_FINAL_DELIVERABLES/2026-10-26_reels-chon-tham-17/`.
+  - Thư mục này CHỈ chứa video final. KHÔNG để video final trong `05_VIDEO_PROJECTS/` hay `11_COMPLETED_PROJECTS/`.
+- Hồ sơ làm việc (work/, BAO-CAO, contact sheet) → Drive `05_VIDEO_PROJECTS/<dự án>/edit/<NN-ten-video>/`.
+- Project Remotion (node_modules) → ổ máy `D:/LOUGA_WORKSPACE/05_VIDEO_PROJECTS/<dự án>/edit-<NN-ten-video>/project` (Drive không cài được node_modules).

@@ -32,6 +32,15 @@ Người dùng không đưa video → hỏi đường dẫn.
 Tạo thư mục làm việc riêng cho mỗi video, ví dụ `<nơi người dùng chọn>/<ten-video>/` gồm `work/`, `project/`, file xuất.
 KHÔNG ghi vào thư mục đã có file của người dùng; không ghi đè bản cũ (đặt _v2, _v3).
 
+**NƠI LƯU — BẮT BUỘC (chủ thương hiệu chốt 26/10/2026):**
+- **Video FINAL** → Google Drive `LOUGA_WORKSPACE_MEDIA/10_FINAL_DELIVERABLES/<YYYY-MM-DD>_<mã-dự-án>/<NN - tên video>.mp4`.
+  Ngày = ngày edit; tên file = đúng tên video trong `cuts/`; bản sửa sau thêm `_v2`, `_v3` cùng thư mục.
+  Ví dụ: `10_FINAL_DELIVERABLES/2026-10-26_san-sale/01 - Lau thảm bằng cồn có sao không.mp4`.
+  Thư mục này CHỈ chứa video final — KHÔNG để video final trong `05_VIDEO_PROJECTS/` hay `11_COMPLETED_PROJECTS/`.
+- **Hồ sơ làm việc** (work/, BAO-CAO, contact sheet) → Drive `05_VIDEO_PROJECTS/<mã-dự-án>/edit/<NN-ten-video>/`.
+- **Project Remotion** (có node_modules) → ổ máy `D:/LOUGA_WORKSPACE/05_VIDEO_PROJECTS/<mã-dự-án>/edit-<NN-ten-video>/project`
+  (Google Drive không cài được node_modules).
+
 1. **Nghiên cứu nội dung**: video đã có hồ sơ (`<video>.brief.md` + `<video>.hoso.words.json` cạnh file) → CHỈ đọc
    brief, dùng `.hoso.words.json` làm transcript (KHÔNG chạy Whisper, KHÔNG xem lại video). Chưa có hồ sơ mới chạy
    `scripts/transcribe.py`. Tìm điểm yếu (hook, lặp, từ đệm, kết thiếu kết luận). Xem khung: `scripts/contact_sheet.py
@@ -58,7 +67,7 @@ KHÔNG ghi vào thư mục đã có file của người dùng; không ghi đè b
    mỗi B-roll, CTA>` (bundle 1 lần, ~3 s/khung → 1 tấm). Soi: chữ không đè mặt/sản phẩm, không cắt mép, không che số.
 7. **Âm thanh**: `scripts/process_voice.py --in work/voice_raw.wav --out work/voice_proc.wav --analyze`;
    `scripts/measure_sfx.py` để chắc mật độ/mức SFX đúng chuẩn TRƯỚC khi render.
-8. **Render + mix**: `scripts/render_all.py --project <project> --voice work/voice_proc.wav --out <file>.mp4`
+8. **Render + mix**: `scripts/render_all.py --project <project> --voice work/voice_proc.wav --out "<Drive>/10_FINAL_DELIVERABLES/<YYYY-MM-DD>_<mã-dự-án>/<NN - tên video>.mp4"`
    (stem SFX + nhạc dựng bằng numpy `build_stems.py` vài giây; hình không tiếng jpeg 95/crf 14 ~3 phút/phút video;
    mix giọng > SFX > nhạc → −14 LUFS, TP −1.5). Nhiều video: render chạy nền, dựng video sau trong lúc chờ.
    Rồi QC theo `references/04-checklist-qc.md` (contact sheet bản cuối, chép lời lại bản cuối, số đo âm).
@@ -108,6 +117,6 @@ bản gốc từ máy/điện thoại (không qua livestream) — báo người 
 
 ## Báo cáo giao kèm
 
-Ghi `BAO-CAO-<ten>.md` cạnh file xuất: video gốc, lý do chọn, điểm yếu → cách xử lý, bảng cắt, B-roll/ảnh đã
+Ghi `BAO-CAO-<ten>.md` trong thư mục hồ sơ `05_VIDEO_PROJECTS/<mã-dự-án>/edit/<NN-ten-video>/` (không để trong 10_FINAL_DELIVERABLES): video gốc, lý do chọn, điểm yếu → cách xử lý, bảng cắt, B-roll/ảnh đã
 dùng (nguồn + giấy phép), số đo âm (SFX/giây, dB so với giọng, nhạc dưới giọng, LUFS/TP), credit cho caption bài
 đăng, những chỗ cần người dùng nghe/kiểm.
