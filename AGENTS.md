@@ -43,3 +43,12 @@ Cạnh mỗi video đã cắt trong `11_COMPLETED_PROJECTS/2026-10_reels-chon-th
   - Thư mục này CHỈ chứa video final. KHÔNG để video final trong `05_VIDEO_PROJECTS/` hay `11_COMPLETED_PROJECTS/`.
 - Hồ sơ làm việc (work/, BAO-CAO, contact sheet) → Drive `05_VIDEO_PROJECTS/<dự án>/edit/<NN-ten-video>/`.
 - Project Remotion (node_modules) → ổ máy `D:/LOUGA_WORKSPACE/05_VIDEO_PROJECTS/<dự án>/edit-<NN-ten-video>/project` (Drive không cài được node_modules).
+
+## ĐỒNG BỘ GIỮA CÁC MÁY + NHẬT KÝ — BẮT BUỘC (từ 26/10/2026)
+- GitHub giữ code/skill/quy tắc; Google Drive giữ media, asset skill và **nhật ký làm việc** `LOUGA_WORKSPACE_MEDIA/00_SYSTEM/NHAT-KY-LAM-VIEC.md`.
+- Đầu phiên: hook SessionStart tự chạy `00_SYSTEM/sync/dong_bo.py session-start` (git pull, đồng bộ asset skill với Drive, in 3 mục nhật ký cuối). Không thấy khối "DONG BO WORKSPACE" ở đầu phiên → chạy tay lệnh đó, rồi đọc nhật ký trước khi làm.
+- Skill `louisyoga-reel-style1`, `duycongeditvideo-buoc1` trong `~/.claude/skills/` là LIÊN KẾT tới `04_AI_SKILLS/...` của repo — sửa skill là sửa trong repo. Asset nặng (mp3/mp4/onnx/ảnh) không lên git, nằm ở Drive cùng đường dẫn `04_AI_SKILLS/...`; thêm asset mới → script tự đẩy lên Drive ở phiên sau.
+- Xong việc (trước khi báo hoàn thành): ghi nhật ký
+  `python D:/LOUGA_WORKSPACE/00_SYSTEM/sync/dong_bo.py ghi-nhat-ky --viec "..." --file "<đường dẫn final/hồ sơ>" --con-lai "..."`
+- Có sửa skill/quy tắc/script trong repo → commit + push lên GitHub ngay trong phiên (máy chưa cấu hình git user thì dùng tác giả của commit trước, `git -c user.name=... -c user.email=...`).
+- Máy mới: cài Google Drive for desktop + Git + Python, `git clone https://github.com/vadaylatoi-tech/LOUISYOGA_WORKPSPACE D:/LOUGA_WORKSPACE`, chạy `00_SYSTEM/setup/CAI-DONG-BO.bat`, mở lại Claude Code.
