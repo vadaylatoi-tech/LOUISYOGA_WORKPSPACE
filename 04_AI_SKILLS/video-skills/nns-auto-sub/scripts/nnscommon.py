@@ -293,7 +293,7 @@ def gray_frame(path, frame_index, width, height, extra_vf=None):
     vf = "select=eq(n\\,%d)" % int(frame_index)
     if extra_vf:
         vf += "," + extra_vf
-    cmd = ["ffmpeg", "-v", "error", "-i", path, "-vf", vf, "-vsync", "0",
+    cmd = ["ffmpeg", "-v", "error", "-i", path, "-vf", vf, "-fps_mode", "passthrough",
            "-frames:v", "1", "-f", "rawvideo", "-pix_fmt", "gray", "-"]
     raw, err, _ = run(cmd, binary=True, what="ffmpeg lay frame %d" % frame_index)
     need = width * height

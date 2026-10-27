@@ -137,7 +137,7 @@ bị cắt vì lý do này.
 frame bạn muốn xem — lệch cả nửa giây là đủ để kết luận sai về bố cục.
 
 ```bash
-ffmpeg -v error -y -i "video.mp4" -vf "select=eq(n\,120)" -vsync 0 -frames:v 1 thu.png
+ffmpeg -v error -y -i "video.mp4" -vf "select=eq(n\,120)" -fps_mode passthrough -frames:v 1 thu.png
 ```
 
 Hoặc dùng `scripts/frames.py`, nó trích sẵn ở đầu mỗi đoạn, giữa mỗi thẻ và vài

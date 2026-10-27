@@ -32,7 +32,7 @@ def grab_frame(video, index, out_png):
     """
     C.need_tool("ffmpeg")
     C.run(["ffmpeg", "-y", "-v", "error", "-i", video,
-           "-vf", "select=eq(n\\,%d)" % index, "-vsync", "0",
+           "-vf", "select=eq(n\\,%d)" % index, "-fps_mode", "passthrough",
            "-frames:v", "1", out_png])
     if not os.path.isfile(out_png):
         C.die("Khong trich duoc frame %d cua %s" % (index, video))

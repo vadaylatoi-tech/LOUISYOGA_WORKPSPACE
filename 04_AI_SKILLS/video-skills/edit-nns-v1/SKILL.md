@@ -84,7 +84,7 @@ Cắt từng đoạn giữ rồi nối:
 
 ```bash
 # mỗi đoạn: re-encode (KHÔNG -c copy — copy cắt theo keyframe nên lệch tới cả giây)
-ffmpeg -ss <start> -to <end> -i "<raw>" -r 30 -vsync cfr \
+ffmpeg -ss <start> -to <end> -i "<raw>" -r 30 -fps_mode cfr \
   -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p \
   -c:a aac -b:a 192k -ar 48000 "seg_NN.mp4"
 # nối

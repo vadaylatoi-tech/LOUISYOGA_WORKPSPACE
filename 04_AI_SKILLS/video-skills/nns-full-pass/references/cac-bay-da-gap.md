@@ -28,10 +28,10 @@ tuyệt đối.
 lệch tới nửa giây, đủ để kết luận sai về bố cục hoặc bảo "sub không hiện" trong
 khi nó hiện ở frame bên cạnh.
 
-**Cách đúng:** `select=eq(n\,N)` + `-vsync 0`.
+**Cách đúng:** `select=eq(n\,N)` + `-fps_mode passthrough`.
 
 ```bash
-ffmpeg -v error -y -i v.mp4 -vf "select=eq(n\,120)" -vsync 0 -frames:v 1 thu.png
+ffmpeg -v error -y -i v.mp4 -vf "select=eq(n\,120)" -fps_mode passthrough -frames:v 1 thu.png
 ```
 
 Lấy nhiều frame một lượt: `select='eq(n\,10)+eq(n\,50)+eq(n\,90)'` — chỉ giải mã

@@ -266,7 +266,7 @@ def frames_at_indices(path, idxs, sw, sh):
     expr = "+".join("eq(n\\,%d)" % i for i in idxs)
     cmd = ["ffmpeg", "-v", "error", "-i", path, "-vf",
            "select='%s',scale=%d:%d" % (expr, sw, sh),
-           "-vsync", "0", "-pix_fmt", "rgb24", "-f", "rawvideo", "-"]
+           "-fps_mode", "passthrough", "-pix_fmt", "rgb24", "-f", "rawvideo", "-"]
     p = subprocess.run(cmd, capture_output=True)
     fsz = sw * sh * 3
     got = len(p.stdout) // fsz

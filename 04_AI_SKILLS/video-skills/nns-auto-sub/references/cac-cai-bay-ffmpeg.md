@@ -29,7 +29,7 @@ kẹt dấu hai chấm.
 Muốn lấy đúng frame số N để so sánh thì đừng dùng `-ss`:
 
 ```bash
-ffmpeg -v error -i v.mp4 -vf "select=eq(n\,165)" -vsync 0 -frames:v 1 f.png
+ffmpeg -v error -i v.mp4 -vf "select=eq(n\,165)" -fps_mode passthrough -frames:v 1 f.png
 ```
 
 Đổi lại: ffmpeg phải decode tuần tự từ đầu, nên frame càng xa càng lâu. Với video

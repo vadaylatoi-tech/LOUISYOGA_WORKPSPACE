@@ -52,7 +52,7 @@ def gray(video, idx, w, h):
     import numpy as np
     p = subprocess.run(
         ["ffmpeg", "-v", "error", "-y", "-i", video,
-         "-vf", "select=eq(n\\,%d)" % idx, "-vsync", "0", "-frames:v", "1",
+         "-vf", "select=eq(n\\,%d)" % idx, "-fps_mode", "passthrough", "-frames:v", "1",
          "-pix_fmt", "gray", "-f", "rawvideo", "-"], capture_output=True)
     if len(p.stdout) < w * h:
         return None

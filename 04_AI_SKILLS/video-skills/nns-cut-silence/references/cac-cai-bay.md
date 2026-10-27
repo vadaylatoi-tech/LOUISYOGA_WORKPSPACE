@@ -35,7 +35,7 @@ Hậu quả cụ thể: dùng `-ss` để chụp ảnh kiểm chứng "vùng nà
 **Cách làm đúng:**
 
 ```
-ffmpeg -i in.mp4 -vf "select=eq(n\,375)" -vsync 0 -frames:v 1 x.png
+ffmpeg -i in.mp4 -vf "select=eq(n\,375)" -fps_mode passthrough -frames:v 1 x.png
 ```
 
 `select=eq(n,N)` đếm frame đã decode, không liên quan timestamp. Chậm hơn (phải decode

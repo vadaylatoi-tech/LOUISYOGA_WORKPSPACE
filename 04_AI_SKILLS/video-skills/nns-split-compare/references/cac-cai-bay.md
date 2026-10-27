@@ -58,7 +58,7 @@ filtergraph, và ép thêm `-r 30` ở output. `verify.py` đo lại fps trên f
 B-frame. Mọi chỗ trích frame trong skill này (`chrome.py`, `verify.py`) đều dùng:
 
 ```
--vf "select=eq(n\,N)" -vsync 0 -frames:v 1
+-vf "select=eq(n\,N)" -fps_mode passthrough -frames:v 1
 ```
 
 Đây cũng chính là lý do phép kiểm mục 3 của `verify.py` tin được: nếu trích sai

@@ -22,7 +22,7 @@ C = F.need_C()
 
 def grab(video, idx, path):
     p = subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", video,
-                        "-vf", "select=eq(n\\,%d)" % idx, "-vsync", "0",
+                        "-vf", "select=eq(n\\,%d)" % idx, "-fps_mode", "passthrough",
                         "-frames:v", "1", path], capture_output=True)
     return p.returncode == 0 and os.path.isfile(path)
 

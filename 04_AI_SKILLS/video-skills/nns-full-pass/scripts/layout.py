@@ -88,7 +88,7 @@ def gray_frames(video, times, w, h, scale=None):
         vf = "select=eq(n\\,%d),scale=%d:%d" % (n, sw, sh)
         p = subprocess.run(
             ["ffmpeg", "-v", "error", "-y", "-i", video, "-vf", vf,
-             "-vsync", "0", "-frames:v", "1", "-pix_fmt", "gray",
+             "-fps_mode", "passthrough", "-frames:v", "1", "-pix_fmt", "gray",
              "-f", "rawvideo", "-"],
             capture_output=True)
         buf = p.stdout

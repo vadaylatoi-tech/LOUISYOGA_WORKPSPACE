@@ -74,7 +74,7 @@ python -c "import json,io;d=json.load(io.open('plan.json',encoding='utf-8'));pri
 rồi với từng mốc `T`:
 
 ```
-ffmpeg -i raw.mp4 -vf "select=eq(n\,<FRAME>)" -vsync 0 -frames:v 1 check_<FRAME>.png
+ffmpeg -i raw.mp4 -vf "select=eq(n\,<FRAME>)" -fps_mode passthrough -frames:v 1 check_<FRAME>.png
 ```
 
 Dùng `select=eq(n\,N)` **chứ không dùng `-ss`** — xem `cac-cai-bay.md`.
