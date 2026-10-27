@@ -33,6 +33,7 @@ Cạnh mỗi video đã cắt trong `11_COMPLETED_PROJECTS/2026-10_reels-chon-th
 ## Đường dẫn trong LOUGA WORKSPACE (thêm khi chuyển máy, 2026-10-26)
 - Thư viện dùng chung: `03_MEDIA_LIBRARY/shared-sources/`. Skill `nns-*` không còn tự tìm thấy thư mục này (nó không còn là thư mục cha) → luôn truyền `--resources "<workspace>/03_MEDIA_LIBRARY/shared-sources"`.
 - Media (mp4, ảnh, work/, cả `cuts/` + hồ sơ) ĐỌC THẲNG từ Google Drive `G:/My Drive/LOUISYOGA_WORKSPACE/LOUGA_WORKSPACE_MEDIA/<cùng đường dẫn>` (Drive đã bật offline nên file có sẵn trên máy). KHÔNG chép media về D: — bản chép sẽ lệch khi Drive được sửa. D: chỉ giữ repo, asset skill (dong_bo.py tự đồng bộ) và project Remotion có node_modules.
+- **KHÔNG ghi gì lên ổ C:** (kể cả thư mục scratchpad/tạm của Claude): không sao lưu, không ảnh xem trước, không contact sheet, không script tạm. File làm việc đọc/ghi trên G: (Drive) — chỉ G: mới đồng bộ giữa các máy. Ảnh/file tạm → thư mục hồ sơ dự án trên G: (`05_VIDEO_PROJECTS/<dự án>/edit/<NN>/work/`). Sửa file trên Drive không cần sao lưu riêng (Drive giữ lịch sử phiên bản). Bắt buộc phải dùng ổ máy → hỏi anh trước. (Chủ thương hiệu nhắc 27/10/2026.)
 - Đường dẫn cũ còn trong memory/báo cáo cũ: tra `00_SYSTEM/claude-memory/PATH_MAP.md`.
 
 ## NƠI LƯU VIDEO FINAL — BẮT BUỘC (chủ thương hiệu chốt 26/10/2026)
