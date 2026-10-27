@@ -42,6 +42,9 @@ for _n in ("nns-add-sfx", "nns-auto-sub", "nns-cut-silence", "nns-face-highlight
            "nns-split-compare", "edit-nns-v1", "edit-remotion-nns", "edit-style-gpt-secret-code",
            "edit-style-nns", "extract-edit-style", "script-writer"):
     SKILLS[_n] = f"04_AI_SKILLS/video-skills/{_n}"
+# Thu vien dung chung (font Be Vietnam Pro, ~90 SFX, ~120 logo): skill nns-*/edit-* goi qua --resources.
+# svg/mp3/ttf khong len git -> dong bo qua Drive nhu asset skill (KHONG phai skill, khong noi vao ~/.claude/skills).
+SHARED = {"shared-sources": "03_MEDIA_LIBRARY/shared-sources"}
 MEMORY_REL = "00_SYSTEM/claude-memory/workspace"  # memory chung, cai-dat nap vao ~/.claude/projects/<thu muc>/memory
 SKIP_NAMES = {"desktop.ini", "Thumbs.db", ".DS_Store"}
 SKIP_DIRS = {"node_modules", "__pycache__", ".git"}
@@ -83,7 +86,7 @@ def sync_assets(drive, quiet=False):
     """Dong bo 2 chieu, CHI THEM (khong xoa): asset tren Drive <-> thu muc skill trong repo.
     File do git quan ly thi git thang; file media khac kich thuoc thi lay ban tren Drive."""
     msgs = []
-    for name, rel in SKILLS.items():
+    for name, rel in {**SKILLS, **SHARED}.items():
         local = os.path.join(REPO, rel)
         remote = os.path.join(drive, rel)
         if not os.path.isdir(local):
