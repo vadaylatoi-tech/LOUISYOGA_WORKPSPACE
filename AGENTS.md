@@ -40,7 +40,7 @@ Cạnh mỗi video đã cắt trong `11_COMPLETED_PROJECTS/2026-10_reels-chon-th
   - Ngày = ngày edit (vd hôm nay edit thì là ngày hôm nay); `<mã-dự-án>` = phần sau tháng của thư mục dự án (vd `2026-10_san-sale` → `san-sale`).
   - Tên file = đúng tên video trong `cuts/`; bản sửa sau → `_v2`, `_v3` cùng thư mục, không ghi đè.
   - Ví dụ: `10_FINAL_DELIVERABLES/2026-10-26_san-sale/01 - Lau thảm bằng cồn có sao không.mp4`, `10_FINAL_DELIVERABLES/2026-10-26_reels-chon-tham-17/`.
-  - Thư mục này CHỈ chứa video final. KHÔNG để video final trong `05_VIDEO_PROJECTS/` hay `11_COMPLETED_PROJECTS/`.
+  - Thư mục này CHỈ chứa video final + ảnh bìa cùng tên (`<NN - tên video>.jpg`, tạo bằng `louisyoga-reel-style1/scripts/make_cover.py`). KHÔNG để video final trong `05_VIDEO_PROJECTS/` hay `11_COMPLETED_PROJECTS/`.
 - Hồ sơ làm việc (work/, BAO-CAO, contact sheet) → Drive `05_VIDEO_PROJECTS/<dự án>/edit/<NN-ten-video>/`.
 - Project Remotion (node_modules) → ổ máy `D:/LOUGA_WORKSPACE/05_VIDEO_PROJECTS/<dự án>/edit-<NN-ten-video>/project` (Drive không cài được node_modules).
 

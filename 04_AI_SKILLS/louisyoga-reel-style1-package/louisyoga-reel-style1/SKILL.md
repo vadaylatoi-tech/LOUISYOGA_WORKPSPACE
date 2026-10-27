@@ -36,7 +36,7 @@ KHÔNG ghi vào thư mục đã có file của người dùng; không ghi đè b
 - **Video FINAL** → Google Drive `LOUGA_WORKSPACE_MEDIA/10_FINAL_DELIVERABLES/<YYYY-MM-DD>_<mã-dự-án>/<NN - tên video>.mp4`.
   Ngày = ngày edit; tên file = đúng tên video trong `cuts/`; bản sửa sau thêm `_v2`, `_v3` cùng thư mục.
   Ví dụ: `10_FINAL_DELIVERABLES/2026-10-26_san-sale/01 - Lau thảm bằng cồn có sao không.mp4`.
-  Thư mục này CHỈ chứa video final — KHÔNG để video final trong `05_VIDEO_PROJECTS/` hay `11_COMPLETED_PROJECTS/`.
+  Thư mục này CHỈ chứa video final + ảnh bìa cùng tên (`.jpg`, bước 8) — KHÔNG để video final trong `05_VIDEO_PROJECTS/` hay `11_COMPLETED_PROJECTS/`.
 - **Hồ sơ làm việc** (work/, BAO-CAO, contact sheet) → Drive `05_VIDEO_PROJECTS/<mã-dự-án>/edit/<NN-ten-video>/`.
 - **Project Remotion** (có node_modules) → ổ máy `D:/LOUGA_WORKSPACE/05_VIDEO_PROJECTS/<mã-dự-án>/edit-<NN-ten-video>/project`
   (Google Drive không cài được node_modules).
@@ -81,6 +81,12 @@ KHÔNG ghi vào thư mục đã có file của người dùng; không ghi đè b
    Render lại vì bản trước còn lỗi và **chưa giao** → thêm `--replace`: bản cũ chuyển ra
    `<project>/renders/_thay-the/…_KHONG-GIAO.mp4`, bản mới giữ đúng tên chuẩn. Không có `--replace` → `_v2` (chỉ dùng
    cho bản sửa SAU KHI đã giao). Mix lỗi giữa chừng không để lại file hỏng trong thư mục final.
+   **Ảnh bìa (thumbnail)**: `scripts/make_cover.py "<file final>.mp4"` → tự chọn khung hook đủ tiêu đề, KHÔNG gạch
+   chữ/dấu mộc (kiểu chủ thương hiệu duyệt 27/10/2026; `--co-gach` nếu muốn khung có dấu mộc), lưu `<tên video>.jpg`
+   cạnh video và gắn làm ảnh bìa trong mp4 (copy luồng, kiểm md5 hình/tiếng, giữ mtime; chạy lại thì thay bìa cũ).
+   Khung đầu video luôn trống chữ nên thiếu bước này thì Drive/Explorer/nền tảng hiện ảnh vô nghĩa.
+   SOÁT ảnh JPG: hook nằm giữa khung trên B-roll hoặc panel/caption hiện ngay sau tiêu đề → chọn tay `--t <giây>`
+   (đợt 27/10: 5/29 video phải chọn tay).
    Rồi QC theo `references/04-checklist-qc.md` (contact sheet bản cuối, chép lời lại bản cuối, số đo âm).
    ▶ **CỔNG 2**: giao file + báo cáo ngắn (đã làm gì, số đo, credit cần ghi, chỗ cần người dùng nghe/duyệt).
 
