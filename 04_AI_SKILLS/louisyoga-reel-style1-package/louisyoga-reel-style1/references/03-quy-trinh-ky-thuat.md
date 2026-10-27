@@ -14,6 +14,8 @@ python <SKILL>/scripts/snap_cuts.py --video "<raw>.mp4" --rough <W>/work/cuts_ro
 
 # 3. cắt (+ khử khối, làm nét nhẹ)
 python <SKILL>/scripts/cut_words.py --video "<raw>.mp4" --words "<raw>.hoso.words.json" --cuts <W>/work/cuts.json --out-dir <W>/work
+# 3b. tai may nghe lai ban cat: mep nao MAT chu / SOT tieng (giay THO + huong doi) -> sua cuts.json, cat lai, lap toi khi het
+python <SKILL>/scripts/check_cuts.py --work <W>/work
 
 # 4. mặt
 python <SKILL>/scripts/track.py --video "<raw>.mp4" --out <W>/work/face.track.json --step 0.5
@@ -33,6 +35,7 @@ python <SKILL>/scripts/measure_sfx.py --reel <W>/project/src/reel/Reel.tsx --voi
 
 # 8. render + mix + master
 python <SKILL>/scripts/render_all.py --project <W>/project --voice <W>/work/voice_proc.wav --out "<W>/<Ten_Video>_v1.mp4"
+# render lai vi ban truoc loi va CHUA giao: them --replace (ban cu -> project/renders/_thay-the/, giu ten chuan); moi render 1 --port rieng
 python <SKILL>/scripts/contact_sheet.py --video "<W>/<Ten_Video>_v1.mp4" --out <W>/work/final_sheet.jpg
 # (tuỳ chọn, chỉ khi người dùng cho phép chạy Whisper) chép lời bản cuối để chắc không mất chữ
 ```
@@ -77,6 +80,12 @@ Trong hồ sơ, từ đứng trước chỗ ngừng thường bị kéo dài c�
 | `cublas64_12.dll not found` | không có CUDA libs → transcribe.py tự lùi CPU (chậm hơn ~5×) |
 | Python in tiếng Việt lỗi `charmap` | scripts đã ép UTF-8; tự viết script thì `sys.stdout.reconfigure(encoding="utf-8")` |
 | caption mất chữ ở mối cắt | thêm qua `fixes.json` `insert` |
+| mép snap ăn vào chữ giữ / sót chữ bỏ (mốc Whisper lệch) | `check_cuts.py` chỉ đúng mép + hướng dời; sửa `cuts.json` |
+| caption xuống 2 dòng / tách "ảnh \| hưởng" | `gen_data.py` đã giới hạn 21 ký tự + thêm từ ghép; riêng video → fixes `"compound"` / `"lines"` |
+| measure_sfx đếm thiếu cue, build_stems "khong biet 'END'" | đã sửa: đọc mọi `const X = <biểu thức số>;` |
+| bản render lỗi nằm lại trong 10_FINAL_DELIVERABLES, bản đúng thành `_v2` | `render_all.py --replace` |
+| `cublas64_12.dll not found` → Whisper chạy CPU | `transcribe.py` đã tự `add_dll_directory` thư mục nvidia/*/bin |
+| ffmpeg 9: `Unrecognized option 'vsync'` | dùng `-fps_mode passthrough` (đã đổi trong mọi script) |
 | bar/khối đè lên số | cho thanh dày dần xuống dưới, cố định `marginTop` |
 | stamp vàng chìm trên nền sáng | thêm `BottomShade` / `TopShade` |
 | lệnh `rm -rf` bị chặn | đừng xoá thư mục; bundle ra thư mục mới |

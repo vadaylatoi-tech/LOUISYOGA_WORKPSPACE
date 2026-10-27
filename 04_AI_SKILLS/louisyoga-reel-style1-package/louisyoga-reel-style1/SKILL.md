@@ -55,21 +55,31 @@ KHÔNG ghi vào thư mục đã có file của người dùng; không ghi đè b
    ở mép cắt (vd "Nên", "Thì" chỉ còn khoảng lặng) bỏ bằng `fixes.json` → `drop`.
    **Cắt câu lặp có từ phủ định ("đừng", "không") ở gần mép → không cắt** (bài học video 12: suýt mất "đừng" →
    thành "cuộn chặt vào"). Mép "NGHE LAI" không có chỗ lặng thật thì bỏ cắt đó, chỉ rút khoảng lặng.
+   **Luôn chạy `scripts/check_cuts.py --work work`** (Whisper GPU ~30 s nghe lại clean.mp4): nó chỉ ra mép nào làm
+   MẤT chữ / SÓT tiếng, ở giây THÔ nào trong cuts.json và dời hướng nào → sửa cuts.json, cắt lại, chạy lại tới khi hết.
+   (Đo trên 166 mép đợt Săn sale: ~1/5 mép snap vẫn lệch vì mốc từ Whisper lệch — không có quy tắc snap nào tốt hơn.)
    `fixes.json` "replace" áp cho MỌI từ trùng — sửa 1 chữ riêng lẻ thì dùng `drop` + `insert` (vd "làm"→"lắm").
 4. **Mặt**: `scripts/track.py --video <thô> --out work/face.track.json --step 0.5` (model kèm sẵn).
 5. **Dữ liệu**: `scripts/new_project.py --dest <project> --clean work/clean.mp4 --install` rồi
    `scripts/gen_data.py --words work/clean.words.json --face work/face.track.json --fixes work/fixes.json --out <project>/src/reel/data.ts`.
    `fixes.json` sửa thuật ngữ ASR nghe sai (tp→TPE, lúm thẳng→lún thảm, tí tay→tì tay, lưu dựa→Louis Yoga…).
+   Caption tự giữ mỗi dòng ≤ 21 ký tự (`--max-chars`) và không tách từ ghép; từ ghép riêng của video → `"compound"`,
+   muốn tự ngắt dòng → `"lines": ["dòng 1", "dòng 2", ...]` trong fixes.json (không cần viết caption_patch riêng).
 6. **Dựng**: sửa `<project>/src/reel/Reel.tsx` trong các khối `▼ EDIT ▼` (bands, SEG_ZOOM theo số đoạn,
    PUNCHES, FOCUS, BROLL, IMPACTS, CUES, scenes). Dùng atoms `src/kit/atoms.tsx` + khối dựng sẵn `src/kit/scenes.tsx`
    (MatCard, RecapRows, NumberRows, DoDont). Ảnh sản phẩm: `scripts/prep_products.py --dest <project>/public/img`.
    Kiểm bố cục: `scripts/stills.py --project <project> --out work/stills_sheet.jpg --times <giây hook, mỗi panel,
    mỗi B-roll, CTA>` (bundle 1 lần, ~3 s/khung → 1 tấm). Soi: chữ không đè mặt/sản phẩm, không cắt mép, không che số.
 7. **Âm thanh**: `scripts/process_voice.py --in work/voice_raw.wav --out work/voice_proc.wav --analyze`;
-   `scripts/measure_sfx.py` để chắc mật độ/mức SFX đúng chuẩn TRƯỚC khi render.
+   `scripts/measure_sfx.py` để chắc mật độ/mức SFX đúng chuẩn TRƯỚC khi render (đọc được cue ghi bằng hằng
+   `HOOK_DROP`, `VIDEO_FRAMES / FPS`, hằng tự đặt `const END = ...;` — chỉ cần là biểu thức số học).
 8. **Render + mix**: `scripts/render_all.py --project <project> --voice work/voice_proc.wav --out "<Drive>/10_FINAL_DELIVERABLES/<YYYY-MM-DD>_<mã-dự-án>/<NN - tên video>.mp4"`
    (stem SFX + nhạc dựng bằng numpy `build_stems.py` vài giây; hình không tiếng jpeg 95/crf 14 ~3 phút/phút video;
-   mix giọng > SFX > nhạc → −14 LUFS, TP −1.5). Nhiều video: render chạy nền, dựng video sau trong lúc chờ.
+   mix giọng > SFX > nhạc → −14 LUFS, TP −1.5). Nhiều video: render chạy nền, dựng video sau trong lúc chờ
+   (mỗi render một `--port` riêng: 3123, 3131, 3141…).
+   Render lại vì bản trước còn lỗi và **chưa giao** → thêm `--replace`: bản cũ chuyển ra
+   `<project>/renders/_thay-the/…_KHONG-GIAO.mp4`, bản mới giữ đúng tên chuẩn. Không có `--replace` → `_v2` (chỉ dùng
+   cho bản sửa SAU KHI đã giao). Mix lỗi giữa chừng không để lại file hỏng trong thư mục final.
    Rồi QC theo `references/04-checklist-qc.md` (contact sheet bản cuối, chép lời lại bản cuối, số đo âm).
    ▶ **CỔNG 2**: giao file + báo cáo ngắn (đã làm gì, số đo, credit cần ghi, chỗ cần người dùng nghe/duyệt).
 
@@ -78,8 +88,8 @@ Mục tiêu ≤ 25–30 phút/video khi đã có hồ sơ. Chỗ từng tốn th
 | Chỗ chậm | Trước | Bây giờ |
 |---|---|---|
 | Stem SFX + nhạc | 2 lần render Remotion ~3,2 phút/lần | `build_stems.py` ~2 s (lệch < 1,5 ms) |
-| Chọn mép cắt | đo năng lượng tay từng mép, 3–4 lượt | `snap_cuts.py` 1 s, chỉ nghe lại mép "NGHE LAI" |
-| Caption | tự viết lại từng dòng vì ngắt "cơ \| bản" | `gen_data.py` ngắt theo câu + từ ghép |
+| Chọn mép cắt | đo năng lượng tay từng mép, 3–4 lượt | `snap_cuts.py` 1 s + `check_cuts.py` ~30 s chỉ đúng mép hỏng |
+| Caption | tự viết lại từng dòng vì ngắt "cơ \| bản" | `gen_data.py` ngắt theo câu + từ ghép + ≤ 21 ký tự |
 | Chữ rơi ở mối cắt | thêm tay qua `insert` | `cut_words.py` tự giữ chữ còn tiếng |
 | Still soát bố cục | mỗi khung bundle lại | `stills.py` bundle 1 lần, 1 tấm sheet |
 | Viết cảnh đồ hoạ | viết mới mỗi video | `kit/scenes.tsx` + `prep_products.py` |

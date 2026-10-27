@@ -58,16 +58,40 @@ def split_top(s: str) -> list[str]:
     return out
 
 
-def plan(project: str):
-    reel = open(os.path.join(project, "src", "reel", "Reel.tsx"), encoding="utf-8").read()
-    data = open(os.path.join(project, "src", "reel", "data.ts"), encoding="utf-8").read()
-    clean = float(re.search(r"CLEAN_DURATION=([\d.]+)", data).group(1))
-    names: dict = {"FPS": FPS}
+def strip_comments(src: str) -> str:
+    return re.sub(r"//[^\n]*", "", src)
+
+
+def reel_names(reel: str, clean: float) -> dict:
+    """Every top-level `const NAME = <arithmetic>;` of Reel.tsx, resolved in passes so constants may use
+    each other (END = VIDEO_FRAMES / FPS + 0.1, MUN = HOOK + 26.8 ...). Non-arithmetic consts are skipped."""
+    names: dict = {"FPS": FPS, "CLEAN_DURATION": clean}
     names["VIDEO_FRAMES"] = round(clean * FPS)
-    # simple numeric consts used inside CUES / curve (HOOK_DROP, TAIL, ...)
-    for k, v in re.findall(r"^const (\w+) = ([\d.]+);", reel, re.M):
-        names[k] = float(v)
-    names["DURATION"] = names["VIDEO_FRAMES"] + names.get("TAIL", 54)
+    pending = {k: v.strip() for k, v in re.findall(r"^const (\w+)\s*(?::[^=]+)?=\s*([^;\n]+);", reel, re.M)}
+    pending = {k: v.replace("Math.round", "round") for k, v in pending.items() if k not in names}
+    names["round"] = round
+    changed = True
+    while changed:
+        changed = False
+        for k, v in list(pending.items()):
+            try:
+                names[k] = evaluate(v, names)
+            except (ValueError, SyntaxError, TypeError, NameError, ZeroDivisionError):
+                continue
+            del pending[k]
+            changed = True
+    names.pop("round")
+    names.setdefault("TAIL", 54)
+    names["DURATION"] = names.get("DURATION", names["VIDEO_FRAMES"] + names["TAIL"])
+    return names
+
+
+def parse_reel(reel_path: str):
+    """CUES, MUSIC_CURVE, MUSIC and total frames of a Reel.tsx (data.ts must sit next to it)."""
+    reel = strip_comments(open(reel_path, encoding="utf-8").read())
+    data = open(os.path.join(os.path.dirname(reel_path), "data.ts"), encoding="utf-8").read()
+    clean = float(re.search(r"CLEAN_DURATION=([\d.]+)", data).group(1))
+    names = reel_names(reel, clean)
     cue_block = reel.split("const CUES")[1].split("\n];")[0].split("= [", 1)[1]
     cues = []
     for item in re.findall(r"\[([^\[\]]+)\]", cue_block):
@@ -78,6 +102,10 @@ def plan(project: str):
     vols = [evaluate(x, names) for x in split_top(m.group(2))]
     music = re.search(r'const MUSIC = "([^"]+)"', reel).group(1)
     return cues, (frames, vols), music, int(names["DURATION"])
+
+
+def plan(project: str):
+    return parse_reel(os.path.join(project, "src", "reel", "Reel.tsx"))
 
 
 def main():

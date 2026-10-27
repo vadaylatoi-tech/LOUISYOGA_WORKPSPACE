@@ -9,12 +9,12 @@ from __future__ import annotations
 
 import argparse
 import os
-import re
 import sys
 
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import build_stems as B  # noqa: E402
 import common as K  # noqa: E402
 
 SR = 48000
@@ -35,9 +35,8 @@ def main():
     ap.add_argument("--sfx-dir", required=True)
     ap.add_argument("--sfx-rel", type=float, default=-2.5)
     a = ap.parse_args()
-    src = open(a.reel, encoding="utf-8").read()
-    block = src.split("const CUES")[1].split("];")[0]
-    cues = [(float(t), n, float(v)) for t, n, v in re.findall(r'\[([\d.]+), "([\w\-.]+)", ([\d.]+)\]', block)]
+    # same parser as build_stems (named constants like HOOK_DROP / VIDEO_FRAMES / FPS resolved, comments ignored)
+    cues = B.parse_reel(a.reel)[0]
     v = K.load_audio(a.voice, SR)
     s = np.zeros(len(v) + SR * 4, np.float32)
     for t, name, vol in cues:
