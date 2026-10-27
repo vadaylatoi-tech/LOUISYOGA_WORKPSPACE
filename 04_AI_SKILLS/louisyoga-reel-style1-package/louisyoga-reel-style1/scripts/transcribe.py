@@ -17,6 +17,21 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as K  # noqa: E402
 
 
+def add_cuda_dlls():
+    """Windows: cublas/cudnn cai bang pip nam trong site-packages/nvidia/*/bin, khong nam tren PATH
+    -> phai add_dll_directory truoc khi nap model, neu khong se 'cublas64_12.dll not found' roi lui CPU."""
+    if os.name != "nt":
+        return
+    import site
+
+    for base in site.getsitepackages() + [site.getusersitepackages()]:
+        for lib in ("cublas", "cudnn", "cuda_nvrtc"):
+            d = os.path.join(base, "nvidia", lib, "bin")
+            if os.path.isdir(d):
+                os.add_dll_directory(d)
+                os.environ["PATH"] = d + os.pathsep + os.environ.get("PATH", "")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--video", required=True)
@@ -25,13 +40,14 @@ def main():
     ap.add_argument("--language", default="vi")
     ap.add_argument("--device", default="auto", choices=["auto", "cpu", "cuda"])
     a = ap.parse_args()
+    add_cuda_dlls()
     from faster_whisper import WhisperModel
 
     wav = os.path.join(tempfile.mkdtemp(), "a.wav")
     K.run(["ffmpeg", "-v", "error", "-y", "-i", a.video, "-vn", "-ac", "1", "-ar", "16000", wav], "tach tieng")
 
     def go(device):
-        ct = "float16" if device == "cuda" else "int8"
+        ct = "int8_float16" if device == "cuda" else "int8"  # GTX 1660: int8_float16 ~2x nhanh hon float16
         print(f"  model {a.model} on {device}/{ct} ...")
         m = WhisperModel(a.model, device=device, compute_type=ct)
         segs, _ = m.transcribe(wav, language=a.language, word_timestamps=True, vad_filter=True, condition_on_previous_text=False)
