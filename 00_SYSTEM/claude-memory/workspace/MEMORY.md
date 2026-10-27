@@ -1,2 +1,3 @@
 - [Final video location](final-video-location.md) — finals go to 10_FINAL_DELIVERABLES/<date>_<project>/, never in edit folders
 - [Workspace sync system](workspace-sync-system.md) — GitHub repo D:/LOUGA_WORKSPACE + Drive log + SessionStart hook + linked skills
+- [Drive G: offline](drive-offline-read-direct.md) — G: cached offline; read media from G: directly, don't copy to D:

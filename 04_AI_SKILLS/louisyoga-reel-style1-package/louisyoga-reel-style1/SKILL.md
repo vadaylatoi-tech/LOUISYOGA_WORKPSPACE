@@ -44,7 +44,8 @@ KHÔNG ghi vào thư mục đã có file của người dùng; không ghi đè b
 1. **Nghiên cứu nội dung**: video đã có hồ sơ (`<video>.brief.md` + `<video>.hoso.words.json` cạnh file) → CHỈ đọc
    brief, dùng `.hoso.words.json` làm transcript (KHÔNG chạy Whisper, KHÔNG xem lại video). Chưa có hồ sơ mới chạy
    `scripts/transcribe.py`. Tìm điểm yếu (hook, lặp, từ đệm, kết thiếu kết luận). Xem khung: `scripts/contact_sheet.py
-   --every 2` (1 tấm) để biết vùng trống (kệ trên đầu, bàn dưới).
+   --every 2` (1 tấm) để biết vùng trống (kệ trên đầu, bàn dưới). File cắt từ livestream có ô PiP / khung thu nhỏ /
+   người rời khung → xử lý theo `references/03` mục "Ô PiP" TRƯỚC khi cắt.
 2. **Kế hoạch cắt**: viết `work/cuts_rough.json` lấy thẳng mốc từ của hồ sơ (`[start, end, "lý do"]`), rồi
    `scripts/snap_cuts.py --auto-pauses --report work/cuts_report.md` → `work/cuts.json` (tự kéo mép vào chỗ lặng
    thật, tự rút khoảng ngừng > 0.3 s, đánh dấu mép "NGHE LAI"). KHÔNG ngồi đo năng lượng tay từng mép.

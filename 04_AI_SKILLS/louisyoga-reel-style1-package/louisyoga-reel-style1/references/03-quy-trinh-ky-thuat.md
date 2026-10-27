@@ -68,6 +68,19 @@ Trong hồ sơ, từ đứng trước chỗ ngừng thường bị kéo dài c�
 - Ảnh web: Wikimedia Commons API (`generator=search` + `extmetadata`) lấy giấy phép + tác giả, ghi credit nhỏ trên ảnh
   và trong báo cáo. Tải vào thư mục riêng, chỉ mở bằng PIL/ffmpeg.
 
+## Ô PiP / khung thu nhỏ của livestream (đợt Săn sale: video 02, 06, 07)
+File cắt từ livestream hay có ô hình-trong-hình (clip người tập ngoài trời) trượt trên mặt bàn, có khi tới cuối video
+livestream còn tự thu nhỏ khung (viền đen). Soi `raw_sheet.jpg` ngay bước 1.
+- **Đo**: so khác biệt vùng bàn (ảnh xám, ngưỡng ~40) giữa từng khung (10 khung/s) với 1 khung nền không có PiP
+  → được khoảng thời gian + hộp PiP (vd video 02: 16,4–35,45 s, y 845–1140 trên khung 720×1280).
+- **Vá**: máy quay đứng yên → cắt vùng đó từ khung nền (trước hoặc sau PiP; đồ trên bàn bị dời thì đổi khung nền theo
+  từng đoạn) thành PNG mép mềm (alpha, Gaussian 4 px), rồi
+  `ffmpeg -i raw.mp4 -i patchA.png -i patchB.png -filter_complex "[0:v][1:v]overlay=575:845:enable='between(t,16.4,19.3)'[a];[a][2:v]overlay=155:848:enable='between(t,19.3,35.45)'[v]" -map "[v]" -map 0:a -c:v libx264 -crf 12 -c:a copy work/raw_patched.mp4`
+  và dùng `raw_patched.mp4` cho `cut_words.py`/`track.py`. Soát lại bằng tile 1 khung/giây vùng bàn.
+- PiP trượt qua NGƯỜI (không vá được) → phủ đoạn đó bằng ảnh/phim Louis (B-roll). Khung bị thu nhỏ → crop phần hình
+  còn lại rồi phóng lên 720×1280, đặt 1 mối cắt zoom để giấu cú nhảy (video 07).
+- Người nói quay lưng / rời khung (đi lấy thảm) → phủ B-roll ảnh Louis (video 05, 10, 12).
+
 ## Bẫy đã gặp
 | hiện tượng | cách xử lý |
 |---|---|
