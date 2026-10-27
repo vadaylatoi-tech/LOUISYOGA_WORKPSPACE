@@ -78,3 +78,7 @@ __pycache__/
 #     Sửa lỗi v1: bản v1 chặn *.ttf/*.mp3/*.wav nên 6 font + 18 SFX trong danh sách GitHub bị bỏ sót.
 !.claude/skills/**/assets/**
 !.agents/skills/**/assets/**
+
+# --- file he thong Windows/Google Drive
+desktop.ini
+Thumbs.db

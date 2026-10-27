@@ -13,6 +13,7 @@ import argparse
 import datetime as dt
 import json
 import os
+import re
 import shutil
 import socket
 import string
@@ -36,6 +37,12 @@ SKILLS = {
     "louisyoga-reel-style1": "04_AI_SKILLS/louisyoga-reel-style1-package/louisyoga-reel-style1",
     "duycongeditvideo-buoc1": "04_AI_SKILLS/duycongeditvideo-buoc1-package/duycongeditvideo-buoc1",
 }
+# Bo skill dung video (nns-* goi nhau qua thu muc anh em -> phai nam chung 1 thu muc)
+for _n in ("nns-add-sfx", "nns-auto-sub", "nns-cut-silence", "nns-face-highlight", "nns-full-pass",
+           "nns-split-compare", "edit-nns-v1", "edit-remotion-nns", "edit-style-gpt-secret-code",
+           "edit-style-nns", "extract-edit-style", "script-writer"):
+    SKILLS[_n] = f"04_AI_SKILLS/video-skills/{_n}"
+MEMORY_REL = "00_SYSTEM/claude-memory/workspace"  # memory chung, cai-dat nap vao ~/.claude/projects/<thu muc>/memory
 SKIP_NAMES = {"desktop.ini", "Thumbs.db", ".DS_Store"}
 SKIP_DIRS = {"node_modules", "__pycache__", ".git"}
 
@@ -79,8 +86,9 @@ def sync_assets(drive, quiet=False):
     for name, rel in SKILLS.items():
         local = os.path.join(REPO, rel)
         remote = os.path.join(drive, rel)
-        if not os.path.isdir(local) or not os.path.isdir(remote):
+        if not os.path.isdir(local):
             continue
+        os.makedirs(remote, exist_ok=True)  # skill moi: tao cho tren Drive de day asset len
         tracked = tracked_files(rel)
         down = up = 0
         for root, dirs, files in os.walk(remote):
@@ -217,6 +225,36 @@ def link_skills():
     return msgs
 
 
+def seed_memory(drive):
+    """Nap memory chung vao thu muc memory cua Claude Code cho repo va thu muc workspace tren Drive.
+    Chi them file con thieu, khong ghi de memory da co tren may."""
+    src = os.path.join(REPO, MEMORY_REL)
+    if not os.path.isdir(src):
+        return []
+    roots = [REPO] + ([os.path.dirname(drive)] if drive else [])
+    msgs = []
+    for root in roots:
+        slug = re.sub(r"[^A-Za-z0-9]", "-", os.path.abspath(root))
+        mem = os.path.join(HOME_CLAUDE, "projects", slug, "memory")
+        os.makedirs(mem, exist_ok=True)
+        index = os.path.join(mem, "MEMORY.md")
+        have = open(index, encoding="utf-8").read() if os.path.exists(index) else ""
+        added = 0
+        for fn in sorted(os.listdir(src)):
+            if not fn.endswith(".md") or fn == "MEMORY.md" or os.path.exists(os.path.join(mem, fn)):
+                continue
+            shutil.copy2(os.path.join(src, fn), os.path.join(mem, fn))
+            line = next((l for l in open(os.path.join(src, "MEMORY.md"), encoding="utf-8")
+                         if f"({fn})" in l), f"- [{fn}]({fn})\n")
+            if f"({fn})" not in have:
+                have += ("" if not have or have.endswith("\n") else "\n") + line.rstrip("\n") + "\n"
+            added += 1
+        with open(index, "w", encoding="utf-8") as fh:
+            fh.write(have)
+        msgs.append(f"memory {mem}: them {added} file")
+    return msgs
+
+
 def install_hook():
     cfg = {}
     if os.path.exists(SETTINGS):
@@ -252,6 +290,8 @@ def cmd_cai_dat(_a):
         for m in sync_assets(drive) or ["asset da du"]:
             print("-", m)
     for m in link_skills():
+        print("-", m)
+    for m in seed_memory(drive):
         print("-", m)
     print("-", install_hook())
     print("\nXONG. Dong va mo lai Claude Code de hook + skill co hieu luc.")

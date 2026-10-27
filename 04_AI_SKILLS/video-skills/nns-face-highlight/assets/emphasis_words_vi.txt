@@ -1,0 +1,68 @@
+# Tu / cum tu NHAN MANH tieng Viet - dung cho plan.py --from-transcript
+#
+# QUAN TRONG - CACH DO KHOP: plan.py BO HET DAU tieng Viet o CA HAI PHIA truoc khi
+# so sanh. Vi vay o day viet KHONG DAU ("nhung") van bat dung ca chu CO DAU
+# trong transcript, va nguoc lai - transcript viet khong dau cung khop. Nho the
+# file nay giu duoc ASCII thuan, khong bao gio vo font/encoding tren may khac.
+#
+# Moi dong 1 muc. Viet thuong. Cum NHIEU TU duoc phep (vd "quan trong nhat"):
+# plan.py ghep 1..4 tu lien nhau roi do khop, nen cum nhieu tu van bat duoc -
+# day la cai bay da gap: regex cum nhieu tu KHONG bao gio khop 1 token don.
+# Muon dung danh sach rieng: --emphasis-file <file cua ban>
+#
+# --- chuyen huong / doi y (cho punch-in an nhat) ---
+nhung
+tuy nhien
+the nhung
+van de la
+that ra
+thuc ra
+thuc te la
+nguoc lai
+# --- tuyen bo manh ---
+quan trong
+quan trong nhat
+cuc ky
+cuc ki
+rat quan trong
+tuyet doi
+tuyet doi khong
+bat buoc
+phai nho
+nho ky
+luu y
+chu y
+canh bao
+dung bao gio
+khong bao gio
+sai lam
+bi mat
+meo
+thu thuat
+chia khoa
+# --- dan y liet ke ---
+dau tien
+thu nhat
+thu hai
+thu ba
+buoc mot
+buoc hai
+cuoi cung
+ket qua
+ket qua la
+tom lai
+chot lai
+# --- so lieu / so sanh ---
+gap doi
+gap ba
+nhanh hon
+tot hon
+mot nua
+phan tram
+# --- goi hanh dong ---
+hay thu
+lam thu ngay
+theo doi
+dang ky
+luu lai
+comment
