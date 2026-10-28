@@ -150,7 +150,7 @@ def open_bugs(drive):
             continue
         if line.startswith("## ["):
             cur = None
-            if "[ĐÃ XONG]" not in line:
+            if "[ĐÃ XONG]" not in line and "[KHÔNG SỬA]" not in line:
                 cur = [line[3:].strip(), 0]
                 out.append(cur)
         elif cur and line.startswith("- Lần "):

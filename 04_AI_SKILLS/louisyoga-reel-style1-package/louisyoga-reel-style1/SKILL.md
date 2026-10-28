@@ -59,6 +59,9 @@ KHÔNG ghi vào thư mục đã có file của người dùng; không ghi đè b
    **Luôn chạy `scripts/check_cuts.py --work work`** (Whisper GPU ~30 s nghe lại clean.mp4): nó chỉ ra mép nào làm
    MẤT chữ / SÓT tiếng, ở giây THÔ nào trong cuts.json và dời hướng nào → sửa cuts.json, cắt lại, chạy lại tới khi hết.
    (Đo trên 166 mép đợt Săn sale: ~1/5 mép snap vẫn lệch vì mốc từ Whisper lệch — không có quy tắc snap nào tốt hơn.)
+   **Bug A "mép cắt lệch chữ" — chủ thương hiệu quyết KHÔNG sửa tiếp (28/10/2026)**: livestream nói liền, 85% chỗ cắt
+   không có khoảng lặng; đã thử snap 4 kiểu + căn âm wav2vec2 đều không hơn (xem Drive `00_SYSTEM/SO-BUG.md`).
+   Đừng viết lại cách đặt mép; chỉ dùng check_cuts rồi sửa tay chỗ nghe thấy.
    `fixes.json` "replace" áp cho MỌI từ trùng — sửa 1 chữ riêng lẻ thì dùng `drop` + `insert` (vd "làm"→"lắm").
 4. **Mặt**: `scripts/track.py --video <thô> --out work/face.track.json --step 0.5` (model kèm sẵn).
 5. **Dữ liệu**: `scripts/new_project.py --dest <project> --clean work/clean.mp4 --install` rồi
