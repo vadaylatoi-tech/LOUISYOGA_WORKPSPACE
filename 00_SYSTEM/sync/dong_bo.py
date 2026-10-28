@@ -31,6 +31,7 @@ HOME_CLAUDE = os.path.join(os.path.expanduser("~"), ".claude")
 SKILLS_DIR = os.path.join(HOME_CLAUDE, "skills")
 SETTINGS = os.path.join(HOME_CLAUDE, "settings.json")
 NHAT_KY_REL = "00_SYSTEM/NHAT-KY-LAM-VIEC.md"  # tren Drive
+SO_BUG_REL = "00_SYSTEM/SO-BUG.md"  # so bug dung chung, quy tac 2 lan (CLAUDE.md)
 
 # Skill dung chung: ten skill -> thu muc trong repo (cung duong dan tuong doi tren Drive cho asset)
 SKILLS = {
@@ -135,6 +136,28 @@ def last_entries(drive, n=3):
     return entries[-n:]
 
 
+def open_bugs(drive):
+    """Cac loai bug chua [ĐÃ XONG] trong so bug (tieu de '## [TRANG THAI] ...') kem so lan da thu."""
+    p = os.path.join(drive, SO_BUG_REL)
+    if not os.path.isfile(p):
+        return None
+    out, cur, fence = [], None, False
+    for line in open(p, encoding="utf-8"):
+        if line.startswith("```"):
+            fence = not fence          # bo qua mau trong khoi code
+            continue
+        if fence:
+            continue
+        if line.startswith("## ["):
+            cur = None
+            if "[ĐÃ XONG]" not in line:
+                cur = [line[3:].strip(), 0]
+                out.append(cur)
+        elif cur and line.startswith("- Lần "):
+            cur[1] += 1
+    return [f"- {t} — da thu {n} lan" for t, n in out]
+
+
 def cmd_session_start(_a):
     try:
         info = json.loads(sys.stdin.read() or "{}")
@@ -165,6 +188,10 @@ def cmd_session_start(_a):
         ent = last_entries(drive)
         out.append(f"\n## Nhat ky lam viec gan nhat ({drive}/{NHAT_KY_REL})")
         out.append("\n\n".join(ent) if ent else "(chua co muc nao)")
+        bugs = open_bugs(drive)
+        if bugs:
+            out.append(f"\n## Bug chua xong ({drive}/{SO_BUG_REL}) — doc so truoc khi sua; lan 2 khong xong thi DUNG, de xuat huong moi")
+            out.append("\n".join(bugs))
 
     for name, rel in SKILLS.items():
         link = os.path.join(SKILLS_DIR, name)

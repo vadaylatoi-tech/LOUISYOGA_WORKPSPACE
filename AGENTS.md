@@ -45,6 +45,14 @@ Cạnh mỗi video đã cắt trong `11_COMPLETED_PROJECTS/2026-10_reels-chon-th
 - Hồ sơ làm việc (work/, BAO-CAO, contact sheet) → Drive `05_VIDEO_PROJECTS/<dự án>/edit/<NN-ten-video>/`.
 - Project Remotion (node_modules) → ổ máy `D:/LOUGA_WORKSPACE/05_VIDEO_PROJECTS/<dự án>/edit-<NN-ten-video>/project` (Drive không cài được node_modules).
 
+## XỬ LÝ BUG — GIỚI HẠN 2 LẦN (chủ thương hiệu chốt 28/10/2026)
+Sổ bug dùng chung mọi máy: Drive `LOUGA_WORKSPACE_MEDIA/00_SYSTEM/SO-BUG.md` (hook đầu phiên in các loại bug chưa xong). Lý do: ngày nào cũng tìm ra bug mà không sửa dứt điểm.
+1. **Thấy bug → tìm hết chỗ giống nó trước khi sửa**: grep mọi skill/script trong repo, chạy thử trên các video/dự án khác. Ghi phạm vi đã quét vào sổ.
+2. **Phân loại theo NGUYÊN NHÂN GỐC**, cùng loại gom 1 mục → sửa 1 lần cho cả loại. Không vá từng chỗ lẻ.
+3. **Mỗi lần thử sửa = 1 dòng "Lần N"** trong sổ (ngày, máy, cách sửa, kết quả ĐO trên dữ liệu thật). Đếm CHUNG cả 2 máy / mọi phiên Claude — đọc sổ trước khi sửa.
+4. **Lần 2 vẫn chưa xong → DỪNG, không thử lần 3.** Đổi trạng thái `[DỪNG - XEM LẠI HƯỚNG]`, viết đề xuất: hướng/phương thức đang dùng, vì sao 2 lần không được, 2–3 hướng khác, nên chọn hướng nào → báo anh, chờ duyệt rồi mới làm.
+5. Sửa xong và đo lại hết lỗi → `[ĐÃ XONG]`; có sửa script trong repo thì commit + push như thường.
+
 ## ĐỒNG BỘ GIỮA CÁC MÁY + NHẬT KÝ — BẮT BUỘC (từ 26/10/2026)
 - GitHub giữ code/skill/quy tắc; Google Drive giữ media, asset skill và **nhật ký làm việc** `LOUGA_WORKSPACE_MEDIA/00_SYSTEM/NHAT-KY-LAM-VIEC.md`.
 - Đầu phiên: hook SessionStart tự chạy `00_SYSTEM/sync/dong_bo.py session-start` (git pull, đồng bộ asset skill với Drive, in 3 mục nhật ký cuối). Không thấy khối "DONG BO WORKSPACE" ở đầu phiên → chạy tay lệnh đó, rồi đọc nhật ký trước khi làm.
