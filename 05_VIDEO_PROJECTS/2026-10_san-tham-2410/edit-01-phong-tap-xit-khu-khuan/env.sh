@@ -1,0 +1,12 @@
+export PRJ="D:/LOUGA_WORKSPACE/05_VIDEO_PROJECTS/2026-10_san-tham-2410/edit-01-phong-tap-xit-khu-khuan/project"
+export TEMP="$PRJ/renders/_tmp" TMP="$PRJ/renders/_tmp" TMPDIR="$PRJ/renders/_tmp"
+mkdir -p "$TEMP"
+export npm_config_cache="D:/LOUGA_WORKSPACE/_npm-cache"
+export PYTHONIOENCODING=utf-8 PYTHONDONTWRITEBYTECODE=1
+export S="C:/Users/ADMIN/.claude/skills/louisyoga-reel-style1/scripts"
+export MEDIA="G:/My Drive/LOUISYOGA_WORKSPACE/LOUGA_WORKSPACE_MEDIA"
+export RAW="$MEDIA/05_VIDEO_PROJECTS/2026-10_san-tham-2410/cuts/01 - Phòng tập đã xịt khử khuẩn, thảm vẫn cần lau-.mp4"
+export HOSO="$MEDIA/05_VIDEO_PROJECTS/2026-10_san-tham-2410/cuts/01 - Phòng tập đã xịt khử khuẩn, thảm vẫn cần lau-.hoso.words.json"
+export ED="$MEDIA/05_VIDEO_PROJECTS/2026-10_san-tham-2410/edit/01-phong-tap-xit-khu-khuan"
+export W="$ED/work"
+export FINAL="$MEDIA/10_FINAL_DELIVERABLES/2026-10-28_san-tham-2410/01 - Phòng tập đã xịt khử khuẩn, thảm vẫn cần lau-.mp4"

@@ -82,3 +82,6 @@ __pycache__/
 # --- file he thong Windows/Google Drive
 desktop.ini
 Thumbs.db
+
+# npm cache dat tren D: (khong ghi C:)
+_npm-cache/
