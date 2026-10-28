@@ -196,7 +196,14 @@ def load_terms(path):
     """terms.json: [["mau regex", "thay bang"], ...] — sua ten rieng Whisper hay nghe sai."""
     if not path or not os.path.isfile(path):
         return []
-    return [(re.compile(a, re.I), b) for a, b in read_json(path)]
+    rules = read_json(path)
+    # JSON doc "\b" (1 gach) thanh ky tu backspace -> regex khong bao gio khop (file mau cu bi vay).
+    # Phai viet "\\b" trong JSON; file viet sai thi tu sua va bao.
+    if any("\x08" in a for a, _ in rules):
+        print("  CANH BAO %s: viet \"\\b\" 1 gach (JSON doc thanh backspace) -> tu sua thanh ranh gioi tu."
+              " Nen sua file thanh \"\\\\b\"." % path)
+        rules = [(a.replace("\x08", r"\b"), b) for a, b in rules]
+    return [(re.compile(a, re.I), b) for a, b in rules]
 
 
 def fix_text(s, terms):

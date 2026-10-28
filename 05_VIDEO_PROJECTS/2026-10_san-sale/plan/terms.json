@@ -1,12 +1,12 @@
 [
- ["\b(?:tp|tê bê|tế bê|tay be|tpe)\b", "TPE"],
- ["\b(?:asena|ascena|azana|asuna)\b", "Asana"],
- ["\b(?:quin|quynh)\b", "Queen"],
- ["\bbasic (?:den|gem|gel|zen|z|gen)\b", "Basic Gen"],
- ["\b(?:thạm|thẳm|tạm|hạm)\b", "thảm"],
- ["\bbong chóc\b", "bong tróc"],
- ["\b(?:dọa hàng|dọ hàng|dõi hàng)\b", "giỏ hàng"],
- ["\bđịnh luyến\b", "định tuyến"],
- ["\bchất điệu\b", "chất liệu"],
- ["\b(?:lushoga|louis soga|richoga|louis chogar)\b", "Louis Yoga"]
+ ["\\b(?:tp|tê bê|tế bê|tay be|tpe)\\b", "TPE"],
+ ["\\b(?:asena|ascena|azana|asuna)\\b", "Asana"],
+ ["\\b(?:quin|quynh)\\b", "Queen"],
+ ["\\bbasic (?:den|gem|gel|zen|z|gen)\\b", "Basic Gen"],
+ ["\\b(?:thạm|thẳm|hạm)\\b", "thảm"],
+ ["\\bbong chóc\\b", "bong tróc"],
+ ["\\b(?:dọa hàng|dọ hàng|dõi hàng)\\b", "giỏ hàng"],
+ ["\\bđịnh luyến\\b", "định tuyến"],
+ ["\\bchất điệu\\b", "chất liệu"],
+ ["\\b(?:lushoga|louis soga|richoga|louis chogar)\\b", "Louis Yoga"]
 ]
