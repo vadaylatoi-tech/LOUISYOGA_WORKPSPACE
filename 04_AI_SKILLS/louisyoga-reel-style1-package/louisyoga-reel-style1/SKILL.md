@@ -70,10 +70,12 @@ KHÔNG ghi vào thư mục đã có file của người dùng; không ghi đè b
    Caption tự giữ mỗi dòng ≤ 21 ký tự (`--max-chars`) và không tách từ ghép; từ ghép riêng của video → `"compound"`,
    muốn tự ngắt dòng → `"lines": ["dòng 1", "dòng 2", ...]` trong fixes.json (không cần viết caption_patch riêng).
 6. **Dựng**: sửa `<project>/src/reel/Reel.tsx` trong các khối `▼ EDIT ▼` (bands, SEG_ZOOM theo số đoạn,
-   PUNCHES, FOCUS, BROLL, IMPACTS, CUES, scenes). Dùng atoms `src/kit/atoms.tsx` + khối dựng sẵn `src/kit/scenes.tsx`
+   PUNCHES, FOCUS, BROLL, IMPACTS, CUES, scenes). Đặt `CAP_Y`, `G` và mọi chữ cần đọc theo **safe zone** Reels/TikTok
+   (x 108–886, y 269–1248, tính cả hộp chữ thật + animation — `references/01` mục "Khung & bố cục"). Dùng atoms `src/kit/atoms.tsx` + khối dựng sẵn `src/kit/scenes.tsx`
    (MatCard, RecapRows, NumberRows, DoDont). Ảnh sản phẩm: `scripts/prep_products.py --dest <project>/public/img`.
    Kiểm bố cục: `scripts/stills.py --project <project> --out work/stills_sheet.jpg --times <giây hook, mỗi panel,
-   mỗi B-roll, CTA>` (bundle 1 lần, ~3 s/khung → 1 tấm). Soi: chữ không đè mặt/sản phẩm, không cắt mép, không che số.
+   mỗi B-roll, CTA>` (bundle 1 lần, ~3 s/khung → 1 tấm). Soi: chữ không đè mặt/sản phẩm, không cắt mép, không che số,
+   không lọt ra ngoài safe zone (sửa ngay khi dựng, không thêm lượt render riêng).
 7. **Âm thanh**: `scripts/process_voice.py --in work/voice_raw.wav --out work/voice_proc.wav --analyze`;
    `scripts/measure_sfx.py` để chắc mật độ/mức SFX đúng chuẩn TRƯỚC khi render (đọc được cue ghi bằng hằng
    `HOOK_DROP`, `VIDEO_FRAMES / FPS`, hằng tự đặt `const END = ...;` — chỉ cần là biểu thức số học).
@@ -115,6 +117,7 @@ bản gốc từ máy/điện thoại (không qua livestream) — báo người 
 ## Luật cứng (vi phạm = làm lại)
 
 - Hình người nói **tràn khung**; chỉ che toàn khung trong chớp nhoáng để tạo hiệu ứng. Đồ hoạ ở vùng trống.
+- Chữ/logo/CTA cần đọc nằm trong **safe zone** Reels/TikTok (x 108–886, y 269–1248) suốt lúc đọc; nền/footage tràn khung.
 - **Ảnh thật** thay vì hình vẽ: ảnh sản phẩm trong thư mục dữ liệu của người dùng, avatar web, B-roll phim
   thương hiệu, ảnh CC trên mạng (ghi credit). Không dùng ảnh "hời hợt" (người tạo dáng chung chung).
 - **Tư liệu LOUIS YOGA trước tiên** (góp ý 27/10/2026: "đang lạm dụng video không phải của Louis"). Thứ tự ưu tiên khi

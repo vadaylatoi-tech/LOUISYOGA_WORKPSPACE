@@ -35,8 +35,9 @@ const TAIL = 54; // CTA hold after the last word (1.8 s)
 const DURATION = VIDEO_FRAMES + TAIL;
 
 // ▼ EDIT ▼ layout bands — measure on a frame of YOUR footage (keep face + product visible)
-const CAP_Y = 1196; // caption line: just under the object the speaker holds / under the chin
-const G = 1330; // top of the lower graphics band (table, towels — empty area)
+// Safe zone Reels/TikTok for text that must be read: x 108–886, y 269–1248 (see references/01).
+const CAP_Y = 1170; // caption line: just under the object the speaker holds / under the chin; bottom edge ≈ 1248
+const G = 1270; // top of the lower graphics band (table, towels — empty area)
 
 const FOOTAGE = "footage/clean.mp4";
 const FILM = "broll/louisyoga_brand_film_30fps.mp4";

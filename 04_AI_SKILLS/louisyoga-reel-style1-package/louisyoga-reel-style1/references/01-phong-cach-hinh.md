@@ -5,13 +5,27 @@ Nguồn gốc: học từ video explainer kiểu tài liệu (facebook.com/reel/
 
 ## Khung & bố cục
 - 1080×1920, 30 fps. Footage người nói **tràn khung** (không thu nhỏ vào ô, không nền che 40% như bản đầu).
-- Chia vùng theo footage thật (đo trên 1 khung):
-  - **Dải trên** (kệ/tường phía trên đầu, y ≈ 100–420): tiêu đề hook, tag series, nhãn B-roll. Dùng `TopShade` khi cần đọc rõ.
+- **SAFE ZONE Facebook Reels + TikTok — nguyên tắc dựng mặc định** (chủ thương hiệu chốt 29/10/2026). Tính ngay lúc
+  đặt bố cục, không để tới QC. Vùng ưu tiên cho chữ quan trọng (hook, tiêu đề, caption, logo, CTA, con số, dấu mộc):
+  **x 108–886, y 269–1248**. Ngoài vùng này có thể bị che bởi: tai thỏ/Dynamic Island/thanh trạng thái + tab
+  "Following/Reels" (trên), avatar-tên-caption bài đăng-thanh điều hướng (dưới), cột Like/Comment/Share (phải).
+  - Đo **cả hộp thật** của khối: mọi dòng sau khi ngắt, viền/stroke, shadow, và lúc lớn nhất của animation đang đọc
+    (từ đang nói to 108%, slam/pop scale, rung) — không chỉ tâm hay `top`. Vùng an toàn lệch trái (cột nút ở phải):
+    khối căn giữa 1080 thì rộng tối đa ~690 px; rộng hơn → dịch tâm về x ≈ 497, xuống dòng, bớt chữ hoặc giảm cỡ.
+  - Phải nằm trong vùng suốt lúc người xem cần đọc; đoạn bay vào/ra, whip, chớp được đi ra ngoài.
+  - Footage, B-roll, nền, `TopShade`, hiệu ứng trang trí vẫn tràn toàn khung.
+  - Là vùng ưu tiên, không phải hình chữ nhật ép cứng: lệch vài chục px vì bố cục đẹp hơn được, miễn chữ không lọt vào
+    vùng nút/caption bài đăng. Một bản dùng cho cả hai nền tảng → bố cục hợp cả hai (vùng trên là vùng chung).
+- Chia vùng theo footage thật (đo trên 1 khung), các dải đã cắt theo safe zone:
+  - **Dải trên** (kệ/tường phía trên đầu, y ≈ 270–420): tiêu đề hook, tag series, nhãn B-roll. Dùng `TopShade` khi cần
+    đọc rõ. Hook 2 dòng 136 px cao ~300 px → đỉnh chữ không cao hơn y 270; không đủ chỗ thì giảm cỡ hoặc lấn xuống trán.
   - **Mặt + sản phẩm** (y ≈ 420–1180): KHÔNG đặt chữ/panel. Chỉ được kẻ đường callout chỉ vào sản phẩm.
-  - **Caption** ngay dưới sản phẩm/cằm (`CAP_Y` ≈ 1190–1260).
-  - **Dải dưới** (bàn, khăn, hộp; `G` ≈ 1320–1660): panel so sánh, ảnh thật, checklist, dấu mộc. Tránh x > 940 khi
-    y 1000–1650 (nút TikTok bên phải) và y > 1660 (mô tả bài đăng).
-- Ví dụ đã duyệt: CAP_Y = 1196, G = 1330 (người ngồi giữa, thảm cầm trước ngực, khăn/hộp trên bàn).
+  - **Caption** ngay dưới sản phẩm/cằm: mép DƯỚI caption (kể cả viền) ≈ 1248 → 1 dòng 62 px thì `CAP_Y` ≈ 1150–1180.
+    Dòng dài chạm x > 886 → giảm `--max-chars` hoặc ép `"lines"` trong fixes.json.
+  - **Dải dưới** (bàn, khăn, hộp; `G` ≈ 1260–1500): panel so sánh, ảnh thật, checklist. Nằm dưới 1248 nên chỉ để hình/
+    panel minh hoạ phụ; con số, chữ chốt, dấu mộc cần đọc thì đặt ở phần trên của panel (≤ ~1300) hoặc đưa lên dải
+    trên. x ≤ 886 khi y ≥ 1000 (cột nút); không đặt gì cần đọc ở y > 1500 (avatar, mô tả bài đăng).
+- Ví dụ đã duyệt (trước khi có safe zone): CAP_Y = 1196, G = 1330 — video mới kéo lên CAP_Y ≈ 1170, G ≈ 1270.
 
 ## Màu (tokens trong `src/kit/theme.ts`)
 | token | mã | dùng cho |
