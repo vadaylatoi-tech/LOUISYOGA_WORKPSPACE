@@ -35,9 +35,10 @@ const TAIL = 54; // CTA hold after the last word (1.8 s)
 const DURATION = VIDEO_FRAMES + TAIL;
 
 // ▼ EDIT ▼ layout bands — measure on a frame of YOUR footage (keep face + product visible)
-// Safe zone Reels/TikTok for text that must be read: x 108–886, y 269–1248 (see references/01).
-const CAP_Y = 1170; // caption line: just under the object the speaker holds / under the chin; bottom edge ≈ 1248
-const G = 1270; // top of the lower graphics band (table, towels — empty area)
+// Safe zone "bậc thang" (kit/theme.ts ZONE, references/01): text in A (y 250–860, x 90–990) or
+// B (y 860–1430, x 90–800); nothing to read below 1430. Panels reaching zone B are drawn at 79 %.
+const CAP_Y = 1300; // caption line (zone B, left of the buttons); bottom edge ≈ 1375
+const G = 990; // top of the lower graphics band: a 320-px panel drawn at 79 % ends ≈ 1243, above the captions
 
 const FOOTAGE = "footage/clean.mp4";
 const FILM = "broll/louisyoga_brand_film_30fps.mp4";
@@ -125,11 +126,11 @@ const MUSIC_CURVE: [number[], number[]] = [
 const Hook: React.FC = () => (
   <>
     <TopShade start={0} end={f(4.1)} />
-    <BigText start={0} end={f(4.1)} y={120} slam lines={[{ text: "Thảm càng dày", color: C.white, size: 100 }]} />
-    <BigText start={f(0.55)} end={f(4.1)} y={230} slam lines={[{ text: "càng tốt?", color: C.accent, size: 124 }]} />
-    <StrikeLine d="M250,330 L830,282" start={f(HOOK_DROP)} end={f(4.1)} />
+    <BigText start={0} end={f(4.1)} y={262} slam lines={[{ text: "Thảm càng dày", color: C.white, size: 100 }]} />
+    <BigText start={f(0.55)} end={f(4.1)} y={372} slam lines={[{ text: "càng tốt?", color: C.accent, size: 124 }]} />
+    <StrikeLine d="M250,472 L830,424" start={f(HOOK_DROP)} end={f(4.1)} />
     <BottomShade start={f(HOOK_DROP) - 2} end={f(2.3)} />
-    <Stamp text="Chưa chắc!" start={f(HOOK_DROP)} end={f(2.3)} x={540} y={G + 140} rot={-8} size={136} />
+    <Stamp text="Chưa chắc!" start={f(HOOK_DROP)} end={f(2.3)} x={445} y={G + 140} rot={-8} size={96} />
   </>
 );
 
@@ -225,8 +226,8 @@ const MatCallout: React.FC = () => {
   if (!life) return null;
   return (
     <>
-      <CalloutLine d="M300,1395 C250,1300 330,1200 470,1080" tip={[470, 1080]} start={s} end={e} />
-      <div style={{ position: "absolute", left: 60, top: G + 70 }}>
+      <CalloutLine d="M300,1195 C250,1150 330,1100 470,1040" tip={[470, 1040]} start={s} end={e} />
+      <div style={{ position: "absolute", left: 60, top: G + 30 }}>
         <Pill text="Thảm Basic · cao su 5 mm" start={s + 2} end={e} x={330} y={0} size={38} />
         <Pill text="Độ nén chắc" start={f(36.5)} end={e} x={250} y={92} bg={C.gold} fg={C.ink} size={38} />
       </div>
@@ -237,7 +238,7 @@ const MatCallout: React.FC = () => {
 const AdviceTitle: React.FC = () => (
   <>
     <Kicker text="tập nâng cao thì nên chọn" start={f(41.1)} end={f(46.1)} y={G + 10} color={C.white} />
-    <BigText start={f(43.45)} end={f(46.1)} y={G + 70} slam lines={[{ text: "Độ nén chắc", color: C.accent, size: 110 }]} />
+    <BigText start={f(43.45)} end={f(46.1)} y={G + 70} slam lines={[{ text: "Độ nén chắc", color: C.accent, size: 88 }]} />
   </>
 );
 
@@ -251,14 +252,14 @@ const EndCTA: React.FC = () => {
     <>
       <AbsoluteFill style={{ background: `rgba(14,10,16,${dim})` }} />
       <TopShade start={s} end={DURATION + 20} />
-      <div style={{ position: "absolute", left: W / 2 - 70, top: 100, transform: `scale(${interpolate(frame, [s, s + 10], [0, 1], { ...clamp, easing: Easing.out(Easing.back(2)) })})` }}>
+      <div style={{ position: "absolute", left: W / 2 - 70, top: 262, transform: `scale(${interpolate(frame, [s, s + 10], [0, 1], { ...clamp, easing: Easing.out(Easing.back(2)) })})` }}>
         <Img src={staticFile("brand/lotus.png")} style={{ width: 140, height: 140 }} />
       </div>
-      <BigText start={s + 6} end={DURATION + 1} y={260} slam lines={[{ text: "Follow Louis Yoga", color: C.white, size: 84 }]} />
-      <Kicker text="xem thêm mẹo chọn thảm" start={s + 10} end={DURATION + 1} y={360} color={C.gold} />
-      <Polaroid src="brand/mat_basic_blue.jpg" label="Basic · 5 mm" start={s + 8} end={DURATION + 1} x={90} y={G - 40} w={230} h={290} rot={-7} />
-      <Polaroid src="brand/mat_asana_black.jpg" label="Asana · 4,5 mm" start={s + 12} end={DURATION + 1} x={700} y={G - 30} w={230} h={290} rot={6} />
-      <div style={{ position: "absolute", left: 360, right: 360, top: G + 90, textAlign: "center", opacity: interpolate(frame, [s + 14, s + 22], [0, 1], clamp) }}>
+      <BigText start={s + 6} end={DURATION + 1} y={420} slam lines={[{ text: "Follow Louis Yoga", color: C.white, size: 84 }]} />
+      <Kicker text="xem thêm mẹo chọn thảm" start={s + 10} end={DURATION + 1} y={520} color={C.gold} />
+      <Polaroid src="brand/mat_basic_blue.jpg" label="Basic · 5 mm" start={s + 8} end={DURATION + 1} x={100} y={720} w={230} h={290} rot={-7} />
+      <Polaroid src="brand/mat_asana_black.jpg" label="Asana · 4,5 mm" start={s + 12} end={DURATION + 1} x={500} y={730} w={230} h={290} rot={6} />
+      <div style={{ position: "absolute", left: 90, width: 710, top: 1150, textAlign: "center", opacity: interpolate(frame, [s + 14, s + 22], [0, 1], clamp) }}>
         <div style={{ ...font(900, 40), color: C.white }}>Cao su</div>
         <div style={{ ...font(900, 40), color: C.white }}>tự nhiên</div>
         <div style={{ ...font(900, 46), color: C.accent, marginTop: 8 }}>4,5–5 mm</div>
@@ -284,8 +285,8 @@ export const LouisYogaReel: React.FC = () => {
         <MatCallout />
         <AdviceTitle />
         <CheckGrid items={[["Thoải mái", 46.2], ["Ổn định", 47.36], ["An tâm", 52.0], ["Hiệu quả", 52.64]]} start={f(46.15)} end={f(54.35)} y={G} />
-        <Stamp text="Chuẩn 5 ly" start={f(9.5)} end={f(12.25)} x={540} y={G + 150} rot={-6} size={96} />
-        <Pill text="✓ Hạn chế lún thảm" start={f(16.8)} end={f(17.95)} x={W / 2} y={G + 110} size={46} />
+        <Stamp text="Chuẩn 5 ly" start={f(9.5)} end={f(12.25)} x={445} y={G + 150} rot={-6} size={90} />
+        <Pill text="✓ Hạn chế lún thảm" start={f(16.8)} end={f(17.95)} x={445} y={G + 110} size={44} />
         <Captions lines={CAPTIONS} y={CAP_Y} from={2.2} until={CLEAN_DURATION} />
         <EndCTA />
       </AbsoluteFill>

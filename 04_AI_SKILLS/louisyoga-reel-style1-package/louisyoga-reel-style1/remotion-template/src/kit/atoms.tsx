@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Easing, Img, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { MONTSERRAT } from "./useMontserrat";
-import { C, clamp, font, FPS, H, rnd, W } from "./theme";
+import { C, clamp, fitSize, font, FPS, H, rnd, W, ZONE, zoneRight } from "./theme";
 
 // Graphic atoms of Louis Yoga reel style 1. All times are FRAMES unless a prop says seconds.
 
@@ -29,8 +29,8 @@ export const Kicker: React.FC<{ text: string; start: number; end: number; y: num
   end,
   y,
   color = C.white,
-  left = 0,
-  right = 0,
+  left = ZONE.L,
+  right,
 }) => {
   const life = useLife(start, end);
   const p = usePop(start, 14);
@@ -41,11 +41,12 @@ export const Kicker: React.FC<{ text: string; start: number; end: number; y: num
         position: "absolute",
         top: y,
         left,
-        right,
+        right: right ?? W - zoneRight(y + 50),
         textAlign: "center",
+        whiteSpace: "nowrap",
         opacity: life * Math.min(1, p * 1.5),
         transform: `translateY(${(1 - p) * 30}px)`,
-        ...font(800, 40),
+        ...font(800, fitSize(text, 40, W - (right ?? W - zoneRight(y + 50)) - left)),
         letterSpacing: 4,
         color,
       }}
@@ -69,20 +70,21 @@ export const BigText: React.FC<{
   if (!life) return null;
   const s = slam ? interpolate(p, [0, 1], [1.7, 1]) : interpolate(p, [0, 1], [0.6, 1]);
   const shake = slam && frame - start < 8 ? (rnd(frame) - 0.5) * 14 : 0;
+  const bottom = y + lines.reduce((a, l) => a + l.size * 1.05, 0);
   return (
     <div
       style={{
         position: "absolute",
         top: y,
-        left: 40,
-        right: 40,
+        left: ZONE.L,
+        right: W - zoneRight(bottom), // centred in the safe zone (narrower under y 860: button column)
         textAlign: "center",
         opacity: life * Math.min(1, p * 2),
         transform: `translate(${shake}px, ${shake * 0.6}px) scale(${s})`,
       }}
     >
       {lines.map((l, i) => (
-        <div key={i} style={{ ...font(900, l.size), color: l.color, textShadow: "0 6px 0 rgba(0,0,0,0.55)" }}>
+        <div key={i} style={{ ...font(900, fitSize(l.text, l.size, zoneRight(bottom) - ZONE.L)), color: l.color, whiteSpace: "nowrap", textShadow: "0 6px 0 rgba(0,0,0,0.55)" }}>
           {l.text}
         </div>
       ))}
@@ -276,24 +278,29 @@ export const PhotoCard: React.FC<{ src: string; label: string; x: number; y: num
 
 // ---------------------------------------------------------------- containers & shades
 
-// Dark rounded panel that rises into the lower band (pair with quick-swoosh).
+// Dark rounded panel that rises into the lower band (pair with quick-swoosh). Children are laid out on a
+// 900-wide box; a panel reaching below y 860 (zone B) is drawn at 79 % so it stays in x 90–800.
+// y = top of the panel as drawn; it then ends at y + h·k (keep that above the caption line).
+export const panelScale = (y: number, h: number) => (y + h <= ZONE.STEP ? 1 : (ZONE.R_B - ZONE.L) / 900);
 export const Panel: React.FC<{ start: number; end: number; y: number; h: number; children: React.ReactNode }> = ({ start, end, y, h, children }) => {
   const life = useLife(start, end, 7);
   const p = usePop(start, 14);
   if (!life) return null;
+  const k = panelScale(y, h);
   return (
     <div
       style={{
         position: "absolute",
-        left: 50,
+        left: ZONE.L,
         width: 900,
         top: y,
         height: h,
+        transformOrigin: "0 0",
         borderRadius: 30,
         background: "rgba(22,17,26,0.84)",
         border: "2px solid rgba(255,90,174,0.55)",
         boxShadow: "0 20px 50px rgba(0,0,0,0.45)",
-        transform: `translateY(${(1 - p) * 120}px) scale(${0.92 + 0.08 * p})`,
+        transform: `translateY(${(1 - p) * 120}px) scale(${k * (0.92 + 0.08 * p)})`,
         opacity: life * Math.min(1, p * 1.6),
         overflow: "hidden",
       }}
@@ -367,13 +374,13 @@ export const CheckGrid: React.FC<{ items: [string, number][]; start: number; end
   );
 };
 
-// Small top-left series tag ("Mẹo chọn thảm · Louis Yoga") — frames.
+// Small top-left series tag ("Mẹo chọn thảm · Louis Yoga") at the top of zone A — frames.
 export const SeriesTag: React.FC<{ start: number; end: number; tag: string; brand: string }> = ({ start, end, tag, brand }) => {
   const frame = useCurrentFrame();
   const p = usePop(start, 14);
   if (frame < start || frame >= end) return null;
   return (
-    <div style={{ position: "absolute", left: 48, top: 150, display: "flex", alignItems: "center", transform: `translateX(${(1 - p) * -420}px)` }}>
+    <div style={{ position: "absolute", left: ZONE.L, top: ZONE.TOP + 12, display: "flex", alignItems: "center", transform: `translateX(${(1 - p) * -420}px)` }}>
       <div style={{ background: C.pinkDeep, color: C.white, ...font(900, 30), padding: "10px 20px", borderRadius: 8, letterSpacing: 1 }}>{tag}</div>
       <div style={{ marginLeft: 12, color: C.white, ...font(800, 28), letterSpacing: 2, textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>{brand}</div>
     </div>

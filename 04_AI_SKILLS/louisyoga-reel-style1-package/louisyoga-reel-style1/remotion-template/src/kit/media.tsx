@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Easing, Freeze, Img, interpolate, OffthreadVideo, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { usePop } from "./atoms";
-import { C, clamp, f, font, FPS, H, W } from "./theme";
+import { C, clamp, f, font, FPS, H, W, ZONE } from "./theme";
 
 // ---------------------------------------------------------------- talking head (full-bleed)
 
@@ -137,7 +137,7 @@ const BrollShot: React.FC<{ b: Broll; src: string }> = ({ b, src }) => {
       {moving && shot(dx * 0.25, 0.4)}
       {moving && shot(dx * 0.5, 0.25)}
       <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%)" }} />
-      <div style={{ position: "absolute", left: 56, top: 250, display: "flex", alignItems: "center", transform: `translateX(${(1 - lp) * -300}px)`, opacity: lp }}>
+      <div style={{ position: "absolute", left: ZONE.L, top: ZONE.TOP + 80, display: "flex", alignItems: "center", transform: `translateX(${(1 - lp) * -300}px)`, opacity: lp }}>
         <div style={{ width: 16, height: 16, borderRadius: 99, background: C.accent, marginRight: 14, boxShadow: `0 0 14px ${C.accent}` }} />
         <div style={{ ...font(900, 46), color: C.white, textShadow: "0 3px 10px rgba(0,0,0,0.6)" }}>{b.label}</div>
       </div>
@@ -161,6 +161,7 @@ export type CapWord = { w: string; s: number; e: number };
 export type CapLine = { start: number; end: number; words: CapWord[] };
 
 // Word-by-word captions: active word pink + slightly larger, black outline for any background.
+// Centred in zone B (x 90–800, left of the button column); a long line is shrunk to fit. y = top of the line.
 export const Captions: React.FC<{ lines: CapLine[]; y: number; from: number; until: number }> = ({ lines, y, from, until }) => {
   const frame = useCurrentFrame();
   const t = frame / FPS;
@@ -168,8 +169,10 @@ export const Captions: React.FC<{ lines: CapLine[]; y: number; from: number; unt
   const line = lines.find((l) => t >= l.start - 0.05 && t < l.end + 0.15);
   if (!line) return null;
   const enter = interpolate(t, [line.start - 0.05, line.start + 0.08], [0, 1], clamp);
+  const est = line.words.reduce((a, w) => a + w.w.length * 62 * 0.66 + 18, 0); // ≈ px width at size 62
+  const fit = Math.min(1, (ZONE.R_B - ZONE.L) / est);
   return (
-    <div style={{ position: "absolute", top: y, left: 60, right: 60, textAlign: "center", transform: `translateY(${(1 - enter) * 16}px)`, opacity: enter }}>
+    <div style={{ position: "absolute", top: y, left: ZONE.L, width: ZONE.R_B - ZONE.L, textAlign: "center", whiteSpace: "nowrap", transform: `translateY(${(1 - enter) * 16}px) scale(${fit})`, transformOrigin: "50% 0", opacity: enter }}>
       {line.words.map((w, i) => {
         const active = t >= w.s - 0.03 && t < w.e + 0.05;
         const said = t >= w.s;

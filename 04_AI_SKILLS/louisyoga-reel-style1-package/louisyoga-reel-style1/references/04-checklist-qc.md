@@ -3,7 +3,7 @@
 Hình (soi contact sheet 1 khung/giây của bản cuối + still các mốc quan trọng):
 - [ ] 2 giây đầu có hook đập: tiêu đề slam, chốt ý (gạch chữ + dấu mộc), zoom vào mặt.
 - [ ] Không chữ/panel nào đè mặt hoặc sản phẩm; không chữ bị cắt mép; không thanh/khối che số;
-      chữ cần đọc trong safe zone x 108–886, y 269–1248 (`references/01`).
+      chữ cần đọc trong vùng bậc thang: A y 250–860 · x 90–990, B y 860–1430 · x 90–800 (`references/01`).
 - [ ] Footage tràn khung ở mọi lúc trừ B-roll (cũng tràn khung) và CTA.
 - [ ] Mỗi mối cắt có đổi mức zoom (không nhảy hình cùng cỡ).
 - [ ] B-roll khớp lời nói; không lẫn cảnh có chữ/icon in sẵn của phim gốc.

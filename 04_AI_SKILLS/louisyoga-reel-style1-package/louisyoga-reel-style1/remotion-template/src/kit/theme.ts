@@ -18,6 +18,15 @@ export const C = {
   dim: "rgba(255,255,255,0.55)",
 };
 
+// Safe zone "bậc thang" for text that must be read (FB Reels + TikTok, organic posts; approved 29/10/2026):
+//   A  y 250–860   text x 90–990 (no buttons up there)
+//   B  y 860–1430  text x 90–800 (the like/comment/share column sits on the right from mid-frame down)
+//   below 1430, and right of 800 under y 860: decoration only (post description, music, buttons).
+export const ZONE = { L: 90, R_A: 990, R_B: 800, TOP: 250, STEP: 860, BOTTOM: 1430 };
+export const zoneRight = (yBottom: number) => (yBottom <= ZONE.STEP ? ZONE.R_A : ZONE.R_B);
+// Font size that keeps one heavy uppercase line inside `width` (never wraps into the next line).
+export const fitSize = (text: string, size: number, width: number) => Math.min(size, Math.floor(width / (text.length * 0.66)));
+
 export const f = (t: number) => Math.round(t * FPS);
 export const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
