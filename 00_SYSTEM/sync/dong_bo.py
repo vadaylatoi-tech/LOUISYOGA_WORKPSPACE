@@ -197,10 +197,29 @@ def cmd_session_start(_a):
             out.append(f"\n## Bug chua xong ({drive}/{SO_BUG_REL}) — doc so truoc khi sua; lan 2 khong xong thi DUNG, de xuat huong moi")
             out.append("\n".join(bugs))
 
+    # Skill moi keo ve tu GitHub -> tu noi vao ~/.claude/skills (chi khi may chua co thu muc trung ten)
     for name, rel in SKILLS.items():
         link = os.path.join(SKILLS_DIR, name)
-        if os.path.isdir(os.path.join(REPO, rel)) and not is_link(link):
-            out.append(f"- CANH BAO: skill {name} tren may chua noi vao repo -> chay: python \"{os.path.abspath(__file__)}\" cai-dat")
+        if not os.path.isdir(os.path.join(REPO, rel)) or is_link(link):
+            continue
+        if os.path.exists(link):
+            out.append(f"- CANH BAO: skill {name} tren may la ban rieng, chua noi vao repo -> chay: python \"{os.path.abspath(__file__)}\" cai-dat")
+            continue
+        try:
+            os.makedirs(SKILLS_DIR, exist_ok=True)
+            if os.name == "nt":
+                subprocess.run(["cmd", "/c", "mklink", "/J", link, os.path.normpath(os.path.join(REPO, rel))], capture_output=True, check=True)
+            else:
+                os.symlink(os.path.join(REPO, rel), link)
+            out.append(f"- Skill moi {name}: da noi vao Claude (mo phien moi de Claude thay skill)")
+        except Exception as e:
+            out.append(f"- Loi noi skill {name}: {e}")
+    for m in install_node_deps():
+        out.append("- " + m)
+    if drive:
+        for m in seed_memory(drive):
+            if not m.endswith(": them 0 file"):
+                out.append("- " + m)
 
     if cwd != os.path.normcase(REPO):
         cm = os.path.join(REPO, "CLAUDE.md")
@@ -256,6 +275,30 @@ def link_skills():
         else:
             os.symlink(target, link)
         msgs.append(f"{name}: noi {link} -> {target}")
+    return msgs
+
+
+NODE_DIRS = ["04_AI_SKILLS/iart-ai"]  # thu muc co package.json can `npm i` (node_modules khong len git)
+
+
+def install_node_deps():
+    """npm ci cho thu muc nao chua co node_modules; cache + file tam de tren o cua repo (khong ghi C:)."""
+    msgs = []
+    for rel in NODE_DIRS:
+        d = os.path.join(REPO, rel)
+        if not os.path.isfile(os.path.join(d, "package.json")) or os.path.isdir(os.path.join(d, "node_modules")):
+            continue
+        cache = os.path.join(REPO, "_npm-cache")
+        tmp = os.path.join(cache, "tmp")
+        os.makedirs(tmp, exist_ok=True)
+        env = dict(os.environ, npm_config_cache=cache, TEMP=tmp, TMP=tmp)
+        npm = shutil.which("npm") or "npm"
+        cmd = [npm, "ci" if os.path.isfile(os.path.join(d, "package-lock.json")) else "install", "--silent"]
+        try:
+            r = subprocess.run(cmd, cwd=d, env=env, capture_output=True, text=True, timeout=300)
+            msgs.append(f"npm {rel}: {'da cai thu vien' if r.returncode == 0 else 'LOI ' + (r.stderr or r.stdout)[-300:]}")
+        except Exception as e:
+            msgs.append(f"npm {rel}: LOI {e} (cai tay: cd {d} && npm i)")
     return msgs
 
 
@@ -326,6 +369,8 @@ def cmd_cai_dat(_a):
     for m in link_skills():
         print("-", m)
     for m in seed_memory(drive):
+        print("-", m)
+    for m in install_node_deps() or ["thu vien node da du"]:
         print("-", m)
     print("-", install_hook())
     print("\nXONG. Dong va mo lai Claude Code de hook + skill co hieu luc.")
