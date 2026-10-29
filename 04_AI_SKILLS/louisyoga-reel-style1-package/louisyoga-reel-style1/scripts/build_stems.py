@@ -24,7 +24,8 @@ import common as K  # noqa: E402
 SR = 48000
 FPS = 30
 ONSET = {"swoosh.mp3": 0.07, "quick-swoosh.mp3": 0.04, "pop.mp3": 0.23, "pop-2.mp3": 0.066, "punch.mp3": 0.107, "riser-metallic.mp3": 1.809,
-         "camera-shutter.mp3": 0.04, "digital-counting-1.mp3": 0.063, "ding.mp3": 0.149, "quick-ting.mp3": 0.019, "correct.mp3": 0.079}
+         "camera-shutter.mp3": 0.04, "digital-counting-1.mp3": 0.063, "ding.mp3": 0.149, "quick-ting.mp3": 0.019, "correct.mp3": 0.079,
+         "glasses-cheers-2.wav": 0.49, "ting.wav": 0.97, "new-item.wav": 0.65}
 
 
 def f(t: float) -> int:

@@ -44,6 +44,7 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--composition", default="LouisYogaReel")
     ap.add_argument("--sfx-rel", type=float, default=-2.5)
+    ap.add_argument("--music-under", type=float, default=19.0, help="nhac thap hon giong N dB truoc duck (19 -> ~24 dB khi noi; style 2 dung 11 -> ~15,5 dB)")
     ap.add_argument("--port", default="3123")
     ap.add_argument("--concurrency", default="4")
     ap.add_argument("--replace", action="store_true", help="--out da co la nhap loi chua giao: chuyen ra renders/_thay-the/ roi ghi dung ten")
@@ -76,7 +77,7 @@ def main():
     tmp = os.path.join(rdir, "final.mp4")
     r = subprocess.run([sys.executable, os.path.join(HERE, "mix_stems.py"), "--voice", a.voice, "--sfx", os.path.join(rdir, "sfx.wav"),
                         "--music", os.path.join(rdir, "music.wav"), "--video", os.path.join(rdir, "video_muted.mp4"), "--out", tmp,
-                        "--sfx-rel", str(a.sfx_rel), "--work", os.path.join(rdir, "mix")])
+                        "--sfx-rel", str(a.sfx_rel), "--music-under", str(a.music_under), "--work", os.path.join(rdir, "mix")])
     if r.returncode or not os.path.isfile(tmp):
         K.die("mix that bai (khong ghi gi vao --out)")
     if os.path.exists(out):  # only with --replace

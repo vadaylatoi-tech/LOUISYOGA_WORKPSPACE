@@ -5,6 +5,9 @@ description: "Dựng video ngắn talking-head tiếng Việt (TikTok/Reels/Shor
 
 # Louis Yoga reel — phong cách 1
 
+> Video có phần **giải thích kỹ thuật / so sánh thông số** → dùng **phong cách 2** (`louisyoga-reel-style2`: motion
+> graphic toàn khung trên nền footage mờ, hook âm "dồn → lặng → nổ"). Style 2 dùng chung script + kit của skill này.
+
 Bộ skill này đóng gói **đúng quy trình và gu đã được duyệt** qua 3 vòng góp ý trên video
 "Thảm càng dày càng tốt? Chưa chắc!" (bản v4). Mọi đường dẫn bên dưới tính từ thư mục skill này
 (`<SKILL>` = thư mục chứa file SKILL.md này).
@@ -80,6 +83,7 @@ KHÔNG ghi vào thư mục đã có file của người dùng; không ghi đè b
    `scripts/measure_sfx.py` để chắc mật độ/mức SFX đúng chuẩn TRƯỚC khi render (đọc được cue ghi bằng hằng
    `HOOK_DROP`, `VIDEO_FRAMES / FPS`, hằng tự đặt `const END = ...;` — chỉ cần là biểu thức số học).
 8. **Render + mix**: `scripts/render_all.py --project <project> --voice work/voice_proc.wav --out "<Drive>/10_FINAL_DELIVERABLES/<YYYY-MM-DD>_<mã-dự-án>/<NN - tên video>.mp4"`
+   (`--music-under N`: nhạc thấp hơn giọng N dB trước duck, mặc định 19 → ~24 dB khi nói; true peak AAC vượt −1,4 thì mix tự chặn đỉnh)
    (stem SFX + nhạc dựng bằng numpy `build_stems.py` vài giây; hình không tiếng jpeg 95/crf 14 ~3 phút/phút video;
    mix giọng > SFX > nhạc → −14 LUFS, TP −1.5). Nhiều video: render chạy nền, dựng video sau trong lúc chờ
    (mỗi render một `--port` riêng: 3123, 3131, 3141…).

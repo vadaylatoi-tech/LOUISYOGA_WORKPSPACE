@@ -43,6 +43,11 @@ def events(sfx_mono, vmed):
     return len(pk), np.median(pk) - vmed, np.percentile(pk, 90) - vmed, pk.max() - vmed
 
 
+def true_peak(path: str) -> float:
+    o = subprocess.run(["ffmpeg", "-hide_banner", "-i", path, "-af", "ebur128=peak=true", "-f", "null", "-"], capture_output=True).stderr.decode("utf-8", "replace")
+    return float(o.split("Summary:")[-1].split("Peak:")[1].split("dBFS")[0])
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--voice", required=True)
@@ -92,6 +97,14 @@ def main():
           f"measured_LRA={j['input_lra']}:measured_thresh={j['input_thresh']}:offset={j['target_offset']}:linear=true,aresample=48000")
     K.run(["ffmpeg", "-v", "error", "-y", "-i", a.video, "-i", wav, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-af", af,
            "-c:a", "aac", "-b:a", "256k", "-shortest", "-movflags", "+faststart", a.out], "mux")
+    # AAC encoding can push the true peak back over the limit (measured -1.1..-1.3 dBTP on bright music) → limit once more
+    if true_peak(a.out) > -1.4:
+        fixed = os.path.join(work, "tp_fixed.mp4")
+        K.run(["ffmpeg", "-v", "error", "-y", "-i", a.out, "-map", "0:v", "-map", "0:a", "-c:v", "copy",
+               "-af", "alimiter=limit=-2.2dB:level=disabled:attack=1:release=50", "-c:a", "aac", "-b:a", "256k",
+               "-movflags", "+faststart", fixed], "chan dinh")
+        os.replace(fixed, a.out)
+        print("  (true peak > -1.4 sau AAC -> da chan dinh lai)")
 
     vmed = np.percentile(momentary(v, 0.05)[momentary(v, 0.05) > -45], 50)
     n, med, p90, mx = events(s.mean(1), vmed)

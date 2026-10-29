@@ -36,6 +36,7 @@ SO_BUG_REL = "00_SYSTEM/SO-BUG.md"  # so bug dung chung, quy tac 2 lan (CLAUDE.m
 # Skill dung chung: ten skill -> thu muc trong repo (cung duong dan tuong doi tren Drive cho asset)
 SKILLS = {
     "louisyoga-reel-style1": "04_AI_SKILLS/louisyoga-reel-style1-package/louisyoga-reel-style1",
+    "louisyoga-reel-style2": "04_AI_SKILLS/louisyoga-reel-style2-package/louisyoga-reel-style2",
     "duycongeditvideo-buoc1": "04_AI_SKILLS/duycongeditvideo-buoc1-package/duycongeditvideo-buoc1",
 }
 # Bo skill dung video (nns-* goi nhau qua thu muc anh em -> phai nam chung 1 thu muc)
