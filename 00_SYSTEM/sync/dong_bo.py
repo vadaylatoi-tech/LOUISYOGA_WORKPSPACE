@@ -43,6 +43,10 @@ for _n in ("nns-add-sfx", "nns-auto-sub", "nns-cut-silence", "nns-face-highlight
            "nns-split-compare", "edit-nns-v1", "edit-remotion-nns", "edit-style-gpt-secret-code",
            "edit-style-nns", "extract-edit-style", "script-writer"):
     SKILLS[_n] = f"04_AI_SKILLS/video-skills/{_n}"
+# Bo IART AI (motion graphics, MIT, ban chep trong repo — xem 04_AI_SKILLS/iart-ai/NGUON.md)
+for _n in ("iart-caption-animation", "iart-countdown-video", "iart-lower-thirds", "iart-short-form-video",
+           "iart-kinetic-typography", "iart-talking-head-b-roll"):
+    SKILLS[_n] = f"04_AI_SKILLS/iart-ai/{_n}"
 # Thu vien dung chung (font Be Vietnam Pro, ~90 SFX, ~120 logo): skill nns-*/edit-* goi qua --resources.
 # svg/mp3/ttf khong len git -> dong bo qua Drive nhu asset skill (KHONG phai skill, khong noi vao ~/.claude/skills).
 SHARED = {"shared-sources": "03_MEDIA_LIBRARY/shared-sources"}
