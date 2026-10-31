@@ -5,8 +5,8 @@ import spec from "./spec.json";
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const SANS = "BeVN";
 const SERIF = "SerifVN";
-type Shot = { name: string; clip: string; from: number; dur: number; a: string; b: string; ink?: number; tl?: number; tr?: number; ts?: number; ty?: number; tear?: number; mist?: number[] };
-type V = { style: string; trans: number; beat: number; total: number; framed: number; shots: Shot[] };
+type Shot = { name: string; clip: string; from: number; dur: number; a: string; b: string; ink?: number; tl?: number; tr?: number; ts?: number; ty?: number; tear?: number; mist?: number[]; td?: number };
+type V = { style: string; trans: number; beat: number; total: number; framed: number; intro: number; cta: number; shots: Shot[] };
 
 const useFonts = () => {
   const [h] = useState(() => delayRender("fonts"));
@@ -53,17 +53,30 @@ const BeatText: React.FC<{ s: Shot; beatF: number }> = ({ s, beatF }) => {
   );
 };
 
-// Slow, breathing: serif line clears from blur while the letters settle; small spaced line follows.
+// Letters appear one by one at TF frames each (spec.py places a key sound on each); layout stays fixed.
+const TF = 2.2;
+const Typed: React.FC<{ text: string; at: number }> = ({ text, at }) => {
+  const fr = useCurrentFrame();
+  return (
+    <>
+      {Array.from(text.normalize("NFC")).map((ch, i) => (
+        <span key={i} style={{ opacity: interpolate(fr, [at + i * TF, at + i * TF + 2], [0, 1], clamp) }}>{ch}</span>
+      ))}
+    </>
+  );
+};
+
+// Slow, breathing: serif line typed on; small spaced line follows.
 const BreathText: React.FC<{ s: Shot }> = ({ s }) => {
   const fr = useCurrentFrame();
-  const k = interpolate(fr, [4, 30], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) });
-  const k2 = interpolate(fr, [20, 44], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) });
+  const at = s.td ?? 4;
+  const at2 = at + s.a.normalize("NFC").length * TF + 6;
   const out = interpolate(fr, [s.dur - 14, s.dur - 2], [1, 0], clamp);
   const ts = s.ts ?? 1;
   return (
     <div style={{ position: "absolute", left: s.tl ?? 90, right: s.tr ?? 90, top: s.ty ?? 420, textAlign: "center", opacity: out }}>
-      <div style={{ fontFamily: SERIF, fontStyle: "italic", whiteSpace: "nowrap", fontSize: 112 * ts, lineHeight: 1.15, color: s.ink ? INK : "#FFF3DF", textShadow: s.ink ? "none" : SHADOW, opacity: k, filter: `blur(${(1 - k) * 12}px)`, letterSpacing: (1 - k) * 12 }}>{s.a}</div>
-      {s.b && <div style={{ marginTop: 16, fontFamily: SANS, fontWeight: 500, fontSize: 44 * Math.max(0.85, ts), letterSpacing: 7 - k2 * 2, color: s.ink ? INK : "#fff", textTransform: "uppercase", textShadow: s.ink ? "none" : SHADOW, opacity: k2 }}>{s.b}</div>}
+      <div style={{ fontFamily: SERIF, fontStyle: "italic", whiteSpace: "nowrap", fontSize: 112 * ts, lineHeight: 1.15, color: s.ink ? INK : "#FFF3DF", textShadow: s.ink ? "none" : SHADOW }}><Typed text={s.a} at={at} /></div>
+      {s.b && <div style={{ marginTop: 16, fontFamily: SANS, fontWeight: 500, fontSize: 44 * Math.max(0.85, ts), letterSpacing: 5, color: s.ink ? INK : "#fff", textTransform: "uppercase", textShadow: s.ink ? "none" : SHADOW }}><Typed text={s.b} at={at2} /></div>}
     </div>
   );
 };
@@ -168,21 +181,31 @@ const rnd = (i: number) => {
   return x - Math.floor(x);
 };
 
-// Fine spray leaving the nozzle (position measured on the shot), fanning down onto the mat.
+// Soft spray leaving the nozzle (position measured on the shot): a faint fog plume plus very fine
+// droplets that drift and sink, so it reads as mist rather than sparks.
 const Mist: React.FC<{ seed: number }> = ({ seed }) => {
   const fr = useCurrentFrame();
   const NX = 665;
   const NY = 1345;
+  const g = interpolate(fr, [0, 26], [0, 1], { ...clamp, easing: Easing.out(Easing.quad) });
+  const fog = interpolate(fr, [0, 5, 26], [0, 0.26, 0], clamp);
   return (
     <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
-      {Array.from({ length: 70 }).map((_, i) => {
-        const r = (j: number) => rnd(seed * 100 + i * 3 + j);
-        const age = (fr - r(0) * 5) / 13;
-        if (age <= 0 || age > 1) return null;
-        const ang = 0.35 + r(1) * 1.5;
-        const dist = (40 + r(2) * 230) * (1 - (1 - age) ** 2);
-        return <circle key={i} cx={NX + Math.cos(ang) * dist} cy={NY + Math.sin(ang) * dist * 0.75} r={1.6 + r(3) * 3.6} fill="#fff" opacity={(1 - age) * 0.8} />;
-      })}
+      <defs>
+        <filter id={`fog${seed}`} x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation={34} /></filter>
+        <filter id={`drop${seed}`}><feGaussianBlur stdDeviation={1} /></filter>
+      </defs>
+      <ellipse cx={NX + 30 + g * 70} cy={NY + 40 + g * 120} rx={60 + g * 170} ry={34 + g * 100} fill="#fff" opacity={fog} filter={`url(#fog${seed})`} />
+      <g filter={`url(#drop${seed})`}>
+        {Array.from({ length: 150 }).map((_, i) => {
+          const r = (j: number) => rnd(seed * 100 + i * 3 + j);
+          const age = (fr - r(0) * 7) / (15 + r(4) * 9);
+          if (age <= 0 || age > 1) return null;
+          const ang = 0.35 + r(1) * 1.5;
+          const dist = (30 + r(2) * 250) * (1 - (1 - age) ** 3);
+          return <circle key={i} cx={NX + Math.cos(ang) * dist} cy={NY + Math.sin(ang) * dist * 0.75 + age * age * 60} r={1 + r(3) * 1.8} fill="#fff" opacity={Math.sin(Math.min(age * 6, 1) * 1.57) * (1 - age) * 0.6} />;
+        })}
+      </g>
     </svg>
   );
 };
@@ -252,7 +275,23 @@ const BgShot: React.FC<{ s: Shot; first: boolean }> = ({ s, first }) => {
 const Framed: React.FC<{ v: V }> = ({ v }) => {
   const fr = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const p = spring({ frame: fr - 8, fps, config: { damping: 14, stiffness: 130 } });
+  const intro = !!v.intro;
+  const p = spring({ frame: fr - (intro ? 32 : 8), fps, config: { damping: 14, stiffness: 130 } });
+  // Opening: full-bleed shot clears from blur, then draws back into the card on the first music accent.
+  const q = intro ? spring({ frame: fr - 15, fps, config: { damping: 15, stiffness: 95, mass: 0.8 } }) : 1;
+  const S = 1 + (1 / K - 1) * (1 - q);
+  const cardT = `translate(${-CARD.x * (1 - q)}px, ${-CARD.y * (1 - q)}px) scale(${S})`;
+  const clearK = intro ? interpolate(fr, [0, 16], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) }) : 1;
+  const glow = intro ? interpolate(fr, [25, 27, 46], [0, 0.42, 0], clamp) : 0;
+  const logo = intro ? spring({ frame: fr - 27, fps, config: { damping: 16, stiffness: 120 } }) : 1;
+  // Closing: shot blurs under a pale veil and the product card travels to the centre.
+  const cf = fr - v.cta;
+  const cOn = v.cta > 0 && cf >= 0;
+  const veil = cOn ? interpolate(cf, [0, 18], [0, 1], { ...clamp, easing: Easing.inOut(Easing.cubic) }) : 0;
+  const fly = cOn ? spring({ frame: cf - 2, fps, config: { damping: 17, stiffness: 95 } }) : 0;
+  const btn = cOn ? spring({ frame: cf - 35, fps, config: { damping: 12, stiffness: 170 } }) : 0;
+  const lerp = (a: number, b: number) => a + (b - a) * fly;
+  const filter = clearK < 1 || veil > 0 ? `blur(${(1 - clearK) * 22 + veil * 16}px) brightness(${1 + (1 - clearK) * 0.3})` : undefined;
   return (
     <AbsoluteFill style={{ background: "#9AA09F", overflow: "hidden" }}>
       {v.shots.map((s, i) => (
@@ -261,20 +300,31 @@ const Framed: React.FC<{ v: V }> = ({ v }) => {
         </Sequence>
       ))}
       <AbsoluteFill style={{ background: "rgba(255,255,255,0.1)" }} />
-      <Img src={staticFile("brand/logo_edit_white.svg")} style={{ position: "absolute", left: CARD.x - 8, top: 58, width: 370 }} />
-      <div style={{ position: "absolute", left: CARD.x - 8, top: CARD.y - 8, width: CARD.w + 16, height: Math.round(1920 * K) + 16, borderRadius: 58, background: "rgba(255,255,255,0.85)", boxShadow: "0 18px 50px rgba(0,0,0,0.22)" }} />
-      <div style={{ position: "absolute", left: CARD.x, top: CARD.y, width: CARD.w, height: Math.round(1920 * K), borderRadius: 50, overflow: "hidden", background: "#111" }}>
-        <div style={{ width: 1080, height: 1920, transform: `scale(${K})`, transformOrigin: "0 0" }}>
-          <Shots v={v} />
+      <Img src={staticFile("brand/logo_edit_white.svg")} style={{ position: "absolute", left: CARD.x - 8, top: 58, width: 370, opacity: logo, transform: `translateY(${(1 - logo) * -46}px)` }} />
+      <AbsoluteFill style={{ transform: cardT, transformOrigin: `${CARD.x}px ${CARD.y}px` }}>
+        <div style={{ position: "absolute", left: CARD.x - 8, top: CARD.y - 8, width: CARD.w + 16, height: Math.round(1920 * K) + 16, borderRadius: 58, background: "rgba(255,255,255,0.85)", boxShadow: "0 18px 50px rgba(0,0,0,0.22)" }} />
+        <div style={{ position: "absolute", left: CARD.x, top: CARD.y, width: CARD.w, height: Math.round(1920 * K), borderRadius: 50 * Math.min(1, q), overflow: "hidden", background: "#111" }}>
+          <div style={{ width: 1080, height: 1920, transform: `scale(${K})`, transformOrigin: "0 0", filter }}>
+            <Shots v={v} />
+          </div>
+          <AbsoluteFill style={{ background: "#FAF7F1", opacity: veil * 0.8 }} />
         </div>
-      </div>
-      <div style={{ position: "absolute", right: 150, top: 1372, textAlign: "right", color: "#fff", fontFamily: SANS, textShadow: SHADOW, opacity: p }}>
+      </AbsoluteFill>
+      <AbsoluteFill style={{ background: "#FFF3DF", opacity: glow }} />
+      <div style={{ position: "absolute", right: 150, top: 1372, textAlign: "right", color: "#fff", fontFamily: SANS, textShadow: SHADOW, opacity: p * (1 - veil), transform: `translateX(${(1 - p) * 40}px)` }}>
         <div style={{ fontWeight: 300, fontSize: 32, letterSpacing: 2 }}>THẢM</div>
         <div style={{ fontWeight: 300, fontSize: 60, lineHeight: 1.0, letterSpacing: 2 }}>AURA</div>
       </div>
-      <div style={{ position: "absolute", left: 772, top: 1478, width: 200, height: 216, borderRadius: 24, background: "#fff", overflow: "hidden", boxShadow: "0 10px 26px rgba(0,0,0,0.25)", transform: `rotate(3deg) scale(${p})` }}>
-        <Img src={staticFile("brand/aura.jpg")} style={{ width: 200, height: 216, objectFit: "cover", objectPosition: "50% 0" }} />
+      <div style={{ position: "absolute", left: lerp(772, 350), top: lerp(1478, 262), width: lerp(200, 380), height: lerp(216, 440), borderRadius: 24, background: "#fff", overflow: "hidden", boxShadow: "0 10px 26px rgba(0,0,0,0.25)", transform: `rotate(${lerp(3, -2)}deg) scale(${p})` }}>
+        <Img src={staticFile("brand/aura.jpg")} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 0" }} />
       </div>
+      {cOn && (
+        <div style={{ position: "absolute", left: CARD.x, width: CARD.w, top: 708, textAlign: "center", color: INK }}>
+          <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 96, lineHeight: 1.1 }}><Typed text="Thảm Aura" at={v.cta + 12} /></div>
+          <div style={{ display: "inline-block", marginTop: 14, padding: "18px 36px", borderRadius: 60, background: INK, color: "#FFF3DF", fontFamily: SANS, fontWeight: 500, fontSize: 32, opacity: Math.min(1, btn), transform: `scale(${0.8 + 0.2 * btn})` }}>Xem chi tiết ở link dưới bài</div>
+          <div style={{ marginTop: 20, fontFamily: SANS, fontWeight: 500, fontSize: 34, letterSpacing: 1 }}><Typed text="louisyoga.vn" at={v.cta + 44} /></div>
+        </div>
+      )}
     </AbsoluteFill>
   );
 };

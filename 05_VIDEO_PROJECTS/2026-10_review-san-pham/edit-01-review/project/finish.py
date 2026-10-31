@@ -13,7 +13,7 @@ LIB = BASE + "03_MEDIA_LIBRARY/MUSIC_LIBRARY/"
 SFXD = "D:/LOUGA_WORKSPACE/03_MEDIA_LIBRARY/shared-sources/sound-effects/"
 OUTD = BASE + "10_FINAL_DELIVERABLES/2026-10-31_review-san-pham/"
 SR = 48000
-NAME = {"1": "01 - Review thảm Louis Yoga - Cao trào trước_v2", "2": "02 - Review thảm Louis Yoga - Tĩnh rồi cao trào_v4", "3": "03 - Review thảm Louis Yoga - Tò mò rồi hé lộ_v2"}
+NAME = {"1": "01 - Review thảm Louis Yoga - Cao trào trước_v2", "2": "02 - Review thảm Louis Yoga - Tĩnh rồi cao trào_v5", "3": "03 - Review thảm Louis Yoga - Tò mò rồi hé lộ_v2"}
 spec = json.load(open(f"{HERE}/src/spec.json", encoding="utf-8"))
 
 
@@ -54,20 +54,63 @@ for ver in sys.argv[1:] or ["1", "2", "3"]:
                 st = int((s["from"] / 30 + rel) * SR)
                 L = min(len(x), N - st)
                 sfx[st:st + L] += x[:L]
-    for name, rel in c.get("spray", []):  # tieng xit: on trang loc 2,5-11 kHz, tat nhanh
-        n = int(0.34 * SR)
+    for name, rel in c.get("spray", []):  # tieng xit "pshh": hoi em, lien tuc, khong co canh sac
+        n = int(0.46 * SR)
         rng = np.random.default_rng(int(rel * 100))
         noise = rng.standard_normal((n, 2))
         F = np.fft.rfft(noise, axis=0)
-        fq = np.fft.rfftfreq(n, 1 / SR)
-        F[(fq < 2500) | (fq > 11000)] = 0
-        y = np.fft.irfft(F, n=n, axis=0)
-        e = np.minimum(np.arange(n) / (0.012 * SR), 1) * np.exp(-np.arange(n) / (0.11 * SR))
-        y = (y / np.abs(y).max() * e[:, None] * 0.3).astype(np.float32)
+        fq = np.fft.rfftfreq(n, 1 / SR) + 1
+        hiss = np.exp(-(np.log(fq / 5200) ** 2) / (2 * 0.62 ** 2))  # dinh mem quanh 5,2 kHz
+        air = 0.3 * np.exp(-(np.log(fq / 1300) ** 2) / (2 * 0.5 ** 2))  # than hoi o tam thap
+        y = np.fft.irfft(F * (hiss + air)[:, None], n=n, axis=0)
+        ti = np.arange(n) / SR
+        e = np.sin(np.minimum(ti / 0.045, 1) * np.pi / 2) ** 2 * np.where(ti < 0.16, 1, np.exp(-(ti - 0.16) / 0.075))
+        y = (y / np.abs(y).max() * e[:, None] * 0.24).astype(np.float32)
         for s in c["shots"]:
             if s["name"] == name:
                 st = int((s["from"] / 30 + rel) * SR)
                 sfx[st:st + n] += y
+    if c.get("ticks"):  # tieng go chu: moi chu hien mot phim that tach tu ban ghi ban phim co
+        k = load(SFXD + "mechanical-keyboard.mp3")
+        rng = np.random.default_rng(7)
+        ek = np.convolve(np.abs(k[:, 0]), np.ones(96) / 96, "same")
+        pk, j = [], 0
+        while j < len(ek):
+            if ek[j] > ek.max() * 0.25:
+                m = j + int(np.argmax(ek[j:j + int(0.06 * SR)]))
+                pk.append(m)
+                j = m + int(0.07 * SR)
+            else:
+                j += 1
+        L = int(0.07 * SR)
+        keyset = []
+        for m in pk:
+            a = max(0, m - int(0.004 * SR))
+            q = k[a:a + L].copy()
+            q *= np.minimum(1, (L - np.arange(len(q))) / (0.02 * SR))[:, None]
+            keyset.append(q / np.abs(q).max())
+        for t in c["ticks"]:
+            q = keyset[rng.integers(len(keyset))] * rng.uniform(0.085, 0.125)
+            st = int(t * SR)
+            L2 = min(len(q), N - st)
+            sfx[st:st + L2] += q[:L2]
+    if c.get("intro"):
+        H = int(0.9 * SR)  # dinh nhac dau (nguon 56,56)
+        a = int((55.66 + 0.9) * SR)
+        sw = src[a:a + H][::-1].copy() * (np.linspace(0, 1, H)[:, None] ** 2) * 0.6  # chinh hop am cua bai, dao nguoc
+        sfx[:H] += sw
+        n = int(0.7 * SR)  # nhip tram mem dung dinh nhac
+        ti = np.arange(n) / SR
+        th = np.sin(2 * np.pi * np.cumsum(46 + 18 * np.exp(-ti / 0.06)) / SR) * np.minimum(ti / 0.006, 1) * np.exp(-ti / 0.17) * 0.34
+        sfx[H:H + n] += th[:, None].astype(np.float32)
+        fd = load(SFXD + "fairy-dust.mp3")[: int(2.4 * SR)] * 0.1
+        fd *= np.minimum(1, (len(fd) - np.arange(len(fd))) / SR)[:, None]
+        sfx[H:H + len(fd)] += fd
+    for at, f, vol in c.get("hits", []):  # canh dinh tieng dung lop at
+        x = load(SFXD + f)[: 3 * SR] * vol
+        st = max(0, int(at * SR) - int(np.argmax(np.abs(x[:, 0]))))
+        L = min(len(x), N - st)
+        sfx[st:st + L] += x[:L]
     raw = f"{HERE}/renders/a{ver}.wav"
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "2", "-i", "-", "-c:a", "pcm_f32le", raw], input=(mus + sfx).astype(np.float32).tobytes(), check=True)
     o = subprocess.run(["ffmpeg", "-hide_banner", "-i", raw, "-af", "loudnorm=I=-14:TP=-2:LRA=11:print_format=json", "-f", "null", "-"], capture_output=True).stderr.decode("utf-8", "replace")

@@ -3,6 +3,7 @@
 import json
 import os
 import subprocess
+import unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 BASE = "G:/My Drive/LOUISYOGA_WORKSPACE/LOUGA_WORKSPACE_MEDIA/"
@@ -31,15 +32,16 @@ V1 = {  # dinh truoc: canh theo so beat
     "sfx": [["unwrap", 0.1, "paper-tear-2.wav", 0.5], ["water", 0.1, "water-drip.mp3", 0.3]],
 }
 V2 = {
-    "beat": B2, "style": "breath", "trans": 12, "framed": 1,
-    "music": {"file": "Emotional/E04 - Wildflowers.mp3", "parts": [[0, 56.0, 34.0]], "fade_in": 0.6},
-    "secs": [("dog", 4.6, "Chiếc thảm này", "có gì đáng thử?", {"ink": 1, "tl": 230, "tr": 50}),
+    "beat": B2, "style": "breath", "trans": 12, "framed": 1, "intro": 1, "cta": 967,
+    "music": {"file": "Emotional/E04 - Wildflowers.mp3", "parts": [[0, 55.66, 36.4]], "fade_in": 0.25},
+    "secs": [("dog", 4.94, "Chiếc thảm này", "có gì đáng thử?", {"ink": 1, "tl": 230, "tr": 50, "td": 22}),
              ("bag", 3.0, "Tặng kèm túi", "", {"tear": 1, "ink": 1, "tl": 640, "tr": 30, "ts": 0.66, "ty": 1120}), ("unwrap", 2.8, "", "", {"tear": 1}),
              ("touch", 3.0, "Chạm thử", "nhìn gần bề mặt thảm", {}), ("raise", 2.6, "", "", {}), ("flat", 3.0, "Một đầu vuông", "một đầu tròn", {}),
              ("spray", 2.0, "", "", {"mist": [0.5, 1.06, 1.7]}), ("water", 2.8, "5 giây", "nước thấm hết", {}), ("leg", 3.2, "Bám chắc", "không trượt chân", {"ink": 1, "tl": 230, "tr": 50}),
-             ("edge", 2.0, "4,5 mm", "", {}), ("lunge", 3.0, "", "", {})],
+             ("edge", 2.0, "4,5 mm", "", {}), ("lunge", 7.06, "", "", {})],
     "sfx": [["bag", 0.0, "paper-tear-1.wav", 0.55], ["unwrap", 0.0, "paper-tear-3.wav", 0.55]],
     "spray": [["spray", 0.5], ["spray", 1.06], ["spray", 1.7]],
+    "hits": [[0.72, "mixkit/mixkit-air-woosh-1489.wav", 0.32], [32.3, "mixkit/mixkit-air-woosh-1489.wav", 0.18], [33.4, "quick-ting.mp3", 0.22]],
 }
 V3 = {
     "beat": B3, "style": "type", "trans": 6,
@@ -75,16 +77,30 @@ def clip(ver, name):
     return f"clips/v{ver}_{name}.mp4"
 
 
+TF = 2.2  # so frame cho moi ky tu, khop TF trong Review.tsx
+
+
+def keys(at, text):
+    return [round((at + i * TF) / FPS, 3) for i, ch in enumerate(unicodedata.normalize("NFC", text)) if ch != " "]
+
+
 spec = {}
 for ver, c in ALL.items():
-    shots, t = [], 0.0
+    shots, t, ticks = [], 0.0, []
+    if c.get("cta"):
+        ticks += keys(c["cta"] + 12, "Thảm Aura") + keys(c["cta"] + 44, "louisyoga.vn")
     items = [(n, k * c["beat"], a, b) for n, k, a, b in c["shots"]] if "shots" in c else c["secs"]
     for it in items:
         n, d, a, b = it[:4]
         fx = it[4] if len(it) > 4 else {}
         fr, to = round(t * FPS), round((t + d) * FPS)
         shots.append({"name": n, "clip": clip(ver, n), "from": fr, "dur": to - fr, "a": a, "b": b, **fx})
+        if c.get("framed") and a:
+            at = fr + round(c["trans"] / 2) + fx.get("td", 4)
+            ticks += keys(at, a)
+            if b:
+                ticks += keys(at + len(a) * TF + 6, b)
         t += d
-    spec[str(ver)] = {"style": c["style"], "trans": c["trans"], "beat": c["beat"], "total": round(t * FPS), "shots": shots, "music": c["music"], "sfx": c["sfx"], "spray": c.get("spray", []), "framed": c.get("framed", 0)}
+    spec[str(ver)] = {"style": c["style"], "trans": c["trans"], "beat": c["beat"], "total": round(t * FPS), "shots": shots, "music": c["music"], "sfx": c["sfx"], "spray": c.get("spray", []), "framed": c.get("framed", 0), "intro": c.get("intro", 0), "cta": c.get("cta", 0), "ticks": ticks, "hits": c.get("hits", [])}
 json.dump(spec, open(f"{HERE}/src/spec.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print({k: v["total"] / FPS for k, v in spec.items()})
