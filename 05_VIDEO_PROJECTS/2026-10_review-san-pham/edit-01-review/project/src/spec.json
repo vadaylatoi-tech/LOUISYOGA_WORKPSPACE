@@ -1,0 +1,386 @@
+{
+ "1": {
+  "style": "beat",
+  "trans": 0,
+  "beat": 0.6269,
+  "total": 828,
+  "shots": [
+   {
+    "name": "water",
+    "clip": "clips/v1_water.mp4",
+    "from": 0,
+    "dur": 75,
+    "a": "5 giây",
+    "b": "nước thấm hết"
+   },
+   {
+    "name": "leg",
+    "clip": "clips/v1_leg.mp4",
+    "from": 75,
+    "dur": 75,
+    "a": "Bám chắc",
+    "b": "không trượt chân"
+   },
+   {
+    "name": "edge",
+    "clip": "clips/v1_edge.mp4",
+    "from": 150,
+    "dur": 38,
+    "a": "4,5 mm",
+    "b": ""
+   },
+   {
+    "name": "raise",
+    "clip": "clips/v1_raise.mp4",
+    "from": 188,
+    "dur": 38,
+    "a": "",
+    "b": ""
+   },
+   {
+    "name": "flat",
+    "clip": "clips/v1_flat.mp4",
+    "from": 226,
+    "dur": 75,
+    "a": "Một đầu vuông",
+    "b": "một đầu tròn"
+   },
+   {
+    "name": "fTouch",
+    "clip": "clips/v1_fTouch.mp4",
+    "from": 301,
+    "dur": 38,
+    "a": "",
+    "b": ""
+   },
+   {
+    "name": "touch",
+    "clip": "clips/v1_touch.mp4",
+    "from": 339,
+    "dur": 37,
+    "a": "Chạm thử",
+    "b": ""
+   },
+   {
+    "name": "bag",
+    "clip": "clips/v1_bag.mp4",
+    "from": 376,
+    "dur": 75,
+    "a": "Tặng kèm túi",
+    "b": "dày dặn, khá to"
+   },
+   {
+    "name": "unwrap",
+    "clip": "clips/v1_unwrap.mp4",
+    "from": 451,
+    "dur": 38,
+    "a": "",
+    "b": ""
+   },
+   {
+    "name": "fPress",
+    "clip": "clips/v1_fPress.mp4",
+    "from": 489,
+    "dur": 38,
+    "a": "",
+    "b": ""
+   },
+   {
+    "name": "dog",
+    "clip": "clips/v1_dog.mp4",
+    "from": 527,
+    "dur": 112,
+    "a": "",
+    "b": ""
+   },
+   {
+    "name": "lunge",
+    "clip": "clips/v1_lunge.mp4",
+    "from": 639,
+    "dur": 189,
+    "a": "",
+    "b": ""
+   }
+  ],
+  "music": {
+   "file": "R&B/R01 - Stylish LoFi RnB.mp3",
+   "parts": [
+    [
+     0,
+     40.12,
+     12.54
+    ],
+    [
+     12.54,
+     70.21,
+     17.0
+    ]
+   ],
+   "fade_in": 0.05
+  },
+  "sfx": [
+   [
+    "unwrap",
+    0.1,
+    "paper-tear-2.wav",
+    0.5
+   ],
+   [
+    "water",
+    0.1,
+    "water-drip.mp3",
+    0.3
+   ]
+  ]
+ },
+ "2": {
+  "style": "breath",
+  "trans": 12,
+  "beat": 0.5805,
+  "total": 1050,
+  "shots": [
+   {
+    "name": "dog",
+    "clip": "clips/v2_dog.mp4",
+    "from": 0,
+    "dur": 138,
+    "a": "Thảm mới",
+    "b": "cho buổi tập yên tĩnh"
+   },
+   {
+    "name": "fTouch",
+    "clip": "clips/v2_fTouch.mp4",
+    "from": 138,
+    "dur": 87,
+    "a": "",
+    "b": ""
+   },
+   {
+    "name": "bag",
+    "clip": "clips/v2_bag.mp4",
+    "from": 225,
+    "dur": 75,
+    "a": "Tặng kèm túi",
+    "b": "dày dặn, khá to"
+   },
+   {
+    "name": "unwrap",
+    "clip": "clips/v2_unwrap.mp4",
+    "from": 300,
+    "dur": 60,
+    "a": "",
+    "b": ""
+   },
+   {
+    "name": "touch",
+    "clip": "clips/v2_touch.mp4",
+    "from": 360,
+    "dur": 90,
+    "a": "Chạm thử",
+    "b": "nhìn gần bề mặt thảm"
+   },
+   {
+    "name": "flat",
+    "clip": "clips/v2_flat.mp4",
+    "from": 450,
+    "dur": 75,
+    "a": "Một đầu vuông",
+    "b": "một đầu tròn"
+   },
+   {
+    "name": "raise",
+    "clip": "clips/v2_raise.mp4",
+    "from": 525,
+    "dur": 45,
+    "a": "",
+    "b": ""
+   },
+   {
+    "name": "spray",
+    "clip": "clips/v2_spray.mp4",
+    "from": 570,
+    "dur": 60,
+    "a": "",
+    "b": ""
+   },
+   {
+    "name": "water",
+    "clip": "clips/v2_water.mp4",
+    "from": 630,
+    "dur": 84,
+    "a": "5 giây",
+    "b": "nước thấm hết"
+   },
+   {
+    "name": "leg",
+    "clip": "clips/v2_leg.mp4",
+    "from": 714,
+    "dur": 96,
+    "a": "Bám chắc",
+    "b": "không trượt chân"
+   },
+   {
+    "name": "edge",
+    "clip": "clips/v2_edge.mp4",
+    "from": 810,
+    "dur": 60,
+    "a": "4,5 mm",
+    "b": ""
+   },
+   {
+    "name": "lunge",
+    "clip": "clips/v2_lunge.mp4",
+    "from": 870,
+    "dur": 180,
+    "a": "",
+    "b": ""
+   }
+  ],
+  "music": {
+   "file": "Emotional/E04 - Wildflowers.mp3",
+   "parts": [
+    [
+     0,
+     56.0,
+     37.0
+    ]
+   ],
+   "fade_in": 0.6
+  },
+  "sfx": [
+   [
+    "unwrap",
+    0.1,
+    "paper-tear-2.wav",
+    0.35
+   ],
+   [
+    "spray",
+    1.0,
+    "water-drip.mp3",
+    0.25
+   ]
+  ]
+ },
+ "3": {
+  "style": "type",
+  "trans": 6,
+  "beat": 0.8011,
+  "total": 981,
+  "shots": [
+   {
+    "name": "bag",
+    "clip": "clips/v3_bag.mp4",
+    "from": 0,
+    "dur": 72,
+    "a": "Bên trong là gì?",
+    "b": ""
+   },
+   {
+    "name": "unwrap",
+    "clip": "clips/v3_unwrap.mp4",
+    "from": 72,
+    "dur": 66,
+    "a": "",
+    "b": ""
+   },
+   {
+    "name": "touch",
+    "clip": "clips/v3_touch.mp4",
+    "from": 138,
+    "dur": 72,
+    "a": "Chạm thử trước đã",
+    "b": ""
+   },
+   {
+    "name": "fPattern",
+    "clip": "clips/v3_fPattern.mp4",
+    "from": 210,
+    "dur": 75,
+    "a": "",
+    "b": ""
+   },
+   {
+    "name": "raise",
+    "clip": "clips/v3_raise.mp4",
+    "from": 285,
+    "dur": 96,
+    "a": "",
+    "b": ""
+   },
+   {
+    "name": "flat",
+    "clip": "clips/v3_flat.mp4",
+    "from": 381,
+    "dur": 96,
+    "a": "Một đầu vuông",
+    "b": "một đầu tròn"
+   },
+   {
+    "name": "leg",
+    "clip": "clips/v3_leg.mp4",
+    "from": 477,
+    "dur": 96,
+    "a": "Bám chắc",
+    "b": "không trượt chân"
+   },
+   {
+    "name": "spray",
+    "clip": "clips/v3_spray.mp4",
+    "from": 573,
+    "dur": 72,
+    "a": "",
+    "b": ""
+   },
+   {
+    "name": "water",
+    "clip": "clips/v3_water.mp4",
+    "from": 645,
+    "dur": 96,
+    "a": "5 giây",
+    "b": "nước thấm hết"
+   },
+   {
+    "name": "edge",
+    "clip": "clips/v3_edge.mp4",
+    "from": 741,
+    "dur": 72,
+    "a": "4,5 mm",
+    "b": ""
+   },
+   {
+    "name": "lunge",
+    "clip": "clips/v3_lunge.mp4",
+    "from": 813,
+    "dur": 168,
+    "a": "",
+    "b": ""
+   }
+  ],
+  "music": {
+   "file": "Dreamy/D03 - Take A Break.mp3",
+   "parts": [
+    [
+     0,
+     4.0,
+     34.0
+    ]
+   ],
+   "fade_in": 0.3
+  },
+  "sfx": [
+   [
+    "unwrap",
+    0.1,
+    "paper-tear-2.wav",
+    0.4
+   ],
+   [
+    "spray",
+    1.0,
+    "water-drip.mp3",
+    0.25
+   ]
+  ]
+ }
+}
