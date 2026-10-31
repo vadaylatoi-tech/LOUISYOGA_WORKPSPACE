@@ -21,3 +21,7 @@ Memory và báo cáo cũ ghi đường dẫn của máy công ty. Tra bảng nà
 | `D:\Tổng dữ liệu\Dự án - Thay đổi giao diện website sapo\` | `07_PUBLISHING/website-sapo/` (kit cũ: `09_ARCHIVE/website-sapo-kits-cu/`) |
 | `D:\Tổng dữ liệu\Dự án tạo ảnh website - Louis Yoga\` | `02_PRODUCTS/website-images/` (Drive); skill avatar: `04_AI_SKILLS/quy-tac-avatar-louis-yoga/` |
 | `D:\Tổng dữ liệu\Dự án tạo website daft - louis Yoga\` | `09_ARCHIVE/website-draft-louis-yoga/`; Video Hero: `01_BRAND/video/` |
+| `D:\Tổng dữ liệu\`, `D:\LOUGA_STAGING\`, `D:\_maymoi_test\`, `D:\LOUGA_INVENTORY_REPORT\` (bản cũ trên ổ D:, chuyển 31/10/2026) | `D:\09_Lưu trữ\Hệ thống cũ\` |
+| `D:\Nguyễn Như Linh\` | `D:\09_Lưu trữ\Bàn giao - Nguyễn Như Linh\` |
+| `D:\1.Poster FB\`, `D:\SHOPEE\`, `D:\2.Catalog\`, `D:\Phụ kiện final\` | `D:\01_Louis Yoga\` (log nguồn → đích: Drive `00_Quản lý Drive/LOG-SAP-XEP-O-D-2026-10-31.json`) |
+| Thiết kế Sadu, Telvina, Daft, Tiệm bánh bông kem | `D:\02_Khách hàng\` |
