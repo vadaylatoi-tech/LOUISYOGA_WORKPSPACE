@@ -13,7 +13,7 @@ LIB = BASE + "03_MEDIA_LIBRARY/MUSIC_LIBRARY/"
 SFXD = "D:/LOUGA_WORKSPACE/03_MEDIA_LIBRARY/shared-sources/sound-effects/"
 OUTD = BASE + "10_FINAL_DELIVERABLES/2026-10-31_review-san-pham/"
 SR = 48000
-NAME = {"1": "01 - Review thảm Louis Yoga - Cao trào trước_v2", "2": "02 - Review thảm Louis Yoga - Tĩnh rồi cao trào_v5", "3": "03 - Review thảm Louis Yoga - Tò mò rồi hé lộ_v2"}
+NAME = {"1": "01 - Review thảm Louis Yoga - Cao trào trước_v2", "2": "02 - Review thảm Louis Yoga - Tĩnh rồi cao trào_v6", "3": "03 - Review thảm Louis Yoga - Tò mò rồi hé lộ_v2"}
 spec = json.load(open(f"{HERE}/src/spec.json", encoding="utf-8"))
 
 
@@ -60,12 +60,12 @@ for ver in sys.argv[1:] or ["1", "2", "3"]:
         noise = rng.standard_normal((n, 2))
         F = np.fft.rfft(noise, axis=0)
         fq = np.fft.rfftfreq(n, 1 / SR) + 1
-        hiss = np.exp(-(np.log(fq / 5200) ** 2) / (2 * 0.62 ** 2))  # dinh mem quanh 5,2 kHz
-        air = 0.3 * np.exp(-(np.log(fq / 1300) ** 2) / (2 * 0.5 ** 2))  # than hoi o tam thap
+        hiss = np.exp(-(np.log(fq / 3600) ** 2) / (2 * 0.55 ** 2))  # dinh mem quanh 3,6 kHz, khong gat
+        air = 0.45 * np.exp(-(np.log(fq / 1300) ** 2) / (2 * 0.5 ** 2))  # than hoi o tam thap
         y = np.fft.irfft(F * (hiss + air)[:, None], n=n, axis=0)
         ti = np.arange(n) / SR
-        e = np.sin(np.minimum(ti / 0.045, 1) * np.pi / 2) ** 2 * np.where(ti < 0.16, 1, np.exp(-(ti - 0.16) / 0.075))
-        y = (y / np.abs(y).max() * e[:, None] * 0.24).astype(np.float32)
+        e = np.sin(np.minimum(ti / 0.08, 1) * np.pi / 2) ** 2 * np.where(ti < 0.14, 1, np.exp(-(ti - 0.14) / 0.09))
+        y = (y / np.abs(y).max() * e[:, None] * 0.07).astype(np.float32)
         for s in c["shots"]:
             if s["name"] == name:
                 st = int((s["from"] / 30 + rel) * SR)
