@@ -1,0 +1,29 @@
+TITLE: Mot khoang lang cho co the
+FCM: NON-DROP FRAME
+
+001  FILM V C 00:00:49:28 00:00:52:09 00:00:00:00 00:00:02:10
+* FROM CLIP NAME: louisyoga_brand_film_30fps.mp4 | anh nang tren tham | crop [330, 205, 1556] | speed 1
+002  FILM V C 00:00:52:12 00:00:55:18 00:00:02:10 00:00:05:16
+* FROM CLIP NAME: louisyoga_brand_film_30fps.mp4 | tay mo mep tham | crop [0, 80, 1640] | speed 1
+003  FILM V C 00:00:12:00 00:00:16:18 00:00:04:28 00:00:09:16
+* FROM CLIP NAME: louisyoga_brand_film_30fps.mp4 | ngoi tinh | crop [0, 100, 1640] | speed 1
+004  FILM V C 00:00:07:18 00:00:11:21 00:00:09:16 00:00:13:19
+* FROM CLIP NAME: louisyoga_brand_film_30fps.mp4 | bo cau uon lung | crop [0, 100, 1640] | speed 1
+005  FILM V C 00:00:58:18 00:01:00:00 00:00:13:19 00:00:15:19
+* FROM CLIP NAME: louisyoga_brand_film_30fps.mp4 | quy tran cham tham | crop [0, 150, 1640] | speed 0.7
+006  FILM V C 00:00:42:18 00:00:45:27 00:00:15:19 00:00:18:28
+* FROM CLIP NAME: louisyoga_brand_film_30fps.mp4 | tay vuot tham xanh la | crop [0, 150, 1640] | speed 1
+007  FILM V C 00:00:46:12 00:00:49:15 00:00:18:28 00:00:22:01
+* FROM CLIP NAME: louisyoga_brand_film_30fps.mp4 | ngon tay lan hoa sen | crop [0, 150, 1640] | speed 1
+008  FILM V C 00:01:00:09 00:01:02:15 00:00:22:01 00:00:24:08
+* FROM CLIP NAME: louisyoga_brand_film_30fps.mp4 | ban tay tham xanh | crop [280, 205, 1556] | speed 1
+009  FILM V C 00:00:40:15 00:00:41:18 00:00:24:08 00:00:25:25
+* FROM CLIP NAME: louisyoga_brand_film_30fps.mp4 | om tham louisyoga | crop [0, 150, 1640] | speed 0.7
+010  FILM V C 00:00:55:21 00:00:58:06 00:00:25:25 00:00:28:10
+* FROM CLIP NAME: louisyoga_brand_film_30fps.mp4 | tay tren mat de den | crop [0, 150, 1640] | speed 1
+011  FILM V C 00:00:17:06 00:00:22:18 00:00:27:22 00:00:33:04
+* FROM CLIP NAME: louisyoga_brand_film_30fps.mp4 | chong tay nang chan | crop [0, 158, 1640] | speed 1
+012  FILM V C 00:01:02:24 00:01:09:24 00:00:33:04 00:00:40:04
+* FROM CLIP NAME: louisyoga_brand_film_30fps.mp4 | nam uon lung | crop [0, 100, 1640] | speed 1
+013  FILM V C 00:01:11:18 00:01:14:27 00:00:40:04 00:00:43:13
+* FROM CLIP NAME: louisyoga_brand_film_30fps.mp4 | ngoi tha long | crop [0, 100, 1640] | speed 1
