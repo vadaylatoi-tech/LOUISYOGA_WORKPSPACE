@@ -31,13 +31,13 @@ V1 = {  # dinh truoc: canh theo so beat
     "sfx": [["unwrap", 0.1, "paper-tear-2.wav", 0.5], ["water", 0.1, "water-drip.mp3", 0.3]],
 }
 V2 = {
-    "beat": B2, "style": "breath", "trans": 12,
-    "music": {"file": "Emotional/E04 - Wildflowers.mp3", "parts": [[0, 56.0, 37.0]], "fade_in": 0.6},
+    "beat": B2, "style": "breath", "trans": 12, "framed": 1,
+    "music": {"file": "Emotional/E04 - Wildflowers.mp3", "parts": [[0, 56.0, 34.0]], "fade_in": 0.6},
     "secs": [("dog", 4.6, "Chiếc thảm này", "có gì đáng thử?", {"ink": 1, "tl": 230, "tr": 50}),
-             ("bag", 3.0, "Tặng kèm túi", "", {"tear": 1, "ink": 1, "tl": 450, "tr": 90, "ts": 0.72}), ("unwrap", 2.8, "", "", {"tear": 1}),
+             ("bag", 3.0, "Tặng kèm túi", "", {"tear": 1, "ink": 1, "tl": 640, "tr": 30, "ts": 0.66, "ty": 1120}), ("unwrap", 2.8, "", "", {"tear": 1}),
              ("touch", 3.0, "Chạm thử", "nhìn gần bề mặt thảm", {}), ("raise", 2.6, "", "", {}), ("flat", 3.0, "Một đầu vuông", "một đầu tròn", {}),
              ("spray", 2.0, "", "", {"mist": [0.5, 1.06, 1.7]}), ("water", 2.8, "5 giây", "nước thấm hết", {}), ("leg", 3.2, "Bám chắc", "không trượt chân", {"ink": 1, "tl": 230, "tr": 50}),
-             ("edge", 2.0, "4,5 mm", "", {"ink": 1}), ("lunge", 6.0, "", "", {})],
+             ("edge", 2.0, "4,5 mm", "", {}), ("lunge", 3.0, "", "", {})],
     "sfx": [["bag", 0.0, "paper-tear-1.wav", 0.55], ["unwrap", 0.0, "paper-tear-3.wav", 0.55]],
     "spray": [["spray", 0.5], ["spray", 1.06], ["spray", 1.7]],
 }
@@ -85,6 +85,6 @@ for ver, c in ALL.items():
         fr, to = round(t * FPS), round((t + d) * FPS)
         shots.append({"name": n, "clip": clip(ver, n), "from": fr, "dur": to - fr, "a": a, "b": b, **fx})
         t += d
-    spec[str(ver)] = {"style": c["style"], "trans": c["trans"], "beat": c["beat"], "total": round(t * FPS), "shots": shots, "music": c["music"], "sfx": c["sfx"], "spray": c.get("spray", [])}
+    spec[str(ver)] = {"style": c["style"], "trans": c["trans"], "beat": c["beat"], "total": round(t * FPS), "shots": shots, "music": c["music"], "sfx": c["sfx"], "spray": c.get("spray", []), "framed": c.get("framed", 0)}
 json.dump(spec, open(f"{HERE}/src/spec.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print({k: v["total"] / FPS for k, v in spec.items()})

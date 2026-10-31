@@ -5,8 +5,8 @@ import spec from "./spec.json";
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const SANS = "BeVN";
 const SERIF = "SerifVN";
-type Shot = { name: string; clip: string; from: number; dur: number; a: string; b: string; ink?: number; tl?: number; tr?: number; ts?: number; tear?: number; mist?: number[] };
-type V = { style: string; trans: number; beat: number; total: number; shots: Shot[] };
+type Shot = { name: string; clip: string; from: number; dur: number; a: string; b: string; ink?: number; tl?: number; tr?: number; ts?: number; ty?: number; tear?: number; mist?: number[] };
+type V = { style: string; trans: number; beat: number; total: number; framed: number; shots: Shot[] };
 
 const useFonts = () => {
   const [h] = useState(() => delayRender("fonts"));
@@ -61,9 +61,9 @@ const BreathText: React.FC<{ s: Shot }> = ({ s }) => {
   const out = interpolate(fr, [s.dur - 14, s.dur - 2], [1, 0], clamp);
   const ts = s.ts ?? 1;
   return (
-    <div style={{ position: "absolute", left: s.tl ?? 90, right: s.tr ?? 90, top: 420, textAlign: "center", opacity: out }}>
+    <div style={{ position: "absolute", left: s.tl ?? 90, right: s.tr ?? 90, top: s.ty ?? 420, textAlign: "center", opacity: out }}>
       <div style={{ fontFamily: SERIF, fontStyle: "italic", whiteSpace: "nowrap", fontSize: 112 * ts, lineHeight: 1.15, color: s.ink ? INK : "#FFF3DF", textShadow: s.ink ? "none" : SHADOW, opacity: k, filter: `blur(${(1 - k) * 12}px)`, letterSpacing: (1 - k) * 12 }}>{s.a}</div>
-      {s.b && <div style={{ marginTop: 16, fontFamily: SANS, fontWeight: 500, fontSize: 36 * Math.max(0.85, ts), letterSpacing: 7 - k2 * 2, color: s.ink ? INK : "#fff", textTransform: "uppercase", textShadow: s.ink ? "none" : SHADOW, opacity: k2 }}>{s.b}</div>}
+      {s.b && <div style={{ marginTop: 16, fontFamily: SANS, fontWeight: 500, fontSize: 44 * Math.max(0.85, ts), letterSpacing: 7 - k2 * 2, color: s.ink ? INK : "#fff", textTransform: "uppercase", textShadow: s.ink ? "none" : SHADOW, opacity: k2 }}>{s.b}</div>}
     </div>
   );
 };
@@ -153,10 +153,12 @@ const Shots: React.FC<{ v: V }> = ({ v }) => {
           </Sequence>
         ) : null,
       )}
-      <Badge end={v.shots[last].from} />
-      <Sequence from={v.shots[last].from} durationInFrames={v.shots[last].dur} layout="none">
-        <CTA style={v.style} len={v.shots[last].dur} />
-      </Sequence>
+      {!v.framed && <Badge end={v.shots[last].from} />}
+      {!v.framed && (
+        <Sequence from={v.shots[last].from} durationInFrames={v.shots[last].dur} layout="none">
+          <CTA style={v.style} len={v.shots[last].dur} />
+        </Sequence>
+      )}
     </>
   );
 };
@@ -232,9 +234,55 @@ const Layer: React.FC<{ s: Shot; v: V; len: number; first: boolean }> = ({ s, v,
   );
 };
 
+// Layout "khung": blurred copy of the shot as background, the video in a rounded card (safe zone,
+// drawn smaller so it looks sharper), brand logos on top, product name + photo card at the bottom right.
+const CARD = { x: 132, y: 235, w: 816 };
+const K = CARD.w / 1080;
+
+const BgShot: React.FC<{ s: Shot; first: boolean }> = ({ s, first }) => {
+  const fr = useCurrentFrame();
+  const o = first ? 1 : interpolate(fr, [0, 12], [0, 1], clamp);
+  return (
+    <AbsoluteFill style={{ opacity: o }}>
+      <OffthreadVideo src={staticFile(s.clip)} muted style={{ width: 1080, height: 1920, transform: "scale(1.3)", filter: "blur(44px) brightness(1.08)" }} />
+    </AbsoluteFill>
+  );
+};
+
+const Framed: React.FC<{ v: V }> = ({ v }) => {
+  const fr = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const p = spring({ frame: fr - 8, fps, config: { damping: 14, stiffness: 130 } });
+  return (
+    <AbsoluteFill style={{ background: "#9AA09F", overflow: "hidden" }}>
+      {v.shots.map((s, i) => (
+        <Sequence key={i} from={s.from} durationInFrames={s.dur + 12} layout="none">
+          <BgShot s={s} first={i === 0} />
+        </Sequence>
+      ))}
+      <AbsoluteFill style={{ background: "rgba(255,255,255,0.1)" }} />
+      <Img src={staticFile("brand/logo_edit_white.svg")} style={{ position: "absolute", left: CARD.x - 8, top: 58, width: 370 }} />
+      <div style={{ position: "absolute", left: CARD.x - 8, top: CARD.y - 8, width: CARD.w + 16, height: Math.round(1920 * K) + 16, borderRadius: 58, background: "rgba(255,255,255,0.85)", boxShadow: "0 18px 50px rgba(0,0,0,0.22)" }} />
+      <div style={{ position: "absolute", left: CARD.x, top: CARD.y, width: CARD.w, height: Math.round(1920 * K), borderRadius: 50, overflow: "hidden", background: "#111" }}>
+        <div style={{ width: 1080, height: 1920, transform: `scale(${K})`, transformOrigin: "0 0" }}>
+          <Shots v={v} />
+        </div>
+      </div>
+      <div style={{ position: "absolute", right: 150, top: 1372, textAlign: "right", color: "#fff", fontFamily: SANS, textShadow: SHADOW, opacity: p }}>
+        <div style={{ fontWeight: 300, fontSize: 32, letterSpacing: 2 }}>THẢM</div>
+        <div style={{ fontWeight: 300, fontSize: 60, lineHeight: 1.0, letterSpacing: 2 }}>AURA</div>
+      </div>
+      <div style={{ position: "absolute", left: 772, top: 1478, width: 200, height: 216, borderRadius: 24, background: "#fff", overflow: "hidden", boxShadow: "0 10px 26px rgba(0,0,0,0.25)", transform: `rotate(3deg) scale(${p})` }}>
+        <Img src={staticFile("brand/aura.jpg")} style={{ width: 200, height: 216, objectFit: "cover", objectPosition: "50% 0" }} />
+      </div>
+    </AbsoluteFill>
+  );
+};
+
 const Comp: React.FC<{ id: string }> = ({ id }) => {
   useFonts();
   const v = (spec as unknown as Record<string, V>)[id];
+  if (v.framed) return <Framed v={v} />;
   return (
     <AbsoluteFill style={{ background: "#0F0B11" }}>
       <Shots v={v} />

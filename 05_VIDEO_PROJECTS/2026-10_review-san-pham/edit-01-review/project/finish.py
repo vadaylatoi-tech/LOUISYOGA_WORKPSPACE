@@ -13,7 +13,7 @@ LIB = BASE + "03_MEDIA_LIBRARY/MUSIC_LIBRARY/"
 SFXD = "D:/LOUGA_WORKSPACE/03_MEDIA_LIBRARY/shared-sources/sound-effects/"
 OUTD = BASE + "10_FINAL_DELIVERABLES/2026-10-31_review-san-pham/"
 SR = 48000
-NAME = {"1": "01 - Review thảm Louis Yoga - Cao trào trước_v2", "2": "02 - Review thảm Louis Yoga - Tĩnh rồi cao trào_v3", "3": "03 - Review thảm Louis Yoga - Tò mò rồi hé lộ_v2"}
+NAME = {"1": "01 - Review thảm Louis Yoga - Cao trào trước_v2", "2": "02 - Review thảm Louis Yoga - Tĩnh rồi cao trào_v4", "3": "03 - Review thảm Louis Yoga - Tò mò rồi hé lộ_v2"}
 spec = json.load(open(f"{HERE}/src/spec.json", encoding="utf-8"))
 
 
