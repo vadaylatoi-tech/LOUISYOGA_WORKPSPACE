@@ -131,7 +131,8 @@
     "water-drip.mp3",
     0.3
    ]
-  ]
+  ],
+  "spray": []
  },
  "2": {
   "style": "breath",
@@ -144,56 +145,57 @@
     "clip": "clips/v2_dog.mp4",
     "from": 0,
     "dur": 138,
-    "a": "Thảm mới",
-    "b": "cho buổi tập yên tĩnh"
-   },
-   {
-    "name": "fTouch",
-    "clip": "clips/v2_fTouch.mp4",
-    "from": 138,
-    "dur": 87,
-    "a": "",
-    "b": ""
+    "a": "Chiếc thảm này",
+    "b": "có gì đáng thử?",
+    "ink": 1,
+    "tl": 230,
+    "tr": 50
    },
    {
     "name": "bag",
     "clip": "clips/v2_bag.mp4",
-    "from": 225,
-    "dur": 75,
+    "from": 138,
+    "dur": 90,
     "a": "Tặng kèm túi",
-    "b": "dày dặn, khá to"
+    "b": "",
+    "tear": 1,
+    "ink": 1,
+    "tl": 450,
+    "tr": 90,
+    "ts": 0.72
    },
    {
     "name": "unwrap",
     "clip": "clips/v2_unwrap.mp4",
-    "from": 300,
-    "dur": 60,
+    "from": 228,
+    "dur": 84,
     "a": "",
-    "b": ""
+    "b": "",
+    "tear": 1
    },
    {
     "name": "touch",
     "clip": "clips/v2_touch.mp4",
-    "from": 360,
+    "from": 312,
     "dur": 90,
     "a": "Chạm thử",
     "b": "nhìn gần bề mặt thảm"
    },
    {
-    "name": "flat",
-    "clip": "clips/v2_flat.mp4",
-    "from": 450,
-    "dur": 75,
-    "a": "Một đầu vuông",
-    "b": "một đầu tròn"
-   },
-   {
     "name": "raise",
     "clip": "clips/v2_raise.mp4",
-    "from": 525,
-    "dur": 45,
+    "from": 402,
+    "dur": 78,
     "a": "",
     "b": ""
+   },
+   {
+    "name": "flat",
+    "clip": "clips/v2_flat.mp4",
+    "from": 480,
+    "dur": 90,
+    "a": "Một đầu vuông",
+    "b": "một đầu tròn"
    },
    {
     "name": "spray",
@@ -201,7 +203,12 @@
     "from": 570,
     "dur": 60,
     "a": "",
-    "b": ""
+    "b": "",
+    "mist": [
+     0.5,
+     1.06,
+     1.7
+    ]
    },
    {
     "name": "water",
@@ -217,7 +224,10 @@
     "from": 714,
     "dur": 96,
     "a": "Bám chắc",
-    "b": "không trượt chân"
+    "b": "không trượt chân",
+    "ink": 1,
+    "tl": 230,
+    "tr": 50
    },
    {
     "name": "edge",
@@ -225,7 +235,8 @@
     "from": 810,
     "dur": 60,
     "a": "4,5 mm",
-    "b": ""
+    "b": "",
+    "ink": 1
    },
    {
     "name": "lunge",
@@ -249,16 +260,30 @@
   },
   "sfx": [
    [
+    "bag",
+    0.0,
+    "paper-tear-1.wav",
+    0.55
+   ],
+   [
     "unwrap",
-    0.1,
-    "paper-tear-2.wav",
-    0.35
+    0.0,
+    "paper-tear-3.wav",
+    0.55
+   ]
+  ],
+  "spray": [
+   [
+    "spray",
+    0.5
    ],
    [
     "spray",
-    1.0,
-    "water-drip.mp3",
-    0.25
+    1.06
+   ],
+   [
+    "spray",
+    1.7
    ]
   ]
  },
@@ -381,6 +406,7 @@
     "water-drip.mp3",
     0.25
    ]
-  ]
+  ],
+  "spray": []
  }
 }

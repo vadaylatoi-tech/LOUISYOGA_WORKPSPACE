@@ -5,7 +5,7 @@ import spec from "./spec.json";
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const SANS = "BeVN";
 const SERIF = "SerifVN";
-type Shot = { name: string; clip: string; from: number; dur: number; a: string; b: string };
+type Shot = { name: string; clip: string; from: number; dur: number; a: string; b: string; ink?: number; tl?: number; tr?: number; ts?: number; tear?: number; mist?: number[] };
 type V = { style: string; trans: number; beat: number; total: number; shots: Shot[] };
 
 const useFonts = () => {
@@ -16,7 +16,8 @@ const useFonts = () => {
   }, [h]);
 };
 
-const SHADOW = "0 2px 6px rgba(0,0,0,0.75), 0 6px 34px rgba(0,0,0,0.6)";
+const SHADOW = "0 1px 3px rgba(0,0,0,0.45)"; // crisp only: no smudge under the text
+const INK = "#2A2230";
 
 // Clip with a slow push; a beat-cut style gets a short punch at the head of the shot.
 const Clip: React.FC<{ s: Shot; style: string; len: number }> = ({ s, style, len }) => {
@@ -58,10 +59,11 @@ const BreathText: React.FC<{ s: Shot }> = ({ s }) => {
   const k = interpolate(fr, [4, 30], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) });
   const k2 = interpolate(fr, [20, 44], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) });
   const out = interpolate(fr, [s.dur - 14, s.dur - 2], [1, 0], clamp);
+  const ts = s.ts ?? 1;
   return (
-    <div style={{ position: "absolute", left: 90, right: 90, top: 420, textAlign: "center", opacity: out }}>
-      <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 112, lineHeight: 1.15, color: "#FFF3DF", textShadow: SHADOW, opacity: k, filter: `blur(${(1 - k) * 12}px)`, letterSpacing: (1 - k) * 12 }}>{s.a}</div>
-      {s.b && <div style={{ marginTop: 16, fontFamily: SANS, fontWeight: 500, fontSize: 36, letterSpacing: 7 - k2 * 2, color: "#fff", textTransform: "uppercase", textShadow: SHADOW, opacity: k2 }}>{s.b}</div>}
+    <div style={{ position: "absolute", left: s.tl ?? 90, right: s.tr ?? 90, top: 420, textAlign: "center", opacity: out }}>
+      <div style={{ fontFamily: SERIF, fontStyle: "italic", whiteSpace: "nowrap", fontSize: 112 * ts, lineHeight: 1.15, color: s.ink ? INK : "#FFF3DF", textShadow: s.ink ? "none" : SHADOW, opacity: k, filter: `blur(${(1 - k) * 12}px)`, letterSpacing: (1 - k) * 12 }}>{s.a}</div>
+      {s.b && <div style={{ marginTop: 16, fontFamily: SANS, fontWeight: 500, fontSize: 36 * Math.max(0.85, ts), letterSpacing: 7 - k2 * 2, color: s.ink ? INK : "#fff", textTransform: "uppercase", textShadow: s.ink ? "none" : SHADOW, opacity: k2 }}>{s.b}</div>}
     </div>
   );
 };
@@ -126,13 +128,6 @@ const CTA: React.FC<{ style: string; len: number }> = ({ style, len }) => {
   );
 };
 
-// Soft dark glow behind the text so thin type still reads on the bright wall (no visible box).
-const Scrim: React.FC<{ len: number }> = ({ len }) => {
-  const fr = useCurrentFrame();
-  const o = interpolate(fr, [0, 8, len - 8, len], [0, 1, 1, 0], clamp);
-  return <AbsoluteFill style={{ opacity: o, background: "radial-gradient(ellipse 62% 17% at 50% 25%, rgba(16,11,18,0.62) 0%, rgba(16,11,18,0.32) 55%, rgba(16,11,18,0) 100%)" }} />;
-};
-
 const Shots: React.FC<{ v: V }> = ({ v }) => {
   const beatF = Math.round(v.beat * 30);
   const last = v.shots.length - 1;
@@ -143,13 +138,17 @@ const Shots: React.FC<{ v: V }> = ({ v }) => {
         return (
           <Sequence key={i} from={s.from} durationInFrames={len} layout="none">
             <Layer s={s} v={v} len={len} first={i === 0} />
+            {(s.mist ?? []).map((at, k) => (
+              <Sequence key={k} from={Math.round(at * 30)} durationInFrames={18} layout="none">
+                <Mist seed={k + 1} />
+              </Sequence>
+            ))}
           </Sequence>
         );
       })}
       {v.shots.map((s, i) =>
         s.a ? (
           <Sequence key={"t" + i} from={s.from + (v.style === "beat" ? 0 : Math.round(v.trans / 2))} durationInFrames={s.dur} layout="none">
-            <Scrim len={s.dur} />
             {v.style === "beat" ? <BeatText s={s} beatF={beatF} /> : v.style === "breath" ? <BreathText s={s} /> : <TypeText s={s} />}
           </Sequence>
         ) : null,
@@ -162,12 +161,70 @@ const Shots: React.FC<{ v: V }> = ({ v }) => {
   );
 };
 
+const rnd = (i: number) => {
+  const x = Math.sin(i * 127.1 + 311.7) * 43758.5453;
+  return x - Math.floor(x);
+};
+
+// Fine spray leaving the nozzle (position measured on the shot), fanning down onto the mat.
+const Mist: React.FC<{ seed: number }> = ({ seed }) => {
+  const fr = useCurrentFrame();
+  const NX = 665;
+  const NY = 1345;
+  return (
+    <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
+      {Array.from({ length: 70 }).map((_, i) => {
+        const r = (j: number) => rnd(seed * 100 + i * 3 + j);
+        const age = (fr - r(0) * 5) / 13;
+        if (age <= 0 || age > 1) return null;
+        const ang = 0.35 + r(1) * 1.5;
+        const dist = (40 + r(2) * 230) * (1 - (1 - age) ** 2);
+        return <circle key={i} cx={NX + Math.cos(ang) * dist} cy={NY + Math.sin(ang) * dist * 0.75} r={1.6 + r(3) * 3.6} fill="#fff" opacity={(1 - age) * 0.8} />;
+      })}
+    </svg>
+  );
+};
+
+// Torn-paper wipe: the next shot is revealed behind a jagged white paper edge moving across the frame.
+const tearPts = (x: number, off: number) => {
+  const p: [number, number][] = [];
+  for (let i = 0; i <= 26; i++) {
+    const y = (i / 26) * 1920;
+    p.push([x + (y - 960) * 0.16 + (rnd(i) - 0.5) * 46 + (rnd(i + 40) - 0.5) * 18 + off * (0.6 + rnd(i + 80) * 0.9), y]);
+  }
+  return p;
+};
+
+const TearEdge: React.FC<{ x: number }> = ({ x }) => {
+  const a = tearPts(x, 0);
+  const b = tearPts(x, -34);
+  const pts = [...a, ...b.reverse()].map(([px, py]) => `${px},${py}`).join(" ");
+  return (
+    <svg width={1080} height={1920} style={{ position: "absolute", left: 0, top: 0 }}>
+      <polygon points={pts} fill="#FBF8F2" stroke="rgba(0,0,0,0.12)" strokeWidth={2} />
+    </svg>
+  );
+};
+
 // Later shots sit on top and fade/clear in over the transition; beat style hard-cuts.
 const Layer: React.FC<{ s: Shot; v: V; len: number; first: boolean }> = ({ s, v, len, first }) => {
   const fr = useCurrentFrame();
   const t = v.trans;
   const k = first || !t ? 1 : interpolate(fr, [0, t], [0, 1], clamp);
   const blur = v.style === "type" && !first ? (1 - k) * 26 : 0;
+  if (s.tear) {
+    const e = interpolate(fr, [0, t], [0, 1], { ...clamp, easing: Easing.inOut(Easing.cubic) });
+    const x = interpolate(e, [0, 1], [1320, -260]);
+    const poly = [...tearPts(x, 0), [2000, 1920], [2000, 0]].map(([px, py]) => `${px}px ${py}px`).join(",");
+    return (
+      <>
+        <AbsoluteFill style={{ clipPath: `polygon(${poly})` }}>
+          <Clip s={s} style={v.style} len={len} />
+        </AbsoluteFill>
+        {fr < t && <TearEdge x={x} />}
+      </>
+    );
+  }
   return (
     <AbsoluteFill style={{ opacity: k, filter: blur ? `blur(${blur}px)` : undefined }}>
       <Clip s={s} style={v.style} len={len} />

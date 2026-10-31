@@ -13,7 +13,7 @@ LIB = BASE + "03_MEDIA_LIBRARY/MUSIC_LIBRARY/"
 SFXD = "D:/LOUGA_WORKSPACE/03_MEDIA_LIBRARY/shared-sources/sound-effects/"
 OUTD = BASE + "10_FINAL_DELIVERABLES/2026-10-31_review-san-pham/"
 SR = 48000
-NAME = {"1": "01 - Review thảm Louis Yoga - Cao trào trước_v2", "2": "02 - Review thảm Louis Yoga - Tĩnh rồi cao trào_v2", "3": "03 - Review thảm Louis Yoga - Tò mò rồi hé lộ_v2"}
+NAME = {"1": "01 - Review thảm Louis Yoga - Cao trào trước_v2", "2": "02 - Review thảm Louis Yoga - Tĩnh rồi cao trào_v3", "3": "03 - Review thảm Louis Yoga - Tò mò rồi hé lộ_v2"}
 spec = json.load(open(f"{HERE}/src/spec.json", encoding="utf-8"))
 
 
@@ -54,6 +54,20 @@ for ver in sys.argv[1:] or ["1", "2", "3"]:
                 st = int((s["from"] / 30 + rel) * SR)
                 L = min(len(x), N - st)
                 sfx[st:st + L] += x[:L]
+    for name, rel in c.get("spray", []):  # tieng xit: on trang loc 2,5-11 kHz, tat nhanh
+        n = int(0.34 * SR)
+        rng = np.random.default_rng(int(rel * 100))
+        noise = rng.standard_normal((n, 2))
+        F = np.fft.rfft(noise, axis=0)
+        fq = np.fft.rfftfreq(n, 1 / SR)
+        F[(fq < 2500) | (fq > 11000)] = 0
+        y = np.fft.irfft(F, n=n, axis=0)
+        e = np.minimum(np.arange(n) / (0.012 * SR), 1) * np.exp(-np.arange(n) / (0.11 * SR))
+        y = (y / np.abs(y).max() * e[:, None] * 0.3).astype(np.float32)
+        for s in c["shots"]:
+            if s["name"] == name:
+                st = int((s["from"] / 30 + rel) * SR)
+                sfx[st:st + n] += y
     raw = f"{HERE}/renders/a{ver}.wav"
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "2", "-i", "-", "-c:a", "pcm_f32le", raw], input=(mus + sfx).astype(np.float32).tobytes(), check=True)
     o = subprocess.run(["ffmpeg", "-hide_banner", "-i", raw, "-af", "loudnorm=I=-14:TP=-2:LRA=11:print_format=json", "-f", "null", "-"], capture_output=True).stderr.decode("utf-8", "replace")

@@ -11,14 +11,14 @@ FILM = "D:/LOUGA_WORKSPACE/04_AI_SKILLS/louisyoga-reel-style1-package/louisyoga-
 FPS = 30
 LOOK = {
     1: "eq=contrast=1.1:saturation=1.05:gamma=0.97,colorbalance=rs=.06:bs=-.08:rm=.05:gm=.01:bm=-.06:rh=.04:bh=-.06",
-    2: "eq=contrast=1.02:saturation=0.95:brightness=0.015,colorbalance=rs=.05:gs=.02:bs=-.05:rm=.07:gm=.02:bm=-.07:rh=.03:bh=-.05",
+    2: "",  # mau goc (anh chot 31/10)
     3: "eq=contrast=0.94:saturation=0.82:brightness=0.03,colorbalance=rs=.03:bs=.03:rm=.03:gm=-.01:bm=.02",
 }
 # ten: (nguon, giay, lat, crop x0,y0,x1 | "film cx", toc do)
 S = {
     "water": (V, 59.0, 0, None, 2.0), "leg": (V, 47.2, 0, None, 0.9), "edge": (V, 68.5, 0, None, 1), "raise": (V, 35.6, 1, None, 1),
-    "flat": (V, 41.6, 0, None, 0.65), "touch": (V, 28.6, 1, (0, 120, 440), 0.7), "bag": (V, 7.2, 1, (110, 505, 400), 1), "unwrap": (V, 22.0, 1, (286, 505, 576), 1),
-    "dog": (V, 44.3, 0, None, 0.7), "spray": (V, 56.0, 0, None, 1), "lunge": (V, 50.0, 0, None, 0.26),
+    "flat": (V, 41.6, 0, None, 0.65), "touch": (V, 28.6, 1, (0, 120, 440), 0.7), "bag": (V, 7.2, 1, (110, 505, 400), 1), "unwrap": (V, 22.0, 1, (286, 505, 576), 0.75),
+    "dog": (V, 44.3, 0, None, 0.7), "spray": (V, 56.4, 0, None, 1), "lunge": (V, 50.0, 0, None, 0.26),
     "fTouch": (FILM, 42.5, 0, 1150, 0.8), "fPattern": (FILM, 46.3, 0, 1000, 0.8), "fPress": (FILM, 60.2, 0, 960, 0.8), "fMed": (FILM, 12.5, 0, 940, 0.8),
 }
 B1, B2, B3 = 0.6269, 0.5805, 0.8011
@@ -33,10 +33,13 @@ V1 = {  # dinh truoc: canh theo so beat
 V2 = {
     "beat": B2, "style": "breath", "trans": 12,
     "music": {"file": "Emotional/E04 - Wildflowers.mp3", "parts": [[0, 56.0, 37.0]], "fade_in": 0.6},
-    "secs": [("dog", 4.6, "Thảm mới", "cho buổi tập yên tĩnh"), ("fTouch", 2.9, "", ""), ("bag", 2.5, "Tặng kèm túi", "dày dặn, khá to"), ("unwrap", 2.0, "", ""),
-             ("touch", 3.0, "Chạm thử", "nhìn gần bề mặt thảm"), ("flat", 2.5, "Một đầu vuông", "một đầu tròn"), ("raise", 1.5, "", ""),
-             ("spray", 2.0, "", ""), ("water", 2.8, "5 giây", "nước thấm hết"), ("leg", 3.2, "Bám chắc", "không trượt chân"), ("edge", 2.0, "4,5 mm", ""), ("lunge", 6.0, "", "")],
-    "sfx": [["unwrap", 0.1, "paper-tear-2.wav", 0.35], ["spray", 1.0, "water-drip.mp3", 0.25]],
+    "secs": [("dog", 4.6, "Chiếc thảm này", "có gì đáng thử?", {"ink": 1, "tl": 230, "tr": 50}),
+             ("bag", 3.0, "Tặng kèm túi", "", {"tear": 1, "ink": 1, "tl": 450, "tr": 90, "ts": 0.72}), ("unwrap", 2.8, "", "", {"tear": 1}),
+             ("touch", 3.0, "Chạm thử", "nhìn gần bề mặt thảm", {}), ("raise", 2.6, "", "", {}), ("flat", 3.0, "Một đầu vuông", "một đầu tròn", {}),
+             ("spray", 2.0, "", "", {"mist": [0.5, 1.06, 1.7]}), ("water", 2.8, "5 giây", "nước thấm hết", {}), ("leg", 3.2, "Bám chắc", "không trượt chân", {"ink": 1, "tl": 230, "tr": 50}),
+             ("edge", 2.0, "4,5 mm", "", {"ink": 1}), ("lunge", 6.0, "", "", {})],
+    "sfx": [["bag", 0.0, "paper-tear-1.wav", 0.55], ["unwrap", 0.0, "paper-tear-3.wav", 0.55]],
+    "spray": [["spray", 0.5], ["spray", 1.06], ["spray", 1.7]],
 }
 V3 = {
     "beat": B3, "style": "type", "trans": 6,
@@ -66,7 +69,7 @@ def clip(ver, name):
             w = x1 - x0
             vf.append(f"crop={w}:{int(w * 16 / 9) // 2 * 2}:{x0}:{y0}")
         vf.append("hqdn3d=2:2:4:4")
-    vf += [f"setpts=PTS/{sp}", f"minterpolate=fps={FPS}:mi_mode=blend" if sp < 0.5 else f"fps={FPS}", "scale=1080:1920:flags=lanczos", "cas=0.8" if src == V else "cas=0.4", LOOK[ver]]
+    vf += [f"setpts=PTS/{sp}", f"minterpolate=fps={FPS}:mi_mode=blend" if sp < 0.5 else f"fps={FPS}", "scale=1080:1920:flags=lanczos", ("cas=0.45" if ver == 2 else "cas=0.8") if src == V else "cas=0.4"] + ([LOOK[ver]] if LOOK[ver] else [])
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(ss), "-t", str(9 * sp), "-i", src, "-an", "-vf", ",".join(vf), "-t", "9",
                     "-c:v", "libx264", "-crf", "14", "-preset", "fast", "-g", "10", "-bf", "0", "-pix_fmt", "yuv420p", out], check=True)
     return f"clips/v{ver}_{name}.mp4"
@@ -76,10 +79,12 @@ spec = {}
 for ver, c in ALL.items():
     shots, t = [], 0.0
     items = [(n, k * c["beat"], a, b) for n, k, a, b in c["shots"]] if "shots" in c else c["secs"]
-    for n, d, a, b in items:
+    for it in items:
+        n, d, a, b = it[:4]
+        fx = it[4] if len(it) > 4 else {}
         fr, to = round(t * FPS), round((t + d) * FPS)
-        shots.append({"name": n, "clip": clip(ver, n), "from": fr, "dur": to - fr, "a": a, "b": b})
+        shots.append({"name": n, "clip": clip(ver, n), "from": fr, "dur": to - fr, "a": a, "b": b, **fx})
         t += d
-    spec[str(ver)] = {"style": c["style"], "trans": c["trans"], "beat": c["beat"], "total": round(t * FPS), "shots": shots, "music": c["music"], "sfx": c["sfx"]}
+    spec[str(ver)] = {"style": c["style"], "trans": c["trans"], "beat": c["beat"], "total": round(t * FPS), "shots": shots, "music": c["music"], "sfx": c["sfx"], "spray": c.get("spray", [])}
 json.dump(spec, open(f"{HERE}/src/spec.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print({k: v["total"] / FPS for k, v in spec.items()})
