@@ -1,6 +1,6 @@
 - [Final video location](final-video-location.md) — finals go to 10_FINAL_DELIVERABLES/<date>_<project>/, never in edit folders
 - [Workspace sync system](workspace-sync-system.md) — GitHub repo D:/LOUGA_WORKSPACE + Drive log + SessionStart hook + linked skills
 - [Drive G: offline](drive-offline-read-direct.md) — G: cached offline; read media from G: directly, don't copy to D:
-- [Video cover thumbnail](video-cover-thumbnail.md) — make_cover.py after each final; hook frame, no strike/stamp
-- [Only G:, never C:](no-local-c-drive-files.md) — no backups/previews/scratch on C:; work files on G: only
 - [Bug: 2-attempt rule](bug-two-attempt-rule.md) — log in SO-BUG.md on Drive, group by cause, stop after 2 failed tries
+- [Only G:, never C:](no-local-c-drive-files.md) — no backups/previews/scratch on C:; work files on G: only
+- [Video cover thumbnail](video-cover-thumbnail.md) — make_cover.py after each final; hook frame, no strike/stamp
