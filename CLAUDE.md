@@ -56,6 +56,7 @@ Sổ bug dùng chung mọi máy: Drive `LOUGA_WORKSPACE_MEDIA/00_SYSTEM/SO-BUG.m
 ## ĐỒNG BỘ GIỮA CÁC MÁY + NHẬT KÝ — BẮT BUỘC (từ 26/10/2026)
 - GitHub giữ code/skill/quy tắc; Google Drive giữ media, asset skill và **nhật ký làm việc** `LOUGA_WORKSPACE_MEDIA/00_SYSTEM/NHAT-KY-LAM-VIEC.md`.
 - Đầu phiên: hook SessionStart tự chạy `00_SYSTEM/sync/dong_bo.py session-start` (git pull, đồng bộ asset skill với Drive, in 3 mục nhật ký cuối). Không thấy khối "DONG BO WORKSPACE" ở đầu phiên → chạy tay lệnh đó, rồi đọc nhật ký trước khi làm.
+- Video review/unbox sản phẩm không lời → skill `louisyoga-reel-review` (phong cách 3).
 - Skill `louisyoga-reel-style1`, `duycongeditvideo-buoc1` trong `~/.claude/skills/` là LIÊN KẾT tới `04_AI_SKILLS/...` của repo — sửa skill là sửa trong repo. Asset nặng (mp3/mp4/onnx/ảnh) không lên git, nằm ở Drive cùng đường dẫn `04_AI_SKILLS/...`; thêm asset mới → script tự đẩy lên Drive ở phiên sau.
 - Xong việc (trước khi báo hoàn thành): ghi nhật ký
   `python D:/LOUGA_WORKSPACE/00_SYSTEM/sync/dong_bo.py ghi-nhat-ky --viec "..." --file "<đường dẫn final/hồ sơ>" --con-lai "..."`

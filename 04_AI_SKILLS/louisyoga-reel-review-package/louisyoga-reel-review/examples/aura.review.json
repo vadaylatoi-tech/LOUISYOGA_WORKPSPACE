@@ -1,0 +1,196 @@
+{
+ "source": "G:/My Drive/LOUISYOGA_WORKSPACE/LOUGA_WORKSPACE_MEDIA/03_MEDIA_LIBRARY/raw-footage/Video Review sản phẩm/snaptikvn_7643468615177768212.mp4",
+ "product": {
+  "label": "THẢM",
+  "name": "AURA",
+  "title": "Thảm Aura",
+  "site": "louisyoga.vn",
+  "button": "Xem chi tiết ở link dưới bài"
+ },
+ "trans": 12,
+ "cta": 967,
+ "music": {
+  "file": "Emotional/E04 - Wildflowers.mp3",
+  "parts": [
+   [
+    0,
+    55.66,
+    36.4
+   ]
+  ],
+  "fade_in": 0.25
+ },
+ "clips": {
+  "dog": {
+   "ss": 44.3,
+   "speed": 0.7
+  },
+  "bag": {
+   "ss": 7.2,
+   "flip": 1,
+   "crop": [
+    110,
+    505,
+    400
+   ]
+  },
+  "unwrap": {
+   "ss": 22.0,
+   "flip": 1,
+   "crop": [
+    286,
+    505,
+    576
+   ],
+   "speed": 0.75
+  },
+  "touch": {
+   "ss": 28.6,
+   "flip": 1,
+   "crop": [
+    0,
+    120,
+    440
+   ],
+   "speed": 0.7
+  },
+  "raise": {
+   "ss": 35.6,
+   "flip": 1
+  },
+  "flat": {
+   "ss": 41.6,
+   "speed": 0.65
+  },
+  "spray": {
+   "ss": 56.4
+  },
+  "water": {
+   "ss": 59.0,
+   "speed": 2.0
+  },
+  "leg": {
+   "ss": 47.2,
+   "speed": 0.9
+  },
+  "edge": {
+   "ss": 68.5
+  },
+  "lunge": {
+   "ss": 50.0,
+   "speed": 0.26
+  }
+ },
+ "shots": [
+  {
+   "clip": "dog",
+   "dur": 4.94,
+   "a": "Chiếc thảm này",
+   "b": "có gì đáng thử?",
+   "ink": 1,
+   "tl": 230,
+   "tr": 50,
+   "td": 22
+  },
+  {
+   "clip": "bag",
+   "dur": 3.0,
+   "a": "Tặng kèm túi",
+   "ink": 1,
+   "tl": 640,
+   "tr": 30,
+   "ts": 0.66,
+   "ty": 1120,
+   "tear": 1
+  },
+  {
+   "clip": "unwrap",
+   "dur": 2.8,
+   "tear": 1
+  },
+  {
+   "clip": "touch",
+   "dur": 3.0,
+   "a": "Chạm thử",
+   "b": "nhìn gần bề mặt thảm"
+  },
+  {
+   "clip": "raise",
+   "dur": 2.6
+  },
+  {
+   "clip": "flat",
+   "dur": 3.0,
+   "a": "Một đầu vuông",
+   "b": "một đầu tròn"
+  },
+  {
+   "clip": "spray",
+   "dur": 2.0,
+   "mist": [
+    0.5,
+    1.06,
+    1.7
+   ],
+   "nozzle": [
+    665,
+    1345
+   ]
+  },
+  {
+   "clip": "water",
+   "dur": 2.8,
+   "a": "5 giây",
+   "b": "nước thấm hết"
+  },
+  {
+   "clip": "leg",
+   "dur": 3.2,
+   "a": "Bám chắc",
+   "b": "không trượt chân",
+   "ink": 1,
+   "tl": 230,
+   "tr": 50
+  },
+  {
+   "clip": "edge",
+   "dur": 2.0,
+   "a": "4,5 mm"
+  },
+  {
+   "clip": "lunge",
+   "dur": 7.06
+  }
+ ],
+ "sfx": [
+  [
+   "bag",
+   0.0,
+   "paper-tear-1.wav",
+   0.55
+  ],
+  [
+   "unwrap",
+   0.0,
+   "paper-tear-3.wav",
+   0.55
+  ]
+ ],
+ "hits": [
+  [
+   0.72,
+   "mixkit/mixkit-air-woosh-1489.wav",
+   0.32
+  ],
+  [
+   32.3,
+   "mixkit/mixkit-air-woosh-1489.wav",
+   0.18
+  ],
+  [
+   33.4,
+   "quick-ting.mp3",
+   0.22
+  ]
+ ]
+}
