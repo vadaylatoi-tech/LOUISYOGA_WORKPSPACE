@@ -41,8 +41,8 @@ KHÔNG ghi vào thư mục đã có file của người dùng; không ghi đè b
   Ví dụ: `10_FINAL_DELIVERABLES/2026-10-26_san-sale/01 - Lau thảm bằng cồn có sao không.mp4`.
   Thư mục này CHỈ chứa video final + ảnh bìa cùng tên (`.jpg`, bước 8) — KHÔNG để video final trong `05_VIDEO_PROJECTS/` hay `11_COMPLETED_PROJECTS/`.
 - **Hồ sơ làm việc** (work/, BAO-CAO, contact sheet) → Drive `05_VIDEO_PROJECTS/<mã-dự-án>/edit/<NN-ten-video>/`.
-- **Project Remotion** (có node_modules) → ổ máy `D:/LOUGA_WORKSPACE/05_VIDEO_PROJECTS/<mã-dự-án>/edit-<NN-ten-video>/project`
-  (Google Drive không cài được node_modules).
+- **Project Remotion** → Drive `05_VIDEO_PROJECTS/<mã-dự-án>/edit/<NN-ten-video>/project`; không tạo gì trong `D:/LOUGA_WORKSPACE/05_VIDEO_PROJECTS`.
+  `render_all.py`/`stills.py` tự chạy qua cache `LOUGA_CACHE` vì Drive không cài được node_modules; cache xóa được, không chứa gì duy nhất.
 
 1. **Nghiên cứu nội dung**: video đã có hồ sơ (`<video>.brief.md` + `<video>.hoso.words.json` cạnh file) → CHỈ đọc
    brief, dùng `.hoso.words.json` làm transcript (KHÔNG chạy Whisper, KHÔNG xem lại video). Chưa có hồ sơ mới chạy

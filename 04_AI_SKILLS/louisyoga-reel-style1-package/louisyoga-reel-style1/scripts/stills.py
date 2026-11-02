@@ -15,6 +15,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as K  # noqa: E402
+import remotion_local as RL  # noqa: E402
 
 
 def main():
@@ -28,7 +29,7 @@ def main():
     a = ap.parse_args()
     from PIL import Image, ImageDraw
 
-    proj = os.path.abspath(a.project)
+    proj = RL.chuan_bi(a.project)
     npx = "npx.cmd" if os.name == "nt" else "npx"
     sdir = os.path.join(os.path.dirname(os.path.abspath(a.out)), "stills")
     os.makedirs(sdir, exist_ok=True)

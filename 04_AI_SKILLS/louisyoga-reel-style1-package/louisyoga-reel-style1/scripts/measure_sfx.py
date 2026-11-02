@@ -32,7 +32,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--reel", required=True)
     ap.add_argument("--voice", required=True)
-    ap.add_argument("--sfx-dir", required=True)
+    ap.add_argument("--sfx-dir", default=os.path.join(K.ASSETS, "sfx"))
     ap.add_argument("--sfx-rel", type=float, default=-2.5)
     a = ap.parse_args()
     # same parser as build_stems (named constants like HOOK_DROP / VIDEO_FRAMES / FPS resolved, comments ignored)

@@ -25,6 +25,7 @@ import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as K  # noqa: E402
+import remotion_local as RL  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -49,7 +50,7 @@ def main():
     ap.add_argument("--concurrency", default="4")
     ap.add_argument("--replace", action="store_true", help="--out da co la nhap loi chua giao: chuyen ra renders/_thay-the/ roi ghi dung ten")
     a = ap.parse_args()
-    a.project = os.path.abspath(a.project)
+    a.project = RL.chuan_bi(a.project)
     out = a.out
     if not a.replace:
         base, ext = os.path.splitext(out)

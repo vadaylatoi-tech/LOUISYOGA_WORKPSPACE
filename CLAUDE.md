@@ -32,7 +32,7 @@ Cạnh mỗi video đã cắt trong `11_COMPLETED_PROJECTS/2026-10_reels-chon-th
 
 ## Đường dẫn trong LOUGA WORKSPACE (thêm khi chuyển máy, 2026-10-26)
 - Thư viện dùng chung: `03_MEDIA_LIBRARY/shared-sources/`. Skill `nns-*` không còn tự tìm thấy thư mục này (nó không còn là thư mục cha) → luôn truyền `--resources "<workspace>/03_MEDIA_LIBRARY/shared-sources"`.
-- Media (mp4, ảnh, work/, cả `cuts/` + hồ sơ) ĐỌC THẲNG từ Google Drive `G:/My Drive/LOUISYOGA_WORKSPACE/LOUGA_WORKSPACE_MEDIA/<cùng đường dẫn>` (Drive đã bật offline nên file có sẵn trên máy). KHÔNG chép media về D: — bản chép sẽ lệch khi Drive được sửa. D: chỉ giữ repo, asset skill (dong_bo.py tự đồng bộ) và project Remotion có node_modules.
+- Media (mp4, ảnh, work/, cả `cuts/` + hồ sơ) ĐỌC THẲNG từ Google Drive `G:/My Drive/LOUISYOGA_WORKSPACE/LOUGA_WORKSPACE_MEDIA/<cùng đường dẫn>` (Drive đã bật offline nên file có sẵn trên máy). KHÔNG chép media về D: — bản chép sẽ lệch khi Drive được sửa. D: chỉ giữ repo, asset skill (dong_bo.py tự đồng bộ) và cache render tự sinh.
 - **KHÔNG ghi gì lên ổ C:** (kể cả thư mục scratchpad/tạm của Claude): không sao lưu, không ảnh xem trước, không contact sheet, không script tạm. File làm việc đọc/ghi trên G: (Drive) — chỉ G: mới đồng bộ giữa các máy. Ảnh/file tạm → thư mục hồ sơ dự án trên G: (`05_VIDEO_PROJECTS/<dự án>/edit/<NN>/work/`). Sửa file trên Drive không cần sao lưu riêng (Drive giữ lịch sử phiên bản). Bắt buộc phải dùng ổ máy → hỏi anh trước. (Chủ thương hiệu nhắc 27/10/2026.)
 - Đường dẫn cũ còn trong memory/báo cáo cũ: tra `00_SYSTEM/claude-memory/PATH_MAP.md`.
 
@@ -43,7 +43,7 @@ Cạnh mỗi video đã cắt trong `11_COMPLETED_PROJECTS/2026-10_reels-chon-th
   - Ví dụ: `10_FINAL_DELIVERABLES/2026-10-26_san-sale/01 - Lau thảm bằng cồn có sao không.mp4`, `10_FINAL_DELIVERABLES/2026-10-26_reels-chon-tham-17/`.
   - Thư mục này CHỈ chứa video final + ảnh bìa cùng tên (`<NN - tên video>.jpg`, tạo bằng `louisyoga-reel-style1/scripts/make_cover.py`). KHÔNG để video final trong `05_VIDEO_PROJECTS/` hay `11_COMPLETED_PROJECTS/`.
 - Hồ sơ làm việc (work/, BAO-CAO, contact sheet) → Drive `05_VIDEO_PROJECTS/<dự án>/edit/<NN-ten-video>/`.
-- Project Remotion (node_modules) → ổ máy `D:/LOUGA_WORKSPACE/05_VIDEO_PROJECTS/<dự án>/edit-<NN-ten-video>/project` (Drive không cài được node_modules).
+- Project Remotion (src, footage) → Drive `05_VIDEO_PROJECTS/<dự án>/edit/<NN-ten-video>/project`. Anh chốt 02/11/2026: làm việc trên G:, không tạo project trên D:. Drive không cài được node_modules nên `render_all.py`/`stills.py` tự chép bản tạm sang cache `LOUGA_CACHE` (mặc định `D:/LOUGA_CACHE`, không bao giờ C:); cache xóa được, không chứa gì duy nhất. Repo git vẫn ở D: vì không để `.git` trên Drive.
 
 ## XỬ LÝ BUG — GIỚI HẠN 2 LẦN (chủ thương hiệu chốt 28/10/2026)
 Sổ bug dùng chung mọi máy: Drive `LOUGA_WORKSPACE_MEDIA/00_SYSTEM/SO-BUG.md` (hook đầu phiên in các loại bug chưa xong). Lý do: ngày nào cũng tìm ra bug mà không sửa dứt điểm.

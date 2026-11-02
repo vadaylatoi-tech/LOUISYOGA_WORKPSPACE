@@ -19,6 +19,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as K  # noqa: E402
+import remotion_local as RL  # noqa: E402
 
 
 def main():
@@ -33,14 +34,15 @@ def main():
     else:
         shutil.copytree(K.TEMPLATE, a.dest, dirs_exist_ok=True, ignore=shutil.ignore_patterns("node_modules", "renders", "out"))
     pub = os.path.join(a.dest, "public")
-    for sub in ("fonts", "sfx", "music", "brand", "broll", "louis-photos"):
+    drive = RL.tren_drive(a.dest)
+    for sub in () if drive else ("fonts", "sfx", "music", "brand", "broll", "louis-photos"):
         shutil.copytree(os.path.join(K.ASSETS, sub), os.path.join(pub, sub), dirs_exist_ok=True)
     os.makedirs(os.path.join(pub, "footage"), exist_ok=True)
     os.makedirs(os.path.join(pub, "img"), exist_ok=True)
     if a.clean:
         shutil.copy2(a.clean, os.path.join(pub, "footage", "clean.mp4"))
     print(f"  project -> {a.dest}")
-    if a.install:
+    if a.install and not drive:
         npm = "npm.cmd" if os.name == "nt" else "npm"
         print("  npm install ...")
         r = subprocess.run([npm, "install", "--no-audit", "--no-fund"], cwd=a.dest)
